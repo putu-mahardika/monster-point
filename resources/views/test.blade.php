@@ -9,7 +9,7 @@
         <title>Sidenav Light - SB Admin</title>
         <link href="{{ asset('app.css') }}" rel="stylesheet" />
     </head>
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" style="overflow-x: hidden;">
         <nav class="sb-topnav navbar navbar-expand" style="background-color: white;">
             <!-- Navbar Brand-->
             <a class="navbar-brand ps-3" href="index.html">
@@ -42,7 +42,7 @@
                 <nav class="sb-sidenav accordion sb-sidenav-light" id="sidenavAccordion" style="background-color: #E5E5E5;">
                     <div class="sb-sidenav-menu">
                         <div class="nav">
-                            <a class="nav-link mb-4 mt-4" href="index.html">
+                            <a class="nav-link mb-3 mt-3" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                                 Dashboard
                             </a>
@@ -100,13 +100,8 @@
                 </main>
                 <footer class="py-4 bg-light mt-auto">
                     <div class="container-fluid px-4">
-                        <div class="d-flex align-items-center justify-content-between small">
+                        <div class="d-flex align-items-center justify-content-center small">
                             <div class="text-muted">Copyright &copy; Your Website 2021</div>
-                            <div>
-                                <a href="#">Privacy Policy</a>
-                                &middot;
-                                <a href="#">Terms &amp; Conditions</a>
-                            </div>
                         </div>
                     </div>
                 </footer>

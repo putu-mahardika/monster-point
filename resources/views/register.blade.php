@@ -8,9 +8,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
   <title>Login - SB Admin</title>
-  <link href="css/styles.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous">
-  </script>
+  <link href="{{ asset('app.css') }}" rel="stylesheet" />
   <style>
 
   </style>
@@ -25,7 +23,7 @@
             <div class="col-lg-5">
                   <div class="row justify-content-center mt-5 mb-5">
                     <div class="col-auto">
-                       <img  src="assets/img/logo_ps_long - Copy.png" alt="logo_ps_long" style="height:100px; width:auto;">
+                       <img  src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
                     </div>
                   </div>
                   <div class="row">
@@ -86,9 +84,7 @@
       </footer>
     </div>
   </div>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous">
-  </script>
-  <script src="js/scripts.js"></script>
+  <script src="{{ asset('js/app.js') }}"></script>
 </body>
 
 </html>

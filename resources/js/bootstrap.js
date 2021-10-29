@@ -2,7 +2,7 @@ window._ = require('lodash');
 window.Popper = require("@popperjs/core").default;
 window.$ = window.jQuery = require("jquery");
 require("bootstrap");
-require("@devextreme/vdom/dist/cjs");
+require("devextreme/dist/js/dx.all.js");
 window.Swal = require("sweetalert2");
 window.Toats = Swal.mixin({
     toast: true,

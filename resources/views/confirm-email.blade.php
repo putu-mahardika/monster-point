@@ -7,8 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Password Reset - SB Admin</title>
-        <link href="css/styles.css" rel="stylesheet" />
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js" crossorigin="anonymous"></script>
+        <link href="{{ asset('app.css') }}" rel="stylesheet" />
     </head>
     <body class="">
         <div id="layoutAuthentication">
@@ -20,7 +19,7 @@
                                 <div class="card border-0 rounded-lg mt-5">
                                     <div class="d-flex justify-content-center">
                                         <h3 class="text-center font-weight-light my-4"></h3>
-                                         <img  src="assets/img/logo_ps_long - Copy.png" alt="logo_ps_long" style="height:100px; width:auto;">
+                                         <img  src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
                                     </div>
                                     <div class="card-body">
                                         <div class="small mb-3 text-muted d-flex justify-content-center"></div>
@@ -33,7 +32,7 @@
                                         </div>
                                     </div>
                                    <div class="text-center py-3">
-                                        <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="login.html"><i class="fas fa-sign-in-alt"></i> Back to Login Screen</a>
+                                        <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ route('/login')}}"><i class="fas fa-sign-in-alt"></i> Back to Login Screen</a>
                                     </div>
                                 </div>
                             </div>
@@ -56,7 +55,6 @@
                 </footer>
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-        <script src="js/scripts.js"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
     </body>
 </html>
