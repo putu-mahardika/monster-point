@@ -42,7 +42,7 @@
                           <a class="small" href="password.html">Forgot Password?</a>
                         </div>
                         <div class="d-flex justify-content-center mt-5">
-                          <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="i{{ route('/')}}">Login</a>
+                          <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/test')}}">Login</a>
                         </div>
                       </form>
                     </div>
@@ -50,7 +50,7 @@
                 <div class=" text-center py-3">
                   <div class="small">
                     <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                    <a href="register.html">Stay Sign In </a>
+                    <a href="{{ url('/register')}}">Stay Sign In </a>
                   </div>
                 </div>
             </div>

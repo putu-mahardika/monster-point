@@ -32,7 +32,7 @@
                                         </div>
                                     </div>
                                    <div class="text-center py-3">
-                                        <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ route('/login')}}"><i class="fas fa-sign-in-alt"></i> Back to Login Screen</a>
+                                        <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/login')}}"><i class="fas fa-sign-in-alt"></i> Back to Login Screen</a>
                                     </div>
                                 </div>
                             </div>

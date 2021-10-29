@@ -54,7 +54,7 @@
                           <a class="small" href="#"> Saya Setuju Syarat & Ketentuan </a>
                         </div>
                         <div class="d-flex justify-content-center mt-5">
-                          <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="index.html">Register</a>
+                          <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/confirm-email')}}">Register</a>
                         </div>
                       </form>
                     </div>
