@@ -16,69 +16,105 @@
 
 <body class="bg-white">
   <div id="layoutAuthentication">
-    <div id="layoutAuthentication_content">
-      <main>
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-lg-5">
-                  <div class="row justify-content-center mt-5 mb-5">
-                    <div class="col-auto">
-                       <img  src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                      <form>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xxl" placeholder="Nama Perusahaan" aria-label="Nama Perusahaan" aria-describedby="basic-addon1">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col">
+                            <div class="row justify-content-center mt-5 mb-5">
+                                <div class="col-auto">
+                                    <img  src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
+                                </div>
                             </div>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xxl" placeholder="Alamat Perusahaan" aria-label="Alamat Perusahaan" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xxl" placeholder="Person in Charge (PIC)" aria-label="Person in Charge (PIC)" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xxl" placeholder="PIC Phone" aria-label="PIC Phone" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xxl" placeholder="Email" aria-label="Email" aria-describedby="basic-addon1">
-                            </div>
-                            <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xxl" placeholder="Kebutuhan" aria-label="Kebutuhan" aria-describedby="basic-addon1">
-                            </div>
-                      </form>
 
-                        <div class="d-flex justify-content-end">
-                          <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                          <a class="small" href="#"> Saya Setuju Syarat & Ketentuan </a>
+                            <form class="">
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>Nama Perusahaan</label>
+                                    </div>
+                                    <div class="col-md-4 rounded-xl">
+                                        <input type="email" class=" rounded-xxl" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>Alamat Perusahaan</label>
+                                    </div>
+                                    <div class="col-md-4 rounded-xl">
+                                        <input type="email" class=" rounded-xxl" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>Peron in Charge (PIC)</label>
+                                    </div>
+                                    <div class="col-md-4 rounded-xl">
+                                        <input type="email" class=" rounded-xxl" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>PIC Phone</label>
+                                    </div>
+                                    <div class="col-md-4 rounded-xl">
+                                        <input type="email" class=" rounded-xxl" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>Email</label>
+                                    </div>
+                                    <div class="col-md-4 rounded-xl">
+                                        <input type="email" class=" rounded-xxl" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>Kebutuhan</label>
+                                    </div>
+                                    <div class="col-md-4 rounded-xl">
+                                        <input type="email" class=" rounded-xxl" id="inputEmail3">
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-2 rounded-xl ml-5">
+                                        <label>Kebutuhan</label>
+                                    </div>
+                                     <div class="col-md-4 rounded-xl">
+                                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                        <a class="small float-right" href="#"> Saya Setuju Syarat & Ketentuan </a>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <div class="row justify-content-center mt-5">
+                                <div class="col justify-content-end">
+                                    <button type="submit" class="btn btn-lg btn-info text-white rounded-xl" href="{{ url('/confirm-email')}}">Register</button>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center mt-5">
+                                <div class="col-auto small">
+                                    <a href="{{ url('login')}}">Sudah punya akun? Masuk ke halaman Login</a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="d-flex justify-content-center mt-5">
-                          <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/confirm-email')}}">Register</a>
-                        </div>
-                      </form>
                     </div>
-                  </div>
-                <div class=" text-center py-3">
-                  <div class="small">
-                    <a href="{{ url('login')}}">Sudah punya akun? Masuk ke halaman Login</a>
-                  </div>
                 </div>
-            </div>
-          </div>
+            </main>
         </div>
-      </main>
-    </div>
-    <div id="layoutAuthentication_footer">
-      <footer class="py-4 bg-light mt-auto">
-        <div class="container-fluid px-4">
-          <div class="d-flex align-items-center justify-content-center small">
-            <div class="text-muted">Copyright &copy; Point Service 2021</div>
-          </div>
+
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 bg-light mt-auto">
+                <div class="container-fluid px-4">
+                <div class="d-flex align-items-center justify-content-center small">
+                    <div class="text-muted">version 1.00.001  &copy; Monster Code 2021 </div>
+                </div>
+                </div>
+            </footer>
         </div>
-      </footer>
-    </div>
   </div>
+
   <script src="{{ asset('js/app.js') }}"></script>
 </body>
 

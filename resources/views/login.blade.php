@@ -18,7 +18,7 @@
   <div id="layoutAuthentication">
     <div id="layoutAuthentication_content">
       <main>
-        <div class="container">
+        <div class="container mt-5 mb-5">
           <div class="row justify-content-center">
             <div class="col-lg-5">
                   <div class="row justify-content-center mt-5 mb-5">
@@ -29,18 +29,23 @@
                   </div>
                   <div class="row">
                     <div class="col">
-                      <form>
-                        <div class=" my-3 d-flex justify-content-center">
-                          <input class="form-control  border-0 rounded-xxl " id="inputEmail" type="email"
-                            placeholder="Example : admin@mail.com" />
-                        </div>
-                        <div class="mb-3 d-flex justify-content-center">
-                          <input class="form-control  border-0 rounded-xxl" id="inputPassword" type="password"
-                            placeholder="Password" />
-                        </div>
-                        <div class="d-flex justify-content-end">
-                          <a class="small" href="password.html">Forgot Password?</a>
-                        </div>
+                        <form>
+                            <div class="form-group row">
+                                <div class="col-lg-3 rounded-xl d-flex justify-content-right">
+                                    <label>Email</label>
+                                </div>
+                                <div class="col-sm-6 rounded-xl">
+                                    <input type="email" class="form-control rounded-xxl">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-3 rounded-xl d-flex justify-content-right">
+                                    <label>Password</label>
+                                </div>
+                                <div class="col-sm-6 rounded-xl">
+                                    <input type="password" class="form-control rounded-xxl" >
+                                </div>
+                            </div>
                         <div class="d-flex justify-content-center mt-5">
                           <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/')}}">Login</a>
                         </div>
@@ -62,11 +67,11 @@
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
           <div class="d-flex align-items-center justify-content-center small">
-            <div class="text-muted">Copyright &copy; Point Service 2021 </div>
+            <div class="text-muted">version 1.00.001  &copy; Monster Code 2021 </div>
           </div>
         </div>
       </footer>
-</div>
+    </div>
   </div>
   <script src="{{ asset('js/app.js') }}"></script>
 </body>
