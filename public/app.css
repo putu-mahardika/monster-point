@@ -12,6 +12,8 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
  */
 :root {
+  --ekky-light: #E5E5E5;
+  --ekky-cyan: #00CAEE;
   --bs-blue: #0d6efd;
   --bs-indigo: #6610f2;
   --bs-purple: #6f42c1;
@@ -11527,13 +11529,16 @@ body {
   color: #adb5bd;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link:hover {
-  color: #0d6efd;
+  color: white;
+  border: 1px solid var(--ekky-cyan);
+  background-color: var(--ekky-cyan);
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link.active {
-  color: #0d6efd;
+  color: white;
+  background-color: var(--ekky-cyan);
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
-  color: #0d6efd;
+  color: white;
 }
 .sb-sidenav-light .sb-sidenav-footer {
   background-color: #e9ecef;
@@ -11700,6 +11705,36 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.rounded-xl{
+  border-radius: 0.75rem;
+}
+.rounded-xxl {
+background: rgb(245, 245, 245);
+padding: 20px;
+width: 400px;
+height: 5px;
+border: 0;
+margin-top: 5px;
+}
+
+.content-rounded{
+  min-height: 100vh;
+  padding: 4rem;
+  border-radius: 2%;
+  background-color: white;
+}
+
+.container-light{
+   background-color: #f8f9fa;
+}
+
+.img-round{
+  border-radius: 70%;
+  width:50px;
+  height: 50px;
+}
+
 /*!
  * Font Awesome Free 5.15.4 by @fontawesome - https://fontawesome.com
  * License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License)
