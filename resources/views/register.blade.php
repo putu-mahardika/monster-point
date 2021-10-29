@@ -61,7 +61,7 @@
                   </div>
                 <div class=" text-center py-3">
                   <div class="small">
-                    <a href="login.html">Sudah punya akun? Masuk ke halaman Login</a>
+                    <a href="{{ url('login')}}">Sudah punya akun? Masuk ke halaman Login</a>
                   </div>
                 </div>
             </div>
@@ -72,13 +72,8 @@
     <div id="layoutAuthentication_footer">
       <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
-          <div class="d-flex align-items-center justify-content-between small">
+          <div class="d-flex align-items-center justify-content-center small">
             <div class="text-muted">Copyright &copy; Point Service 2021</div>
-            <div>
-              <a href="#">Privacy Policy</a>
-              &middot;
-              <a href="#">Terms &amp; Conditions</a>
-            </div>
           </div>
         </div>
       </footer>
