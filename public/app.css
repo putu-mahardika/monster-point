@@ -11462,6 +11462,9 @@ body {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   position: relative;
+  border-top-right-radius: 50px 50px;
+  border-bottom-right-radius: 50px 50px;
+  width: 85%;
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
   font-size: 0.9rem;
@@ -11470,6 +11473,7 @@ body {
   display: inline-block;
   margin-left: auto;
   transition: transform 0.15s ease;
+
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link.collapsed .sb-sidenav-collapse-arrow {
   transform: rotate(-90deg);
@@ -11730,9 +11734,14 @@ margin-top: 5px;
 }
 
 .img-round{
-  border-radius: 70%;
-  width:50px;
-  height: 50px;
+  border-radius: 30%;
+  width:40px;
+  height: 40px;
+}
+
+.menu-halfround{
+  border-top-right-radius: 50px 50px;
+  border-bottom-right-radius: 50px 50px;
 }
 
 /*!
