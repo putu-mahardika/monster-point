@@ -34,7 +34,7 @@
                                 <div class="col-lg-3 rounded-xl d-flex justify-content-right">
                                     <label>Email</label>
                                 </div>
-                                <div class="col-sm-6 rounded-xl">
+                                <div class="col-md-6 rounded-xl">
                                     <input type="email" class="form-control rounded-xxl">
                                 </div>
                             </div>
@@ -42,7 +42,7 @@
                                 <div class="col-lg-3 rounded-xl d-flex justify-content-right">
                                     <label>Password</label>
                                 </div>
-                                <div class="col-sm-6 rounded-xl">
+                                <div class="col-md-6 rounded-xl">
                                     <input type="password" class="form-control rounded-xxl" >
                                 </div>
                             </div>
@@ -64,7 +64,7 @@
       </main>
     </div>
     <div id="layoutAuthentication_footer">
-      <footer class="py-4 bg-light mt-auto">
+      <footer class="py-4 mt-auto">
         <div class="container-fluid px-4">
           <div class="d-flex align-items-center justify-content-center small">
             <div class="text-muted">version 1.00.001  &copy; Monster Code 2021 </div>

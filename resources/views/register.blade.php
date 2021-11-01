@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="row justify-content-center mb-3">
                                     <div class="col-md-2 rounded-xl ml-5">
-                                        <label>Kebutuhan</label>
+                                        <label>       </label>
                                     </div>
                                      <div class="col-md-4 rounded-xl">
                                         <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
@@ -87,10 +87,8 @@
                                 </div>
                             </form>
 
-                            <div class="row justify-content-center mt-5">
-                                <div class="col justify-content-end">
-                                    <button type="submit" class="btn btn-lg btn-info text-white rounded-xl" href="{{ url('/confirm-email')}}">Register</button>
-                                </div>
+                            <div class="d-flex justify-content-center mt-5">
+                                    <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/login')}}">Register</a>
                             </div>
 
                             <div class="row justify-content-center mt-5">
@@ -105,7 +103,7 @@
         </div>
 
         <div id="layoutAuthentication_footer">
-            <footer class="py-4 bg-light mt-auto">
+            <footer class="py-4 mt-auto">
                 <div class="container-fluid px-4">
                 <div class="d-flex align-items-center justify-content-center small">
                     <div class="text-muted">version 1.00.001  &copy; Monster Code 2021 </div>
