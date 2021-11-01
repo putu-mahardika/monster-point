@@ -69,9 +69,7 @@
 
                         </div>
                     </div>
-                    <div class="sb-sidenav-footer">
 
-                    </div>
                 </nav>
             </div>
             <div id="layoutSidenav_content">
@@ -98,10 +96,11 @@
                         </div>
                     </div>
                 </main>
+
                 <footer class="py-4  mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-center small">
-                            <div class="text-muted">Copyright &copy; Your Website 2021</div>
+                            <div class="text-muted"> &copy; Your Website 2021</div>
                         </div>
                     </div>
                 </footer>

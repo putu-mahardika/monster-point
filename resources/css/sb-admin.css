@@ -3488,7 +3488,7 @@ textarea.form-control-lg {
 
 .btn-link {
   font-weight: 400;
-  color: #0d6efd;
+  color:#707070;
   text-decoration: underline;
 }
 .btn-link:hover {
@@ -3960,7 +3960,7 @@ textarea.form-control-lg {
 .nav-link {
   display: block;
   padding: 0.5rem 1rem;
-  color: #0d6efd;
+  color: #707070;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
 }
@@ -11461,6 +11461,9 @@ body {
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
   position: relative;
+  border-top-right-radius: 40px 40px;
+  border-bottom-right-radius: 40px 40px;
+  width: 85%;
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link .sb-nav-link-icon {
   font-size: 0.9rem;
@@ -11469,6 +11472,7 @@ body {
   display: inline-block;
   margin-left: auto;
   transition: transform 0.15s ease;
+
 }
 .sb-sidenav .sb-sidenav-menu .nav .nav-link.collapsed .sb-sidenav-collapse-arrow {
   transform: rotate(-90deg);
@@ -11519,22 +11523,28 @@ body {
   color: #adb5bd;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link {
-  color: #212529;
+  color: #707070;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link .sb-nav-link-icon {
-  color: #adb5bd;
+  color: #707070;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow {
-  color: #adb5bd;
+  color: #707070;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link:hover {
   color: white;
   border: 1px solid var(--ekky-cyan);
   background-color: var(--ekky-cyan);
 }
+.sb-sidenav-light .sb-sidenav-menu .nav-link:hover i {
+  color:white;
+}
 .sb-sidenav-light .sb-sidenav-menu .nav-link.active {
   color: white;
   background-color: var(--ekky-cyan);
+}
+.sb-sidenav-light .sb-sidenav-menu .nav-link.active i {
+  color: white;
 }
 .sb-sidenav-light .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
   color: white;
@@ -11729,7 +11739,12 @@ margin-top: 5px;
 }
 
 .img-round{
-  border-radius: 70%;
-  width:50px;
-  height: 50px;
+  border-radius: 30%;
+  width:40px;
+  height: 40px;
+}
+
+.menu-halfround{
+  border-top-right-radius: 50px 50px;
+  border-bottom-right-radius: 50px 50px;
 }

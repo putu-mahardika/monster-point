@@ -29,7 +29,7 @@
                   </div>
                   <div class="row">
                     <div class="col">
-                        <form>
+                        <form >
                             <div class="form-group row">
                                 <div class="col-lg-3 rounded-xl d-flex justify-content-right">
                                     <label>Email</label>
