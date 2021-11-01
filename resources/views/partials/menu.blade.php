@@ -15,7 +15,7 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
                                 Merchant
                             </a>
-                            <a class="nav-link menu-halfround" href="{{ url('/event')}}">
+                            <a class="nav-link menu-halfround active" href="{{ url('/event')}}">
                                 <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
                                Event / Formula
                             </a>
@@ -33,7 +33,15 @@
                 </nav>
             </div>
 
-            <script>
+<script>
+    let lists = document.querySelectorAll('a');
+    lists.forEach(list => {
+        if (list.href == location.href) {
+            list.classList.add('active');
+        }else{
+            list.classList.remove('active');
+        }
+    });
+</script>
 
-            </script>
 
