@@ -7,23 +7,23 @@
                                 <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                                 Dashboard
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link menu-halfround" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
                                 Company
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link menu-halfround" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
                                 Merchant
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link menu-halfround" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
                                Event / Formula
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link menu-halfround" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
                                 Billing
                             </a>
-                            <a class="nav-link" href="index.html">
+                            <a class="nav-link menu-halfround" href="index.html">
                                 <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
                                 Help
                             </a>

@@ -24,7 +24,7 @@
                     </div>
                 </main>
 
-                <footer class="py-4  mt-auto">
+                <footer class="py-4 mt-auto">
                     <div class="container-fluid px-4">
                         <div class="d-flex align-items-center justify-content-center small">
                             <div class="text-muted"> &copy; Your Website 2021</div>
