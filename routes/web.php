@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('pages/dashboard/index');
+    return view('/home');
 });
 Route::get('/register', function () {
     return view('register');
@@ -28,3 +28,23 @@ Route::get('/email-success', function () {
 Route::get('/confirm-email', function () {
     return view('confirm-email');
 });
+Route::get('/billing', function () {
+    return view('/pages/billing/index');
+});
+Route::get('/company', function () {
+    return view('/pages/company/index');
+});
+Route::get('/dashboard', function () {
+    return view('/pages/dashboard/index');
+});
+Route::get('/event', function () {
+    return view('/pages/event/index');
+});
+Route::get('/merchant', function () {
+    return view('/pages/merchant-member/index');
+});
+Route::get('/help', function () {
+    return view('/pages/help/index');
+});
+
+
