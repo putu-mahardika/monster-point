@@ -13,6 +13,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/test', function () {
+    return view('/test');
+});
 Route::get('/', function () {
     return view('/home');
 });
@@ -40,8 +43,14 @@ Route::get('/dashboard', function () {
 Route::get('/event', function () {
     return view('/pages/event/index');
 });
+Route::get('/event-detail', function () {
+    return view('/pages/event/event-detail');
+});
 Route::get('/merchant', function () {
     return view('/pages/merchant-member/index');
+});
+Route::get('/member-detail', function () {
+    return view('/pages/merchant-member/member-detail');
 });
 Route::get('/help', function () {
     return view('/pages/help/index');

@@ -27,7 +27,8 @@
                                 </div>
                             </div>
 
-                            <form class="">
+                            <form acttion="" class="" methods="">
+                                @csrf
                                 <div class="row justify-content-center mb-3">
                                     <div class="col-md-2 rounded-xl ml-5">
                                         <label>Nama Perusahaan</label>
