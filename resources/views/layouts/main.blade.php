@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <link rel="icon" href="{{ asset('img/money.png') }}">
+        <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
         <title>Point Service</title>
         <link href="{{ asset('app.css') }}" rel="stylesheet" />
     </head>
@@ -29,9 +29,12 @@
                                 </div>
                             </div>
                         </footer>
-        </div>
+                    </div>
                 </div>
             </div>
+
         <script src="{{ asset('js/app.js') }}"></script>
+        @yield('js')
+
     </body>
 </html>
