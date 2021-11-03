@@ -34,6 +34,9 @@ Route::get('/confirm-email', function () {
 Route::get('/billing', function () {
     return view('/pages/billing/index');
 });
+Route::get('/billing-company', function () {
+    return view('/pages/billing/billing-company');
+});
 Route::get('/company', function () {
     return view('/pages/company/index');
 });

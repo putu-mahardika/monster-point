@@ -33,7 +33,7 @@
 
                 <div class="row mb-3 m-3 ">
                     <div class="col-md-6">
-                        <input type="text" class="form-control mb-2" placeholder="">
+                        <input type="text" class="form-control mb-2" placeholder="Enter text to search">
                         <select class="form-select mb-3" size="5" aria-label="size 3 select example">
                             <option selected>Open this select menu</option>
                             <option value="1">One</option>

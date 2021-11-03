@@ -1,102 +1,80 @@
 @extends('layouts.main')
 @section('content')
-<div class="col-md-7">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row">
-                <div class="col">
-                    <button type="button" class="btn btn-md bg-info rounded-xl" href="" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    Add Company <i class="fas fa-plus"></i>
-                    </button>
 
-                </div>
-            </div>
-            {{-- Data All Company --}}
-            <div class="row mt-3 rounded-xl ">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md table-hover"  style="width:100%">
-                            <tr class="bg-info" style="color:white; weight: 5px;">
-                                <th>No.</th>
-                                <th>Company</th>
-                                <th>Bussinness Type</th>
-                                <th>NIB</th>
-                                <th>Member</th>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>PT Something BIG</td>
-                                <td>Franchise</td>
-                                <td>123456009</td>
-                                <td>5 <i class="fas fa-user me-2"></i> <i class="fas fa-angle-right"></i></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>PT Something BIG</td>
-                                <td>Franchise</td>
-                                <td>123456009</td>
-                                <td>5 <i class="fas fa-user me-2"></i> <i class="fas fa-angle-right"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-md-5">
+<div class="col-md-12">
     <div class="card mb-4">
         <div class="card-body">
-            <div class="row">
+            <div class="row mb-2">
                 <div class="col">
-                    PT Something Big <i class="fas fa-edit"></i></a>
+                    <b>Some Company Name</b>
                 </div>
-                <div class="col" style="text-align : right;">
-                    5  <i class="fas fa-users"></i></a>
+                <div class="col-md-4">
+                    <select class="form-control" name="" id="">
+                        <option value="">2020</option>
+                        <option value="">2021</option>
+                        <option value="">2022</option>
+                        <option value="">2023</option>
+                    </select>
                 </div>
             </div>
-            {{-- Data All Merchant Per company --}}
+            {{-- Data All Billing Per company --}}
             <div class="row  mt-2 ">
                 <div class="col">
                     <div class="table-responsive">
-                        <table class="table table-sm table-hover" style="width:100%">
+                        <table class="table table-md  table-hover">
                                 <tr class="bg-light">
-                                    <th>No.</th>
-                                    <th>Name</th>
-                                    <th>Point</th>
+                                    <th>Month</th>
+                                    <th>Clicks</th>
+                                    <th>Bill</th>
+                                    <th>Date Paid</th>
                                     <th></th>
                                 </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td>Jhon Doe</td>
-                                    <td>150</td>
-                                    <td><i class="fas fa-ellipsis-v"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Jhon Doe</td>
-                                    <td>150</td>
-                                    <td><i class="fas fa-ellipsis-v"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Jhon Doe</td>
-                                    <td>150</td>
-                                    <td><i class="fas fa-ellipsis-v"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Jhon Doe</td>
-                                    <td>150</td>
-                                    <td><i class="fas fa-ellipsis-v"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Jhon Doe</td>
-                                    <td>150</td>
-                                    <td><i class="fas fa-ellipsis-v"></i></td>
-                                </tr>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                         
                             </tbody>
                         </table>
                     </div>
