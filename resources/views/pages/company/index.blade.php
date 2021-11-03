@@ -14,7 +14,8 @@
             {{-- Data All Company --}}
             <div class="row mt-3 rounded-xl ">
                 <div class="col">
-                    <table class="table table-md table-responsive table-hover"  style="width:100%">
+                    <div class="table-responsive">
+                        <table class="table table-md table-hover"  style="width:100%">
                             <tr class="bg-info" style="color:white; weight: 5px;">
                                 <th>No.</th>
                                 <th>Company</th>
@@ -38,6 +39,7 @@
                             </tr>
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,45 +59,47 @@
             {{-- Data All Merchant Per company --}}
             <div class="row  mt-2 ">
                 <div class="col">
-                    <table class="table table-sm table-responsive table-hover" style="width:100%">
-                            <tr class="bg-light">
-                                <th>No.</th>
-                                <th>Name</th>
-                                <th>Point</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>Jhon Doe</td>
-                                <td>150</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>Jhon Doe</td>
-                                <td>150</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>Jhon Doe</td>
-                                <td>150</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>Jhon Doe</td>
-                                <td>150</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>Jhon Doe</td>
-                                <td>150</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover" style="width:100%">
+                                <tr class="bg-light">
+                                    <th>No.</th>
+                                    <th>Name</th>
+                                    <th>Point</th>
+                                    <th></th>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>Jhon Doe</td>
+                                    <td>150</td>
+                                    <td><i class="fas fa-ellipsis-v"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>Jhon Doe</td>
+                                    <td>150</td>
+                                    <td><i class="fas fa-ellipsis-v"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>Jhon Doe</td>
+                                    <td>150</td>
+                                    <td><i class="fas fa-ellipsis-v"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>Jhon Doe</td>
+                                    <td>150</td>
+                                    <td><i class="fas fa-ellipsis-v"></i></td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>Jhon Doe</td>
+                                    <td>150</td>
+                                    <td><i class="fas fa-ellipsis-v"></i></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
