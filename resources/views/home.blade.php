@@ -1,7 +1,5 @@
-
 @extends('layouts.main')
 @section('content')
-
            <div class="col">
                 <div class="card mb-4 bg-white rounded-xl">
                     <div class="card-body">

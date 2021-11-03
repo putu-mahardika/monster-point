@@ -2,78 +2,116 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <title>Login - SB Admin</title>
-  <link href="{{ asset('app.css') }}" rel="stylesheet" />
-  <style>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
+    <title>Login | {{ config('app.name') }}</title>
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+    <style>
 
-  </style>
+    </style>
 </head>
 
 <body class="bg-white">
-  <div id="layoutAuthentication">
-    <div id="layoutAuthentication_content">
-      <main>
-        <div class="container mt-5 mb-5">
-          <div class="row justify-content-center">
-            <div class="col-lg-5">
-                  <div class="row justify-content-center mt-5 mb-5">
-                    <div class="col-auto">
-                      <img  src="{{ asset('/img/logo_ps_long.png') }}"alt="logo_ps_long" style="height:100px; width:auto;">
+    <div id="layoutAuthentication">
+        <div id="layoutAuthentication_content">
+            <main>
+                <div class="container my-5">
+                    <div class="row justify-content-center">
+                        <div class="col-xl-5 col-lg-7 col-md-9">
+                            <div class="row justify-content-center mt-3 mb-5">
+                                <div class="col-auto">
+                                    <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
+                                </div>
+                            </div>
 
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col">
-                        <form >
-                            <div class="form-group row">
-                                <div class="col-lg-3 rounded-xl d-flex justify-content-right">
-                                    <label>Email</label>
+                            {{-- Login Form --}}
+                            <form action="#" method="POST">
+                                @csrf
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-3">
+                                        <label for="email">Email</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input name="email" id="email" type="email" class="form-control rounded-xl" autofocus autocomplete="on">
+                                    </div>
                                 </div>
-                                <div class="col-md-6 rounded-xl">
-                                    <input type="email" class="form-control rounded-xxl">
+                                <div class="row justify-content-center mb-2">
+                                    <div class="col-md-3">
+                                        <label for="password">Password</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <div class="input-group mb-3">
+                                            <input name="password" id="password" type="password" class="form-control rounded-xl-start border-end-0" aria-describedby="showPassword">
+                                            <button id="btnShowPassword" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="toogleShowPassword();">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
+                                <div class="row mb-3 px-5">
+                                    <div class="col-md-6 text-center text-md-start mb-3">
+                                        <input class="form-check-input me-2" type="checkbox" id="remember" name="remember">
+                                        <label for="remember">Remember Me</label>
+                                    </div>
+                                    <div class="col-md-6 text-center text-md-end">
+                                        <a href="#">Forgot Password?</a>
+                                    </div>
+                                </div>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <button type="submit" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Login</button>
+                                </div>
+                            </form>
+
+                            <div class="text-divider">
+                                <label>OR</label>
                             </div>
-                            <div class="form-group row">
-                                <div class="col-lg-3 rounded-xl d-flex justify-content-right">
-                                    <label>Password</label>
-                                </div>
-                                <div class="col-md-6 rounded-xl">
-                                    <input type="password" class="form-control rounded-xxl" >
-                                </div>
+
+                            {{-- Socialite --}}
+                            <div class="d-flex justify-content-center mt-4">
+                                <button class="btn btn-facebook rounded-pill mx-1">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <button class="btn btn-google rounded-pill mx-1">
+                                    <i class="fab fa-google"></i>
+                                </button>
+                                <button class="btn btn-github rounded-pill mx-1">
+                                    <i class="fab fa-github"></i>
+                                </button>
                             </div>
-                        <div class="d-flex justify-content-center mt-5">
-                          <a class="btn btn-lg btn-info text-white px-5 py-1 rounded-xl" href="{{ url('/')}}">Login</a>
+
+                            <p class="text-center mt-5">
+                                Don't have an account? <a href="{{ url('register') }}">Sign Up</a> now.
+                            </p>
                         </div>
-                      </form>
                     </div>
-                  </div>
-                <div class=" text-center py-3">
-                  <div class="small">
-                    <input class="form-check-input me-2" type="checkbox" value="" id="flexCheckDefault">
-                    <a href="{{ url('/register')}}">Stay Sign In </a>
-                  </div>
                 </div>
-            </div>
-          </div>
+            </main>
         </div>
-      </main>
-    </div>
-    <div id="layoutAuthentication_footer">
-      <footer class="py-4 mt-auto">
-        <div class="container-fluid px-4">
-          <div class="d-flex align-items-center justify-content-center small">
-            <div class="text-muted">version 1.00.001  &copy; Monster Code 2021 </div>
-          </div>
+        <div id="layoutAuthentication_footer">
+            <footer class="py-4 mt-auto">
+                <x-footer-text />
+            </footer>
         </div>
-      </footer>
     </div>
-  </div>
-  <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script>
+        function toogleShowPassword() {
+            let passwordField = $('#password');
+            let showPasswordBtn = $('#btnShowPassword');
+            if (passwordField.attr('type') == 'password') {
+                passwordField.attr('type', 'text');
+                showPasswordBtn.html('<i class="fas fa-eye-slash"></i>');
+            }
+            else {
+                passwordField.attr('type', 'password');
+                showPasswordBtn.html('<i class="fas fa-eye"></i>');
+            }
+        }
+    </script>
 </body>
 
 </html>
