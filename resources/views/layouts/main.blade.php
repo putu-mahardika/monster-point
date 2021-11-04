@@ -6,35 +6,34 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        @yield('meta')
         <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
-        <title>Point Service</title>
-        <link href="{{ asset('app.css') }}" rel="stylesheet" />
+        <title>@yield('title', 'title') | {{ config('app.name') }}</title>
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
+        @yield('css')
     </head>
     <body class="sb-nav-fixed" style="overflow-x: hidden;">
         @include('partials.topbar')
-            <div id="layoutSidenav">
-                @include('partials.menu')
-                <div id="layoutSidenav_content">
-                    <main  style="background-color: var(--ekky-light); min-height: 100vh;">
-                        <div class="p-2 ">
-                            <div class="row mt-3">
-                                @yield('content')
-                            </div>
+        <div id="layoutSidenav">
+            @include('partials.menu')
+            <div id="layoutSidenav_content">
+                <main  style="background-color: var(--ekky-light); min-height: calc(100vh - 8.2rem);">
+                    <div class="p-2 ">
+                        <div class="row mt-3">
+                            @yield('content')
                         </div>
-                    </main>
-                       <footer class="py-3 mt-auto" style="background-color: ">
-                            <div class="container-fluid px-3">
-                                <div class="d-flex align-items-center justify-content-center small">
-                                    <div class="text-muted">version 1.00.001 &copy; Monster Code 2021</div>
-                                </div>
-                            </div>
-                        </footer>
                     </div>
+                </main>
+                <footer class="py-3 mt-auto">
+                    <x-footer-text />
+                </footer>
                 </div>
             </div>
+        </div>
+
+        @yield('modal')
 
         <script src="{{ asset('js/app.js') }}"></script>
         @yield('js')
-
     </body>
 </html>
