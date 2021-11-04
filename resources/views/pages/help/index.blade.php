@@ -11,9 +11,9 @@
 
 @section('content')
 <div class="col-md-12">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row mt-3 rounded-xl ">
+    <div class="card mb-4 rounded-xxl">
+        <div class="card-body ">
+            <div class="row mt-3  ">
                 <div class="col">
                   <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
                     <a class="navbar-brand" href="#">Navbar</a>
