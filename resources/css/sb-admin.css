@@ -13182,3 +13182,7 @@ body {
     z-index: 11;
     left: calc(50% - 1rem);
 }
+
+.mycontent-left {
+  border-right: 1px dashed #333;
+}
