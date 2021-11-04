@@ -13,12 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/', function () {
+    return redirect('/login');
+});
+
 Route::get('/test', function () {
     return view('/test');
 });
-Route::get('/', function () {
-    return view('/home');
-});
+// Route::get('/', function () {
+//     return view('/home');
+// });
 Route::get('/register', function () {
     return view('register');
 });

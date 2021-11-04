@@ -8,6 +8,7 @@ use App\Actions\Fortify\UpdateUserPassword;
 use App\Actions\Fortify\UpdateUserProfileInformation;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Fortify\Fortify;
@@ -38,6 +39,16 @@ class FortifyServiceProvider extends ServiceProvider
 
         Fortify::loginView(function () {
             return view('login');
+        });
+
+        Fortify::authenticateUsing(function ($request) {
+            dd($request);
+            $validated = Auth::validate($credentials = [
+                'email' => $request->email,
+                'password' => $request->password
+            ]);
+            // dd($validated);
+            return $validated ? Auth::getProvider()->retrieveByCredentials($credentials) : null;
         });
 
         RateLimiter::for('login', function (Request $request) {
