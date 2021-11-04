@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col">
+        <div class="col-md-6">
             <div class="card rounded-xxl">
                 <div class="card-body">
                     <div class="row justify-content-between mb-3">
@@ -50,13 +50,75 @@
                     </div>
                     <div class="row">
                         <div class="col">
-                            <div id="chart"></div>
+                            <div id="chart1"></div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col"></div>
+        <div class="col-md-6">
+                <div class="card rounded-xxl">
+                    <div class="card-body">
+                        <div class="row justify-content-between mb-3">
+                            <div class="col-auto">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <select class="form-control" id="month" name="month">
+                                            <option value="">Click per month</option>
+                                            <option value="">January</option>
+                                            <option value="">February</option>
+                                            <option value="">Maret</option>
+                                        </select>
+                                    </div>
+                                    <div class="col">
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <a href="#" class="small text-dark text-decoration-none text-muted">
+                                   <input class="form-control" type="date" value=""><i class="fas fa-date"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <div id="chart2"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+    <div class="row mt-2 mb-2">
+         <div class="col">
+            <div class="card rounded-xxl">
+                <div class="card-body">
+                    <div class="row justify-content-between mb-3">
+                        <div class="col-auto">
+                            <div class="row">
+                                <div class="col">
+                                   <select class="form-control" id="month" name="month">
+                                        <option value="">Click per month</option>
+                                        <option value="">January</option>
+                                        <option value="">February</option>
+                                        <option value="">Maret</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto d-flex">
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <div id="chart3"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection
 
@@ -66,14 +128,34 @@
 
 @section('js')
     <script>
-        const complaintsData = [
-            { complaint: 'Sunday', count: 780 },
-            { complaint: 'Monday', count: 120 },
-            { complaint: 'Tuesdey', count: 52 },
-            { complaint: 'Wednesday', count: 1123 },
-            { complaint: 'Thursday', count: 321 },
-            { complaint: 'Friday', count: 89 },
-            { complaint: 'Saturday', count: 222 },
+        const complaintsData = [{
+                complaint: 'Sunday',
+                count: 780
+            },
+            {
+                complaint: 'Monday',
+                count: 120
+            },
+            {
+                complaint: 'Tuesdey',
+                count: 52
+            },
+            {
+                complaint: 'Wednesday',
+                count: 1123
+            },
+            {
+                complaint: 'Thursday',
+                count: 321
+            },
+            {
+                complaint: 'Friday',
+                count: 89
+            },
+            {
+                complaint: 'Saturday',
+                count: 222
+            },
         ];
 
         const data = complaintsData;
@@ -88,9 +170,10 @@
             };
         });
 
-        $('#chart').dxChart({
+        $('#chart1').dxChart({
             size: {
                 height: 250
+
             },
             palette: 'Harmony Light',
             dataSource,
@@ -102,8 +185,7 @@
             tooltip: {
                 enabled: true,
             },
-            valueAxis: [
-                {
+            valueAxis: [{
                     name: 'frequency',
                     position: 'left',
                     tickInterval: 300,
@@ -148,5 +230,35 @@
                 horizontalAlignment: 'center',
             },
         });
+
+
+
+
+        $(() => {
+            $('#chart2').dxChart({
+                series: {
+                    argumentField: 'day',
+                    valueField: 'oranges',
+                    name: 'My oranges',
+                    type: 'bar',
+                    color: '#ffaa66',
+                },
+                rotated: true
+            });
+        });
+
+        $(() => {
+            $('#chart3').dxChart({
+                series: {
+                    argumentField: 'day',
+                    valueField: 'oranges',
+                    name: 'My oranges',
+                    type: 'bar',
+                    color: '#ffaa66',
+                },
+                rotated: false
+            });
+        });
+
     </script>
 @endsection
