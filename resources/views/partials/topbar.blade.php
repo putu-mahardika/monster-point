@@ -2,7 +2,7 @@
 
     {{-- Navbar Brand --}}
     <a class="navbar-brand ps-3" href="index.html">
-        <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:30px; width:auto;">
+        <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:53px; width:auto;">
     </a>
 
     {{-- Sidebar Toggle --}}

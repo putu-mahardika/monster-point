@@ -1,8 +1,18 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Detail Billing')
+
 @section('content')
 
 <div class="col-md-12">
-    <div class="card mb-4">
+    <div class="card mb-4 rounded-xxl">
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col">
@@ -74,7 +84,7 @@
                                         <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
                                     </tr>
                                 </form>
-                         
+
                             </tbody>
                         </table>
                     </div>
@@ -88,7 +98,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade rounded-xxl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">

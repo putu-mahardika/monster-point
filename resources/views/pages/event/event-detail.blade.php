@@ -1,9 +1,19 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Detail Event')
+
 @section('content')
 
 <div class="col-md-12">
-    <form action="">    
-        <div class="card mb-4">
+    <form action="">
+        <div class="card mb-4 rounded-xxl">
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col">
@@ -64,7 +74,7 @@
     </form>
 </div>
 
-  
+
   <!-- Modal -->
   <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -79,12 +89,12 @@
         </div>
         <div class="modal-header">
           <h5 class="modal-title" id="staticBackdropLabel">Result/Notes</h5>
-          
+
         </div>
         <div class="modal-body">
             <input type="text" class="form-control mb-2" placeholder="" style="height: 100px">
         </div>
-    
+
         <div class="modal-footer">
           <button type="button" class="btn btn-md rounded-xl" style="background-color:#CCCCCC; color:white" data-bs-dismiss="modal">Close</button>
         </div>

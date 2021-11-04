@@ -1,34 +1,45 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Detail Member')
+
 @section('content')
-
-<div class="col-md-12">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row mb-5">
-                <div class="col">
-                    <div class="row mb-2">
-                        <div class="col-md-2">Code</div>
-                        <div class="col-md-8"><input type="text" class="form-control" placeholder="Company Name"></i></div>
-                        <div class="col-auto"><i class="fas fa-edit"></i></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4 rounded-xxl">
+            <div class="card-body">
+                <div class="row mb-5">
+                    <div class="col">
+                        <div class="row mb-2">
+                            <div class="col-md-2">Code</div>
+                            <div class="col-md-8"><input type="text" class="form-control" placeholder="Company Name"></i></div>
+                            <div class="col-auto"><i class="fas fa-edit"></i></div>
+                        </div>
+                        <div class="row mb-2">
+                            <div class="col-md-2">Name</div>
+                            <div class="col-md-8"><input type="text" class="form-control" placeholder="150"></div>
+                            <div class="col-auto"><i class="fas fa-edit"></i></div>
+                        </div>
                     </div>
-                    <div class="row mb-2">
-                        <div class="col-md-2">Name</div>
-                        <div class="col-md-8"><input type="text" class="form-control" placeholder="150"></div>
-                        <div class="col-auto"><i class="fas fa-edit"></i></div>
+                    <div class="col">
+                        <div class="row">
+                            <div class="col-auto">Note</div>
+                            <div class="col-md-10"><textarea name="" id="" cols="10" rows="5" class="form-control" ></textarea></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row">
-                        <div class="col-auto">Note</div>
-                        <div class="col-md-10"><textarea name="" id="" cols="10" rows="5" class="form-control" ></textarea></div>
-                    </div>
-                </div>
-            </div>
 
-            {{-- Chart Area Member Point --}}
-            <div class="row mt-3 rounded-xl ">
-                <div class="col">
-                    <div id="chart"></div>
+                {{-- Chart Area Member Point --}}
+                <div class="row mt-3 rounded-xl ">
+                    <div class="col">
+                        <div id="chart"></div>
+                    </div>
                 </div>
             </div>
         </div>

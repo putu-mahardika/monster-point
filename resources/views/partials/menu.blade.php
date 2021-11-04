@@ -12,11 +12,11 @@
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/merchant')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
-                    Merchant
+                    Merchant/Member
                 </a>
                 <a class="nav-link menu-halfround active" href="{{ url('/event')}}">
                     <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
-                    Event / Formula
+                    Event/Formula
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/billing')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
