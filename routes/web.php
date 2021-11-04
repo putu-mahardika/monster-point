@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,9 +21,9 @@ Route::get('/', function () {
 Route::get('/test', function () {
     return view('/test');
 });
-// Route::get('/', function () {
-//     return view('/home');
-// });
+Route::get('/home', function () {
+    return view('/home');
+});
 Route::get('/register', function () {
     return view('register');
 });
@@ -61,6 +62,14 @@ Route::get('/member-detail', function () {
 });
 Route::get('/help', function () {
     return view('/pages/help/index');
+});
+
+Route::get('/coba', function () {
+    try {
+        DB::connection()->getPdo();
+    } catch (\Exception $e) {
+        die("Could not connect to the database.  Please check your configuration. error:" . $e );
+    }
 });
 
 

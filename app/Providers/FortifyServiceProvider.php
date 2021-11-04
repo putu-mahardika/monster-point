@@ -42,13 +42,22 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         Fortify::authenticateUsing(function ($request) {
-            dd($request);
-            $validated = Auth::validate($credentials = [
-                'email' => $request->email,
-                'password' => $request->password
-            ]);
+            // dd($request);
+            if ($request->has('remember')){
+                $validated = Auth::validate($credentials = [
+                    'email' => $request->email,
+                    'password' => $request->password
+                ]);
+                return $validated ? Auth::getProvider()->retrieveByCredentials($credentials) : null;
+            } else {
+                Auth::attempt([
+                    'email' => $request->email,
+                    'password' => $request->password
+                ]);
+
+                return Auth::user();
+            }
             // dd($validated);
-            return $validated ? Auth::getProvider()->retrieveByCredentials($credentials) : null;
         });
 
         RateLimiter::for('login', function (Request $request) {
