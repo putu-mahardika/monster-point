@@ -62,7 +62,7 @@ Route::get('/event-detail', function () {
 });
 
 Route::get('/members', function () {
-    return view('/pages/merchant-member/index');
+    return view('pages.member.index');
 });
 
 Route::get('/member-detail', function () {
