@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -29,9 +29,12 @@
                                 </div>
                             </div>
                         </footer>
-        </div>
+                    </div>
                 </div>
             </div>
+
         <script src="{{ asset('js/app.js') }}"></script>
+        @yield('js')
+
     </body>
 </html>
