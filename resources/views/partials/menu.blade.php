@@ -14,7 +14,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
                     Members
                 </a>
-                <a class="nav-link menu-halfround active" href="{{ url('/event')}}">
+                <a class="nav-link menu-halfround active" href="{{ url('/events')}}">
                     <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
                     Events
                 </a>
