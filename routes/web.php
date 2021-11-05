@@ -65,8 +65,8 @@ Route::get('/members', function () {
     return view('pages.member.index');
 });
 
-Route::get('/member-detail', function () {
-    return view('/pages/merchant-member/member-detail');
+Route::get('/members/id/detail', function () {
+    return view('pages.member.member-detail');
 });
 
 Route::get('/help', function () {

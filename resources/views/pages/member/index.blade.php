@@ -19,10 +19,10 @@
                         </div>
                         <div class="col">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xl-start border-end-0" aria-describedby="keyField">
-                                <button class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" id="keyField">
+                                <input type="text" name="key" id="key" class="form-control rounded-xl-start border-end-0">
+                                <span class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);">
                                     <i class="fas fa-pencil-alt"></i>
-                                </button>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -34,10 +34,10 @@
                         </div>
                         <div class="col">
                             <div class="input-group mb-3">
-                                <input type="text" class="form-control rounded-xl-start border-end-0" aria-describedby="startingPointField">
-                                <button class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" id="startingPointField">
+                                <input type="text" name="starting_point" id="starting_point" class="form-control rounded-xl-start border-end-0">
+                                <span class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button">
                                     <i class="fas fa-pencil-alt"></i>
-                                </button>
+                                </span>
                             </div>
                         </div>
                     </div>
