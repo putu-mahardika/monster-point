@@ -8,13 +8,6 @@
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/merchants')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
-<<<<<<< HEAD
-                    Merchant/Member
-                </a>
-                <a class="nav-link menu-halfround active" href="{{ url('/event')}}">
-                    <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
-                    Event/Formula
-=======
                     Merchants
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/members')}}">
@@ -24,7 +17,6 @@
                 <a class="nav-link menu-halfround active" href="{{ url('/event')}}">
                     <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
                     Events
->>>>>>> 61903d5d34a722ddee79456302d097c892edde2d
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/billing')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>

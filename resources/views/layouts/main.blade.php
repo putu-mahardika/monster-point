@@ -17,13 +17,8 @@
         <div id="layoutSidenav">
             @include('partials.menu')
             <div id="layoutSidenav_content">
-<<<<<<< HEAD
-                <main  style="background-color: var(--ekky-light); min-height: calc(100vh - 8.2rem);">
-                    <div class="p-3 ">
-=======
                 <main style="background-color: var(--ekky-light); min-height: calc(100vh - 8.2rem);">
                     <div class="p-3">
->>>>>>> 61903d5d34a722ddee79456302d097c892edde2d
                         @yield('content')
                     </div>
                 </main>
