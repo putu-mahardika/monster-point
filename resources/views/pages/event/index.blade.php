@@ -1,10 +1,20 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Event')
+
 @section('content')
 
 <div class="col-md-12">
-    <div class="card mb-4">
+    <div class="card mb-4 rounded-xxl">
         <div class="card-body">
-          
+
             <div class="row">
                 <div class="col">
                     <button type="button" class="btn btn-md bg-info rounded-xl me-5" href="" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -22,7 +32,7 @@
                     </select>
                 </div>
             </div>
-            
+
             {{-- Data All Company --}}
             <div class="row mt-3 rounded-xl ">
                 <div class="col">

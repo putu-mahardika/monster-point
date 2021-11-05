@@ -18,4 +18,6 @@ window.Toats = Swal.mixin({
 
 require('select2');
 require('ace-builds');
+require('cleave.js');
+require('cleave.js/dist/addons/cleave-phone.id.js');
 

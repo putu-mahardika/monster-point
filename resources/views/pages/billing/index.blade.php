@@ -1,110 +1,122 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Billing')
+
 @section('content')
-<div class="col-md-4">
-    <div class="card mb-4">
-        <div class="card-body">
-            {{-- Data Billing --}}
-            <div class="row mt-3 rounded-xl ">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md  table-hover"  style="width:100%">
-                                <tr class="bg-info" style="color:white; weight: 5px;">
-                                    <th></th>
-                                    <th>Company Name</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                
-                            
-                            </tbody>
-                        </table>
+<div class="row">
+    <div class="col-md-5">
+        <div class="card mb-4 rounded-xxl">
+            <div class="card-body">
+                {{-- Data Billing --}}
+                <div class="row mt-3 rounded-xl ">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-md  table-hover"  style="width:100%">
+                                    <tr class="bg-info" style="color:white; weight: 5px;">
+                                        <th></th>
+                                        <th>Company Name</th>
+                                        <th></th>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
+                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
+                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
+                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
+                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
+                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
+                                    </tr>
+
+
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-md-8">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row mb-2">
-                <div class="col">
-                    <b>Some Company Name</b>
+    <div class="col-md-7">
+        <div class="card mb-4 rounded-xxl">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col">
+                        <b>Some Company Name</b>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" name="" id="">
+                            <option value="">2020</option>
+                            <option value="">2021</option>
+                            <option value="">2022</option>
+                            <option value="">2023</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <select class="form-control" name="" id="">
-                        <option value="">2020</option>
-                        <option value="">2021</option>
-                        <option value="">2022</option>
-                        <option value="">2023</option>
-                    </select>
-                </div>
-            </div>
-            {{-- Data All Billing Per company --}}
-            <div class="row  mt-2 ">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md  table-hover">
-                            <tr class="bg-light">
-                                <th>Month</th>
-                                <th>Clicks</th>
-                                <th>Bill</th>
-                                <th>Date Paid</th>
-                                <th></th>
-                            </tr>
-                            <form action="" method="">
-                                <tr>
-                                    <td>January</td>
-                                    <td>1256</td>
-                                    <td>Rp 12.345.678,-</td>
-                                    <td>20 February 2020</td>
-                                    <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                {{-- Data All Billing Per company --}}
+                <div class="row  mt-2 ">
+                    <div class="col">
+                        <div class="table-responsive">
+                            <table class="table table-md  table-hover">
+                                <tr class="bg-light">
+                                    <th>Month</th>
+                                    <th>Clicks</th>
+                                    <th>Bill</th>
+                                    <th>Date Paid</th>
+                                    <th></th>
                                 </tr>
-                            </form>
-                            <form action="" method="">
-                                <tr>
-                                    <td>January</td>
-                                    <td>1256</td>
-                                    <td>Rp 12.345.678,-</td>
-                                    <td>20 February 2020</td>
-                                    <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                </tr>
-                            </form>
-                            <form action="" method="">
-                                <tr>
-                                    <td>January</td>
-                                    <td>1256</td>
-                                    <td>Rp 12.345.678,-</td>
-                                    <td>20 February 2020</td>
-                                    <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                </tr>
-                            </form>
-                        </table>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                                <form action="" method="">
+                                    <tr>
+                                        <td>January</td>
+                                        <td>1256</td>
+                                        <td>Rp 12.345.678,-</td>
+                                        <td>20 February 2020</td>
+                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
+                                    </tr>
+                                </form>
+                            </table>
+                        </div>
                     </div>
                 </div>
             </div>

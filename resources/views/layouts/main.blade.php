@@ -17,11 +17,9 @@
         <div id="layoutSidenav">
             @include('partials.menu')
             <div id="layoutSidenav_content">
-                <main  style="background-color: var(--ekky-light); min-height: calc(100vh - 8.2rem);">
-                    <div class="p-2 ">
-                        <div class="row mt-3">
-                            @yield('content')
-                        </div>
+                <main style="background-color: var(--ekky-light); min-height: calc(100vh - 8.2rem);">
+                    <div class="p-3">
+                        @yield('content')
                     </div>
                 </main>
                 <footer class="py-3 mt-auto">
