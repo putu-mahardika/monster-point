@@ -15,6 +15,7 @@
     --ekky-light: #E5E5E5;
     --ekky-box-shadow-cyan: 0 0 0 0.25rem rgba(0, 202, 238, 0.4);
     --ekky-muted-cyan: #6dbfce;
+    --ekky-light-cyan: #ccf2f8;
     --ekky-cyan: #00CAEE;
     --ekky-dark-cyan: #4db2c4;
     --ekky-darkest-cyan: #4e94a0;
@@ -13181,4 +13182,32 @@ body {
     color: var(--bs-dark);
     z-index: 11;
     left: calc(50% - 1rem);
+}
+
+.dx-datagrid-headers .dx-header-row {
+    background-color: var(--ekky-cyan);
+    color: white;
+    font-weight: 600;
+}
+
+.dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row > td:not(.dx-focused).dx-datagrid-group-space,
+.dx-rtl .dx-datagrid-rowsview .dx-selection.dx-row:hover > td:not(.dx-focused).dx-datagrid-group-space {
+    border-left-color: var(--ekky-light-cyan) !important;
+}
+
+.dx-datagrid-rowsview .dx-selection.dx-row:not(.dx-row-lines) > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:hover:not(.dx-row-lines) > td {
+    border-bottom: 1px solid var(--ekky-light-cyan) !important;
+    border-top: 1px solid var(--ekky-light-cyan) !important;
+}
+
+.dx-datagrid-rowsview .dx-selection.dx-row > td.dx-datagrid-group-space,
+.dx-datagrid-rowsview .dx-selection.dx-row:hover > td.dx-datagrid-group-space {
+    border-right-color: var(--ekky-light-cyan) !important;
+}
+
+.dx-datagrid-rowsview .dx-selection.dx-row > td,
+.dx-datagrid-rowsview .dx-selection.dx-row:hover > td {
+    background-color: var(--ekky-light-cyan) !important;
+    color: #232323 !important;
 }
