@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Auth\SocialiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,12 +25,12 @@ Route::get('/test', function () {
 Route::get('/home', function () {
     return view('/home');
 });
-Route::get('/register', function () {
-    return view('register');
-});
-Route::get('/login', function () {
-    return view('login');
-});
+// Route::get('/register', function () {
+//     return view('register');
+// });
+// Route::get('/login', function () {
+//     return view('login');
+// });
 Route::get('/email-success', function () {
     return view('email-success');
 });
@@ -63,6 +64,11 @@ Route::get('/member-detail', function () {
 Route::get('/help', function () {
     return view('/pages/help/index');
 });
+
+
+Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
+
 
 Route::get('/coba', function () {
     try {

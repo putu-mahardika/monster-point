@@ -60,6 +60,10 @@ class FortifyServiceProvider extends ServiceProvider
             // dd($validated);
         });
 
+        Fortify::registerView(function () {
+            return view('register');
+        });
+
         RateLimiter::for('login', function (Request $request) {
             return Limit::perMinute(5)->by($request->email.$request->ip());
         });
