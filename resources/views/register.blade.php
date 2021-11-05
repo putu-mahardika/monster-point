@@ -34,7 +34,7 @@
                                         <label for="merchant_name">Merchant Name</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="merchant_name" id="merchant_name" type="text" class="form-control rounded-xl" autofocus autocomplete="off">
+                                        <input name="merchant_name" id="merchant_name" type="text" class="form-control rounded-xl" autofocus autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-3">
@@ -42,15 +42,15 @@
                                         <label for="merchant_address">Address</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="merchant_address" id="merchant_address" type="text" class="form-control rounded-xl" autocomplete="off">
+                                        <input name="merchant_address" id="merchant_address" type="text" class="form-control rounded-xl" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-3">
                                     <div class="col-md-3">
-                                        <label for="merchant_pic">Peron in Charge</label>
+                                        <label for="merchant_pic">Person in Charge</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="merchant_pic" id="merchant_pic" type="text" class="form-control rounded-xl" autocomplete="off">
+                                        <input name="merchant_pic" id="merchant_pic" type="text" class="form-control rounded-xl" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-3">
@@ -58,7 +58,7 @@
                                         <label for="merchant_pic_phone">PIC Phone</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="merchant_pic_phone" id="merchant_pic_phone" type="text" class="form-control rounded-xl" autocomplete="off">
+                                        <input name="merchant_pic_phone" id="merchant_pic_phone" type="text" class="form-control rounded-xl" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-3">
@@ -66,7 +66,23 @@
                                         <label for="merchant_pic_email">Email</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="merchant_pic_email" id="merchant_pic_email" type="email" class="form-control rounded-xl" autocomplete="off">
+                                        <input name="merchant_pic_email" id="merchant_pic_email" type="email" class="form-control rounded-xl" autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-3">
+                                        <label for="merchant_pic_password">Password</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input name="merchant_pic_password" id="merchant_pic_password" type="password" class="form-control rounded-xl" autocomplete="off" required>
+                                    </div>
+                                </div>
+                                <div class="row justify-content-center mb-3">
+                                    <div class="col-md-3">
+                                        <label for="merchant_pic_confirm_password">Confirm Password</label>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <input name="merchant_pic_confirm_password" id="merchant_pic_confirm_password" type="password" class="form-control rounded-xl" autocomplete="off" required>
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-3">
@@ -74,7 +90,7 @@
                                         <label for="use_for">Use For</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="use_for" id="use_for" type="text" class="form-control rounded-xl" autocomplete="off">
+                                        <input name="use_for" id="use_for" type="text" class="form-control rounded-xl" autocomplete="off" required>
                                     </div>
                                 </div>
 
