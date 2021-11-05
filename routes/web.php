@@ -55,8 +55,12 @@ Route::get('/event', function () {
 Route::get('/event-detail', function () {
     return view('/pages/event/event-detail');
 });
-Route::get('/merchant', function () {
-    return view('/pages/merchant-member/index');
+
+Route::get('/merchants', function () {
+    return view('/pages/merchant/index');
+});
+Route::get('/members', function () {
+    return view('/pages/member/index');
 });
 Route::get('/member-detail', function () {
     return view('/pages/merchant-member/member-detail');
