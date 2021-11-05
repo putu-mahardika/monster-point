@@ -124,7 +124,7 @@
                             </div>
 
                             <p class="text-center mt-5">
-                                Already have an account? <a href="{{ url('register') }}">Log In</a>.
+                                Already have an account? <a href="{{ route('login') }}">Log In</a>.
                             </p>
                         </div>
                     </div>
