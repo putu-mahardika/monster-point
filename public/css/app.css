@@ -25338,7 +25338,7 @@ textarea.form-control-lg {
     font-weight: 400;
     line-height: 1.5;
     color: #212529;
-    background-color: var(--ekky-light);
+    background-color: var(--ekky-light-gray);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
@@ -25361,9 +25361,9 @@ textarea.form-control-lg {
 
 .form-select:focus,
 .dataTable-selector:focus {
-    border-color: #86b7fe;
+    border-color: var(--ekky-light);
     outline: 0;
-    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    box-shadow: var(--ekky-box-shadow-cyan);
 }
 
 .form-select[multiple],
@@ -35773,6 +35773,51 @@ body {
     color: #fff;
     background-color: var(--ekky-muted-cyan);
     border-color: var(--ekky-muted-cyan);
+}
+
+.btn-secondary {
+    color: var(--bs-gray-800);
+    background-color: var(--bs-gray-300);
+    border-color: var(--bs-gray-300);
+}
+
+.btn-secondary:hover {
+    color: var(--bs-gray-800);
+    background-color: var(--bs-gray-400);
+    border-color: var(--bs-gray-400);
+}
+
+.btn-check:focus+.btn-secondary,
+.btn-secondary:focus {
+    color: var(--bs-gray-800);
+    background-color: var(--bs-gray-500);
+    border-color: var(--bs-gray-500);
+    box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.5);
+}
+
+.btn-check:checked+.btn-secondary,
+.btn-check:active+.btn-secondary,
+.btn-secondary:active,
+.btn-secondary.active,
+.show>.btn-secondary.dropdown-toggle {
+    color: var(--bs-gray-800);
+    background-color: var(--bs-gray-500);
+    border-color: var(--bs-gray-500);
+}
+
+.btn-check:checked+.btn-secondary:focus,
+.btn-check:active+.btn-secondary:focus,
+.btn-secondary:active:focus,
+.btn-secondary.active:focus,
+.show>.btn-secondary.dropdown-toggle:focus {
+    box-shadow: 0 0 0 0.25rem rgba(130, 138, 145, 0.5);
+}
+
+.btn-secondary:disabled,
+.btn-secondary.disabled {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
 }
 
 .btn-facebook {
