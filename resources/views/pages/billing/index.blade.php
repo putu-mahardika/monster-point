@@ -17,43 +17,7 @@
                 {{-- Data Billing --}}
                 <div class="row mt-3 rounded-xl ">
                     <div class="col">
-                        <div class="table-responsive">
-                            <table class="table table-md  table-hover"  style="width:100%">
-                                    <tr class="bg-info" style="color:white; weight: 5px;">
-                                        <th></th>
-                                        <th>Company Name</th>
-                                        <th></th>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                        <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                    </tr>
-
-
-                                </tbody>
-                            </table>
-                        </div>
+                       <div id="merchantTable"></div>
                     </div>
                 </div>
             </div>
@@ -79,44 +43,7 @@
                 {{-- Data All Billing Per company --}}
                 <div class="row  mt-2 ">
                     <div class="col">
-                        <div class="table-responsive">
-                            <table class="table table-md  table-hover">
-                                <tr class="bg-light">
-                                    <th>Month</th>
-                                    <th>Clicks</th>
-                                    <th>Bill</th>
-                                    <th>Date Paid</th>
-                                    <th></th>
-                                </tr>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                            </table>
-                        </div>
+                       <div id="memberTable"></div>
                     </div>
                 </div>
             </div>
@@ -200,4 +127,149 @@
   </div>
 </div>
 
+@endsection
+@section('js')
+    <script>
+        const merchants = [
+            {
+                ID: 1,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            },
+            {
+                ID: 2,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            },
+            {
+                ID: 3,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            },
+            {
+                ID: 4,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            }
+        ];
+
+        const members = [
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Point: '150',
+                Link: '#'
+            },
+            {
+                ID: 2,
+                MemberName: 'John Doe',
+                Point: '150',
+                Link: '#'
+            },
+            {
+                ID: 3,
+                MemberName: 'John Doe',
+                Point: '150',
+                Link: '#'
+            },
+            {
+                ID: 4,
+                MemberName: 'John Doe',
+                Point: '150',
+                Link: '#'
+            },
+            {
+                ID: 5,
+                MemberName: 'John Doe',
+                Point: '150',
+                Link: '#'
+            }
+        ];
+        $(document).ready(() => {
+            $('#addMerchantModal').on('shown.bs.modal', function () {
+                $(this).find('#merchant_name').focus();
+            });
+
+            $('#addMemberModal').on('shown.bs.modal', function () {
+                $(this).find('#member_key').focus();
+            });
+
+            $('#merchantTable').dxDataGrid({
+                dataSource: merchants,
+                keyExpr: 'ID',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                selection: {
+                    mode: "single" // or "multiple" | "none"
+                },
+                columns: [
+                    {
+                        dataField: 'MerchantName',
+                    },
+                    {
+                        dataField: 'BussinessType',
+                    },
+                    {
+                        dataField: 'NIB',
+                        caption: 'NIB',
+                    },
+                    {
+                        dataField: 'Member',
+                        cellTemplate: memberCellTemplate,
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+                activeStateEnabled: true,
+            });
+
+            $('#memberTable').dxDataGrid({
+                dataSource: members,
+                keyExpr: 'ID',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                columns: [
+                    {
+                        caption: '#',
+                        cellTemplate: function(container, options) {
+                            container.html(`${options.row.rowIndex + 1}`);
+                        }
+                    },
+                    {
+                        dataField: 'MemberName',
+                    },
+                    {
+                        dataField: 'Point',
+                    },
+                    {
+                        dataField: 'Link',
+                        caption: '',
+                        cellTemplate: function (container, options) {
+                            container.html(`
+                                <a href="${options.value}" class="btn btn-md btn-primary rounded px-2">
+                                   Save
+                                </a>
+                            `);
+                        }
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+            });
+        });
+
+        function memberCellTemplate(container, options) {
+            container.html(`${options.value} <i class="fas fa-arrow-right ms-1"></i><i class="fas fa-chevron-right ms-5"></i>`);
+        }
+    </script>
 @endsection
