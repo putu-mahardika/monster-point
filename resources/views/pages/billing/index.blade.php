@@ -165,33 +165,57 @@
             {
                 ID: 1,
                 MemberName: 'John Doe',
-                Point: '150',
-                Link: '#'
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
             },
+
             {
-                ID: 2,
+                ID: 1,
                 MemberName: 'John Doe',
-                Point: '150',
-                Link: '#'
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
             },
+
             {
-                ID: 3,
+                ID: 1,
                 MemberName: 'John Doe',
-                Point: '150',
-                Link: '#'
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
             },
+
             {
-                ID: 4,
+                ID: 1,
                 MemberName: 'John Doe',
-                Point: '150',
-                Link: '#'
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
             },
+
             {
-                ID: 5,
+                ID: 1,
                 MemberName: 'John Doe',
-                Point: '150',
-                Link: '#'
-            }
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
         ];
         $(document).ready(() => {
             $('#addMerchantModal').on('shown.bs.modal', function () {
@@ -215,14 +239,6 @@
                         dataField: 'MerchantName',
                     },
                     {
-                        dataField: 'BussinessType',
-                    },
-                    {
-                        dataField: 'NIB',
-                        caption: 'NIB',
-                    },
-                    {
-                        dataField: 'Member',
                         cellTemplate: memberCellTemplate,
                     }
                 ],
@@ -245,17 +261,23 @@
                         }
                     },
                     {
-                        dataField: 'MemberName',
+                        dataField: 'Month',
                     },
                     {
-                        dataField: 'Point',
+                        dataField: 'Clicks',
+                    },
+                    {
+                        dataField: 'Bill',
+                    },
+                    {
+                        dataField: 'Date_Paid',
                     },
                     {
                         dataField: 'Link',
                         caption: '',
                         cellTemplate: function (container, options) {
                             container.html(`
-                                <a href="${options.value}" class="btn btn-md btn-primary rounded px-2">
+                                <a href="${options.value}" type="submit" class="btn btn-sm btn-primary rounded-xl px-2">
                                    Save
                                 </a>
                             `);
@@ -269,7 +291,7 @@
         });
 
         function memberCellTemplate(container, options) {
-            container.html(`${options.value} <i class="fas fa-arrow-right ms-1"></i><i class="fas fa-chevron-right ms-5"></i>`);
+            container.html(`${options.value}<i class="fas fa-chevron-right ms-5"></i>`);
         }
     </script>
 @endsection
