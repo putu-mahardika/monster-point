@@ -7,7 +7,7 @@
 
 @endsection
 
-@section('title', 'Billing')
+@section('title', 'Help')
 
 @section('content')
 <div class="row">
@@ -59,12 +59,15 @@
                         </div>
                     </div>
 
-                    <div class="vr"></div>
-
-                    <div class="col p-3 ">
+                    <div class="col p-3 border-start">
                         <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
-                            <h4 id="item-1">Create Daily Point</h4>
-                             <textarea class="form-control rounded-xxl" id="editor-area" cols="50" name="" rows="10"></textarea>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="border rounded-xl" id="formulaContainer">
+                                        <span class="d-block text-center py-3">Please Wait...</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
@@ -77,12 +80,16 @@
 @endsection
 @section('js')
 <script>
+     $(document).ready(() => {
+            $('#formulaContainer').html(`<textarea name="event_formula" id="event_formula" cols="30" rows="3"></textarea>`);
+            eventFormula = CodeMirror.fromTextArea(document.getElementById('event_formula'), {
+                lineNumbers: true,
+                mode: "sql",
+                theme: "dracula"
+            });
+            eventFormula.setSize('100%', '10rem');
 
-    var myCodeMirror = CodeMirror(document.getElementById('editor-area'), {
-        mode:  "text",
-        theme: "dracula",
-        readonly: true,
-    });
-    myCodeMirror.setSize("100%", "10rem");
+        });
+
 </script>
 @endsection

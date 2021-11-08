@@ -215,6 +215,7 @@
             eventFormula = CodeMirror.fromTextArea(document.getElementById('event_formula'), {
                 lineNumbers: true,
                 mode: "sql",
+                theme: "dracula"
             });
             eventFormula.setSize('100%', '10rem');
 
