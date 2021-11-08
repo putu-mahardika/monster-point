@@ -58,12 +58,13 @@
                             <p>...</p>
                         </div>
                     </div>
-                    <div class="vr"></div>
-                    <div class="col p-3">
-                        <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
-                            <h4 id="item-1">Item 1</h4>
-                            <p>Code Mirror here</p>
 
+                    <div class="vr"></div>
+
+                    <div class="col p-3 ">
+                        <div data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
+                            <h4 id="item-1">Create Daily Point</h4>
+                             <textarea class="form-control rounded-xxl" id="editor-area" cols="50" name="" rows="10"></textarea>
                         </div>
                     </div>
 
@@ -75,4 +76,13 @@
 
 @endsection
 @section('js')
+<script>
+
+    var myCodeMirror = CodeMirror(document.getElementById('editor-area'), {
+        mode:  "text",
+        theme: "dracula",
+        readonly: true,
+    });
+    myCodeMirror.setSize("100%", "10rem");
+</script>
 @endsection
