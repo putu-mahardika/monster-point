@@ -50,9 +50,12 @@
                     <hr class="dropdown-divider" />
                 </li>
                 <li>
-                    <a class="dropdown-item text-danger" href="{{ url('login')}}">
+                    <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt me-1"></i> Logout
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </li>
