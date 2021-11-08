@@ -1,84 +1,147 @@
 @extends('layouts.main')
-@section('content')
+@section('meta')
 
-<div class="col-md-12">
-    <div class="card mb-4">
-        <div class="card-body">
-          
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Events')
+
+@section('content')
+    <div class="card rounded-xxl">
+        <div class="card-body" style="min-height: calc(100vh - 10.3rem);">
+            <div class="d-flex mb-3">
+                <a href="#" class="btn btn-primary rounded-xxl">
+                    New Event <i class="fas fa-plus ms-2"></i>
+                </a>
+            </div>
+
             <div class="row">
                 <div class="col">
-                    <button type="button" class="btn btn-md bg-info rounded-xl me-5" href="" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                   New Event <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                <div class="col-auto">
-                    <i class="fas fa-sort-amount-down"></i>
-                </div>
-                <div class="col-md-4">
-                    <select class="form-control" name="function" id="function">
-                        <option value=""> Function </option>
-                        <option value="">a</option>
-                        <option value="">a</option>
-                    </select>
-                </div>
-            </div>
-            
-            {{-- Data All Company --}}
-            <div class="row mt-3 rounded-xl ">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md table-hover"  style="width:100%">
-                            <tr class="bg-info" style="color:white; weight: 5px;">
-                                <th>Code</th>
-                                <th>Event</th>
-                                <th>Formula</th>
-                                <th>Daily/Once</th>
-                                <th>Delay Lock</th>
-                                <th>Notes</th>
-                                <th></th>
-                            </tr>
-                            <tr>
-                                <td>PB_POINT01</td>
-                                <td>Event_Buy_01</td>
-                                <td>formula.buy.point.something.somecodeoverhere.</td>
-                                <td>Daily</td>
-                                <td>Yes</td>
-                                <td>Note for the event and formula</td>
-                                <td><a href="{{ url('/event-detail') }}"><i class="fas fa-ellipsis-v"></i></a></td>
-                            </tr>
-                            <tr>
-                                <td>PB_POINT01</td>
-                                <td>Event_Buy_01</td>
-                                <td>formula.buy.point.something.somecodeoverhere.</td>
-                                <td>Daily</td>
-                                <td>Yes</td>
-                                <td>Note for the event and formula</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                            <tr>
-                                <td>PB_POINT01</td>
-                                <td>Event_Buy_01</td>
-                                <td>formula.buy.point.something.somecodeoverhere.</td>
-                                <td>Daily</td>
-                                <td>Yes</td>
-                                <td>Note for the event and formula</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                            <tr>
-                                <td>PB_POINT01</td>
-                                <td>Event_Buy_01</td>
-                                <td>formula.buy.point.something.somecodeoverhere.</td>
-                                <td>Daily</td>
-                                <td>Yes</td>
-                                <td>Note for the event and formula</td>
-                                <td><i class="fas fa-ellipsis-v"></i></td>
-                            </tr>
-                    </table>
-                    </div>
+                    <div id="eventTable"></div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+@endsection
 
+@section('modal')
+
+@endsection
+
+@section('js')
+    <script>
+        const events = [
+            {
+                Code: 'AAA',
+                Event: 'Event 1',
+                Formula: 'formula.buy.point.something<somecodeoverhere?>',
+                Type: 'Daily',
+                DelayLock: 'Yes',
+                Note: 'Dolore anim adipisicing in consequat est.',
+                Link: '#'
+            },
+            {
+                Code: 'AAB',
+                Event: 'Event 2',
+                Formula: 'formula.buy.point.something<somecodeoverhere?>',
+                Type: 'Daily',
+                DelayLock: 'Yes',
+                Note: 'Dolore anim adipisicing in consequat est.',
+                Link: '#'
+            },
+            {
+                Code: 'AAC',
+                Event: 'Event 3',
+                Formula: 'formula.buy.point.something<somecodeoverhere?>',
+                Type: 'Daily',
+                DelayLock: 'Yes',
+                Note: 'Dolore anim adipisicing in consequat est.',
+                Link: '#'
+            },
+            {
+                Code: 'ABA',
+                Event: 'Event 4',
+                Formula: 'formula.buy.point.something<somecodeoverhere?>',
+                Type: 'Daily',
+                DelayLock: 'Yes',
+                Note: 'Dolore anim adipisicing in consequat est.',
+                Link: '#'
+            },
+            {
+                Code: 'ABB',
+                Event: 'Event 5',
+                Formula: 'formula.buy.point.something<somecodeoverhere?>',
+                Type: 'Daily',
+                DelayLock: 'Yes',
+                Note: 'Dolore anim adipisicing in consequat est.',
+                Link: '#'
+            },
+            {
+                Code: 'ABC',
+                Event: 'Event 6',
+                Formula: 'formula.buy.point.something<somecodeoverhere?>',
+                Type: 'Daily',
+                DelayLock: 'Yes',
+                Note: 'Dolore anim adipisicing in consequat est.',
+                Link: '#'
+            },
+        ];
+
+        $(document).ready(() => {
+            $('#addEventModal').on('shown.bs.modal', function () {
+                $(this).find('#member_key').focus();
+            });
+
+            $('#eventTable').dxDataGrid({
+                dataSource: events,
+                keyExpr: 'Code',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                columns: [
+                    {
+                        caption: '#',
+                        cellTemplate: function(container, options) {
+                            container.html(`${options.row.rowIndex + 1}`);
+                        }
+                    },
+                    {
+                        dataField: 'Code',
+                    },
+                    {
+                        dataField: 'Event',
+                    },
+                    {
+                        dataField: 'Formula'
+                    },
+                    {
+                        dataField: 'Type',
+                        caption: 'Daily/Once'
+                    },
+                    {
+                        dataField: 'DelayLock'
+                    },
+                    {
+                        dataField: 'Note'
+                    },
+                    {
+                        dataField: 'Link',
+                        caption: '',
+                        cellTemplate: function (container, options) {
+                            container.html(`
+                                <a href="${options.value}" class="text-dark text-decoration-none px-2">
+                                    <i class="fas fa-ellipsis-v"></i>
+                                </a>
+                            `);
+                        }
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+            });
+        });
+    </script>
 @endsection

@@ -3,9 +3,9 @@
     * Copyright 2013-2021 Start Bootstrap
     * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
     */
-    // 
+    //
 // Scripts
-// 
+//
 
 window.addEventListener('DOMContentLoaded', event => {
 
@@ -22,5 +22,14 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
+});
 
+let formControlElements = $('.form-control');
+jQuery.each(formControlElements, (index, element) => {
+    if ($(element).prop('required')) {
+        let label = $(`label[for='${element.id}']`);
+        if (label) {
+            label.append(`<span class="text-danger">*</span>`);
+        }
+    }
 });

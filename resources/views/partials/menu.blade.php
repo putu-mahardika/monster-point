@@ -6,25 +6,25 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-home"></i></div>
                     Dashboard
                 </a>
-                <a class="nav-link menu-halfround" href="{{ url('/company')}}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-building"></i></div>
-                    Company
-                </a>
-                <a class="nav-link menu-halfround" href="{{ url('/merchant')}}">
+                <a class="nav-link menu-halfround" href="{{ url('/merchants')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-store"></i></div>
-                    Merchant
+                    Merchants
                 </a>
-                <a class="nav-link menu-halfround active" href="{{ url('/event')}}">
+                <a class="nav-link menu-halfround" href="{{ url('/members')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-users"></i></div>
+                    Members
+                </a>
+                <a class="nav-link menu-halfround active" href="{{ url('/events')}}">
                     <div class="sb-nav-link-icon"><i class="fa fa-calculator" aria-hidden="true"></i></div>
-                    Event / Formula
+                    Events
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/billing')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
-                    Billing
+                    Billings
                 </a>
                 <a class="nav-link menu-halfround" href="{{ url('/help')}}">
                     <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
-                    Help
+                    Helps
                 </a>
             </div>
         </div>

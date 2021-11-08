@@ -1,110 +1,49 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Billing')
+
 @section('content')
-<div class="col-md-4">
-    <div class="card mb-4">
-        <div class="card-body">
-            {{-- Data Billing --}}
-            <div class="row mt-3 rounded-xl ">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md  table-hover"  style="width:100%">
-                                <tr class="bg-info" style="color:white; weight: 5px;">
-                                    <th></th>
-                                    <th>Company Name</th>
-                                    <th></th>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                <tr>
-                                    <td>1</td>
-                                    <td> <a href="{{ url('/billing-company') }}">Some Company Name</a></td>
-                                    <td>5 <i class="fas fa-angle-right ml-3"></i></td>
-                                </tr>
-                                
-                            
-                            </tbody>
-                        </table>
+<div class="row">
+    <div class="col-md-5">
+        <div class="card mb-4 rounded-xxl">
+            <div class="card-body">
+                {{-- Data Billing --}}
+                <div class="row mt-3 rounded-xl ">
+                    <div class="col">
+                       <div id="merchantTable"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<div class="col-md-8">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="row mb-2">
-                <div class="col">
-                    <b>Some Company Name</b>
+    <div class="col-md-7">
+        <div class="card mb-4 rounded-xxl">
+            <div class="card-body">
+                <div class="row mb-2">
+                    <div class="col">
+                        <b>Some Company Name</b>
+                    </div>
+                    <div class="col-md-4">
+                        <select class="form-control" name="" id="">
+                            <option value="">2020</option>
+                            <option value="">2021</option>
+                            <option value="">2022</option>
+                            <option value="">2023</option>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <select class="form-control" name="" id="">
-                        <option value="">2020</option>
-                        <option value="">2021</option>
-                        <option value="">2022</option>
-                        <option value="">2023</option>
-                    </select>
-                </div>
-            </div>
-            {{-- Data All Billing Per company --}}
-            <div class="row  mt-2 ">
-                <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md  table-hover">
-                            <tr class="bg-light">
-                                <th>Month</th>
-                                <th>Clicks</th>
-                                <th>Bill</th>
-                                <th>Date Paid</th>
-                                <th></th>
-                            </tr>
-                            <form action="" method="">
-                                <tr>
-                                    <td>January</td>
-                                    <td>1256</td>
-                                    <td>Rp 12.345.678,-</td>
-                                    <td>20 February 2020</td>
-                                    <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                </tr>
-                            </form>
-                            <form action="" method="">
-                                <tr>
-                                    <td>January</td>
-                                    <td>1256</td>
-                                    <td>Rp 12.345.678,-</td>
-                                    <td>20 February 2020</td>
-                                    <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                </tr>
-                            </form>
-                            <form action="" method="">
-                                <tr>
-                                    <td>January</td>
-                                    <td>1256</td>
-                                    <td>Rp 12.345.678,-</td>
-                                    <td>20 February 2020</td>
-                                    <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                </tr>
-                            </form>
-                        </table>
+                {{-- Data All Billing Per company --}}
+                <div class="row  mt-2 ">
+                    <div class="col">
+                       <div id="memberTable"></div>
                     </div>
                 </div>
             </div>
@@ -188,4 +127,171 @@
   </div>
 </div>
 
+@endsection
+@section('js')
+    <script>
+        const merchants = [
+            {
+                ID: 1,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            },
+            {
+                ID: 2,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            },
+            {
+                ID: 3,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            },
+            {
+                ID: 4,
+                MerchantName: 'PT. Something Big',
+                BussinessType: 'Franchise',
+                NIB: '123.123.456.456',
+                Member: 5
+            }
+        ];
+
+        const members = [
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+        ];
+        $(document).ready(() => {
+            $('#addMerchantModal').on('shown.bs.modal', function () {
+                $(this).find('#merchant_name').focus();
+            });
+
+            $('#addMemberModal').on('shown.bs.modal', function () {
+                $(this).find('#member_key').focus();
+            });
+
+            $('#merchantTable').dxDataGrid({
+                dataSource: merchants,
+                keyExpr: 'ID',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                selection: {
+                    mode: "single" // or "multiple" | "none"
+                },
+                columns: [
+                    {
+                        dataField: 'MerchantName',
+                    },
+                    {
+                        cellTemplate: memberCellTemplate,
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+                activeStateEnabled: true,
+            });
+
+            $('#memberTable').dxDataGrid({
+                dataSource: members,
+                keyExpr: 'ID',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                columns: [
+                    {
+                        caption: '#',
+                        cellTemplate: function(container, options) {
+                            container.html(`${options.row.rowIndex + 1}`);
+                        }
+                    },
+                    {
+                        dataField: 'Month',
+                    },
+                    {
+                        dataField: 'Clicks',
+                    },
+                    {
+                        dataField: 'Bill',
+                    },
+                    {
+                        dataField: 'Date_Paid',
+                    },
+                    {
+                        dataField: 'Link',
+                        caption: '',
+                        cellTemplate: function (container, options) {
+                            container.html(`
+                                <a href="${options.value}" type="submit" class="btn btn-sm btn-primary rounded-xl px-2">
+                                   Save
+                                </a>
+                            `);
+                        }
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+            });
+        });
+
+        function memberCellTemplate(container, options) {
+            container.html(`${options.value}<i class="fas fa-chevron-right ms-5"></i>`);
+        }
+    </script>
 @endsection

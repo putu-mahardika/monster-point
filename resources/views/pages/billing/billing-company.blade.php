@@ -1,8 +1,18 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Detail Billing')
+
 @section('content')
 
 <div class="col-md-12">
-    <div class="card mb-4">
+    <div class="card mb-4 rounded-xxl">
         <div class="card-body">
             <div class="row mb-2">
                 <div class="col">
@@ -20,64 +30,7 @@
             {{-- Data All Billing Per company --}}
             <div class="row  mt-2 ">
                 <div class="col">
-                    <div class="table-responsive">
-                        <table class="table table-md  table-hover">
-                                <tr class="bg-light">
-                                    <th>Month</th>
-                                    <th>Clicks</th>
-                                    <th>Bill</th>
-                                    <th>Date Paid</th>
-                                    <th></th>
-                                </tr>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                                <form action="" method="">
-                                    <tr>
-                                        <td>January</td>
-                                        <td>1256</td>
-                                        <td>Rp 12.345.678,-</td>
-                                        <td>20 February 2020</td>
-                                        <td><button class="btn btn-md bg-info rounded-xl" style="color:white" type="submit">Save</button></td>
-                                    </tr>
-                                </form>
-                         
-                            </tbody>
-                        </table>
-                    </div>
+                    <div id="memberTable"></div>
                 </div>
             </div>
         </div>
@@ -88,7 +41,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade rounded-xxl" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -155,9 +108,123 @@
                 </div>
             </div>
       </div>
-
     </div>
   </div>
 </div>
 
+@endsection
+
+@section('js')
+    <script>
+                const members = [
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+            {
+                ID: 1,
+                MemberName: 'John Doe',
+                Month: 'Desember',
+                Clicks: '1550',
+                Bill: 'Rp 1.550.000',
+                Date_Paid: '21 December 2021'
+            },
+
+        ];
+        $(document).ready(() => {
+            $('#addMerchantModal').on('shown.bs.modal', function () {
+                $(this).find('#merchant_name').focus();
+            });
+
+            $('#addMemberModal').on('shown.bs.modal', function () {
+                $(this).find('#member_key').focus();
+            });
+
+            $('#memberTable').dxDataGrid({
+                dataSource: members,
+                keyExpr: 'ID',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                columns: [
+                    {
+                        caption: '#',
+                        cellTemplate: function(container, options) {
+                            container.html(`${options.row.rowIndex + 1}`);
+                        }
+                    },
+                    {
+                        dataField: 'Month',
+                    },
+                    {
+                        dataField: 'Clicks',
+                    },
+                    {
+                        dataField: 'Bill',
+                    },
+                    {
+                        dataField: 'Date_Paid',
+                    },
+                    {
+                        dataField: 'Link',
+                        caption: '',
+                        cellTemplate: function (container, options) {
+                            container.html(`
+                                <a href="${options.value}" type="submit" class="btn btn-sm btn-primary rounded-xl px-2">
+                                   Save
+                                </a>
+                            `);
+                        }
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+            });
+        });
+
+        function memberCellTemplate(container, options) {
+            container.html(`${options.value}<i class="fas fa-chevron-right ms-5"></i>`);
+        }
+    </script>
 @endsection

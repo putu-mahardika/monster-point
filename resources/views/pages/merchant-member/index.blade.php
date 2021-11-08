@@ -1,8 +1,17 @@
 @extends('layouts.main')
+@section('meta')
+
+@endsection
+
+@section('css')
+
+@endsection
+
+@section('title', 'Merchant')
 @section('content')
 
 <div class="col-md-12">
-    <div class="card mb-4">
+    <div class="card mb-4 rounded-xxl">
         <div class="card-body">
             <div class="row mb-5">
                     <div class="col">
@@ -33,14 +42,14 @@
                     <input type="text" class=" form-control " placeholder="Point">
                 </div>
             </div>
-            
+
             {{-- Data All Company --}}
             <div class="row mt-3 rounded-xl ">
                 <div class="col">
                     <div class="table-responsive">
                         <table class="table table-md table-hover"  style="width:100%">
                             <tr class="bg-info" style="color:white; weight: 5px;">
-                                
+
                                 <th>Key</th>
                                 <th>Name</th>
                                 <th>Point</th>
@@ -85,7 +94,7 @@
                                 <td>Any note for the member</td>
                                 <td><i class="fas fa-ellipsis-v"></i></td>
                             </tr>
-                            
+
                             <tr>
                                 <td>AB001</td>
                                 <td>Jhon Doe</td>

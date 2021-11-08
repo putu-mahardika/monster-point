@@ -72,19 +72,19 @@
 
                             {{-- Socialite --}}
                             <div class="d-flex justify-content-center mt-4">
-                                <button class="btn btn-facebook rounded-pill mx-1">
+                                <a class="btn btn-facebook rounded-pill mx-1" href="{{ url('/auth/facebook') }}">
                                     <i class="fab fa-facebook-f"></i>
-                                </button>
-                                <button class="btn btn-google rounded-pill mx-1">
+                                </a>
+                                <a class="btn btn-google rounded-pill mx-1" href="{{ url('/auth/google') }}">
                                     <i class="fab fa-google"></i>
-                                </button>
-                                <button class="btn btn-github rounded-pill mx-1">
+                                </a>
+                                <button class="btn btn-github rounded-pill mx-1" href="{{ url('/auth/github') }}">
                                     <i class="fab fa-github"></i>
                                 </button>
                             </div>
 
                             <p class="text-center mt-5">
-                                Don't have an account? <a href="{{ url('register') }}">Sign Up</a> now.
+                                Don't have an account? <a href="{{ route('register') }}">Sign Up</a> now.
                             </p>
                         </div>
                     </div>

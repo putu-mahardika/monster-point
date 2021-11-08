@@ -2,7 +2,7 @@
 
     {{-- Navbar Brand --}}
     <a class="navbar-brand ps-3" href="index.html">
-        <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:30px; width:auto;">
+        <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:53px; width:auto;">
     </a>
 
     {{-- Sidebar Toggle --}}
@@ -50,9 +50,12 @@
                     <hr class="dropdown-divider" />
                 </li>
                 <li>
-                    <a class="dropdown-item text-danger" href="{{ url('login')}}">
+                    <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt me-1"></i> Logout
                     </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
                 </li>
             </ul>
         </li>
