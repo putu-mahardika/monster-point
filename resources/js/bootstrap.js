@@ -17,7 +17,9 @@ window.Toats = Swal.mixin({
 });
 
 require('select2');
-require('ace-builds');
+window.CodeMirror = require('codemirror');
+require('codemirror/mode/javascript/javascript.js');
+require('codemirror/mode/sql/sql.js');
 require('cleave.js');
 require('cleave.js/dist/addons/cleave-phone.id.js');
 

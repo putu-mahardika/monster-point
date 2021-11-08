@@ -49,11 +49,13 @@ Route::get('/company', function () {
 Route::get('/dashboard', function () {
     return view('/pages/dashboard/index');
 });
-Route::get('/event', function () {
-    return view('/pages/event/index');
+
+Route::get('/events', function () {
+    return view('pages.event.index');
 });
-Route::get('/event-detail', function () {
-    return view('/pages/event/event-detail');
+
+Route::get('/events/id/detail', function () {
+    return view('pages.event.event-detail');
 });
 
 Route::get('/merchants', function () {
