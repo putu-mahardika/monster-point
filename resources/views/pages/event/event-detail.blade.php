@@ -73,6 +73,7 @@
 
                 <div class="row mb-3">
                     <div class="col">
+                        <label for="event_formula">Formula<span class="text-danger">*</span></label>
                         <div class="border rounded-xl" id="formulaContainer">
                             <span class="d-block text-center py-3">Please Wait...</span>
                         </div>
@@ -96,7 +97,9 @@
                         </div>
                     </div>
                     <div class="col-md-6 mb-3">
-                        <textarea class="form-control rounded-xl" name="example" id="example" cols="30" rows="7" style="resize: none; width:100%; background-color: var(--ekky-light-gray)" disabled></textarea>
+                        <div class="border rounded-xl" id="exampleContainer">
+                            <span class="d-block text-center py-3">Please Wait...</span>
+                        </div>
                     </div>
                 </div>
 
@@ -161,81 +164,71 @@
 @section('js')
     <script>
         let eventFormula = null;
-        let tempList = null;
-        let formulas = [
-            {
-                index: 0,
-                name: "SUM",
-                expr: "SUM()",
-                example: "SUM([1, 2, 3, 4, 5])",
-            },
-            {
-                index: 1,
-                name: "AVG",
-                expr: "AVG()",
-                example: "AVG([1, 2, 3, 4, 5])",
-            },
-            {
-                index: 2,
-                name: "SUBSTRACT",
-                expr: "SUBSTRACT()",
-                example: "SUBSTRACT([1, 2, 3, 4, 5])",
-            },
-            {
-                index: 3,
-                name: "COUNT",
-                expr: "COUNT()",
-                example: "COUNT([1, 2, 3, 4, 5])",
-            },
-            {
-                index: 4,
-                name: "MAX",
-                expr: "MAX()",
-                example: "MAX([1, 2, 3, 4, 5])",
-            },
-            {
-                index: 5,
-                name: "MIN",
-                expr: "MIN()",
-                example: "MIN([1, 2, 3, 4, 5])",
-            }
-        ]
+        let eventExample = null;
 
         function loadFormula(search = '') {
             let list = '';
+            let index = 0;
             formulas.forEach(formula => {
-                list += `<li data-index="${formula.index}" class="list-group-item">${formula.name}</li>`;
+                if (search.length > 0) {
+                    if (formula.name.indexOf(search.toUpperCase()) >= 0) {
+                        list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
+                    }
+                }
+                else {
+                    list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
+                }
+                index++;
             });
             $('#formulaList').html(list);
-            tempList = $('ul#formulaList li');
-        }
 
-        $(document).ready(() => {
-            $('#formulaContainer').html(`<textarea name="event_formula" id="event_formula" cols="30" rows="3"></textarea>`);
-            eventFormula = CodeMirror.fromTextArea(document.getElementById('event_formula'), {
-                lineNumbers: true,
-                mode: "sql",
-            });
-            eventFormula.setSize('100%', '10rem');
-
-            loadFormula();
             $('ul#formulaList li').on('click', function () {
                 let index = $(this).data('index');
-                $.each(tempList, (index, el) => {
-                    $(el).removeClass('is-active');
+                $('ul#formulaList li').each((index, element) => {
+                    $(element).removeClass('is-active');
                 });
                 $(this).addClass('is-active');
-                $('#example').text(formulas[index].example);
+                eventExample.setValue(formulas[index].example);
             });
 
             $('ul#formulaList li').on('dblclick', function () {
                 let index = $(this).data('index');
                 eventFormula.setValue(
-                    eventFormula.getValue() + formulas[index].expr
+                    eventFormula.getValue() + formulas[index].expression
                 );
                 eventFormula.focus();
             });
+        }
 
+        $(document).ready(() => {
+            $('#formulaContainer').html(`<textarea name="event_formula" id="event_formula" cols="30" rows="3" required></textarea>`);
+            eventFormula = CodeMirror.fromTextArea(document.getElementById('event_formula'), {
+                lineNumbers: true,
+                mode: 'text/monsterpoint',
+            });
+            eventFormula.setSize('100%', '10rem');
+            eventFormula.on('focus', () => {
+                $('#formulaContainer').attr('style', 'box-shadow: var(--ekky-box-shadow-cyan);');
+            });
+            eventFormula.on('blur', () => {
+                $('#formulaContainer').attr('style', '');
+            });
+
+            $('#exampleContainer').html(`<textarea name="example" id="example" cols="30" rows="3"></textarea>`);
+            eventExample = CodeMirror.fromTextArea(document.getElementById('example'), {
+                lineNumbers: true,
+                mode: 'text/monsterpoint',
+                readOnly: 'nocursor',
+            });
+            eventExample.setSize('100%', '10rem');
+
+            loadFormula();
+
+            $('#searchFormula').on('keyup', function () {
+                loadFormula(
+                    $(this).val()
+                );
+            });
         });
     </script>
 @endsection
