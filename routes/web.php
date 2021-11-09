@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\GreetingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,7 @@ Route::get('/help', function () {
 
 Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
+Route::get('/greet', [SocialiteController::class, 'greet']);
 
 
 Route::get('/coba', function () {
@@ -84,4 +86,5 @@ Route::get('/coba', function () {
     }
 });
 
-
+//riset swagger
+Route::get('/greets', [GreetingController::class, 'greets']);
