@@ -10,16 +10,13 @@
 @endsection
 
 @section('content')
-{{-- @for ($val = 0; $val < count($merchant); $val++)
-    <input type="hidden" id="id" data-id="{{ $merchant[$val] }}">
-@endfor --}}
     <div class="row">
         <div class="col-md-8">
             <div class="card rounded-xxl">
                 <div class="card-body" style="min-height: calc(100vh - 10.3rem);">
                     <div class="row mb-3">
                         <div class="col">
-                            <button type="button" id="create" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMerchantModal">
+                            <button type="button" id="create" class="btn btn-primary rounded-xxl">
                                 Add Merchant <i class="fas fa-plus ms-3"></i>
                             </button>
                         </div>
@@ -119,42 +116,52 @@
         let merchantPicPhone = null;
         let submitted = false;
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        const merchants = [
-            {
-                ID: 1,
-                MerchantName: 'PT. Something Big',
-                BussinessType: 'Franchise',
-                NIB: '123.123.456.456',
-                Member: 5
-            },
-            {
-                ID: 2,
-                MerchantName: 'PT. Something Big',
-                BussinessType: 'Franchise',
-                NIB: '123.123.456.456',
-                Member: 5
-            },
-            {
-                ID: 3,
-                MerchantName: 'PT. Something Big',
-                BussinessType: 'Franchise',
-                NIB: '123.123.456.456',
-                Member: 5
-            },
-            {
-                ID: 4,
-                MerchantName: 'PT. Something Big',
-                BussinessType: 'Franchise',
-                NIB: '123.123.456.456',
-                Member: 5
-            }
-        ];
+        function getDataMerchant() {
+            $('#merchantTable').dxDataGrid({
+                dataSource: `{{ route('merchants.index') }}`,
+                keyExpr: 'Id',
+                columnAutoWidth: true,
+                hoverStateEnabled: true,
+                selection: {
+                    mode: "single" // or "multiple" | "none"
+                },
+                columns: [
+                    {
+                        caption: 'No',
+                        width: 40,
+                        cellTemplate: function(container, options) {
+                            container.html(`${options.row.rowIndex + 1}`);
+                        }
+                    },
+                    {
+                        dataField: 'Nama',
+                    },
+                    {
+                        dataField: 'Alamat',
+                    },
+                    {
+                        dataField: 'Pic',
+                    },
+                    {
+                        dataField: 'PicTelp',
+                    },
+                    {
+                        dataField: 'Email',
+                    },
+                    {
+                        dataField: 'Kebutuhan',
+                    },
+                    {
+                        dataField: 'Id',
+                        cellTemplate: memberCellTemplate,
+                    }
+                ],
+                showBorders: false,
+                showColumnLines: false,
+                showRowLines: true,
+                activeStateEnabled: true,
+            }).dxDataGrid('instance').refresh();
+        }
 
         const members = [
             {
@@ -191,7 +198,7 @@
 
         $(document).ready(() => {
             $('#myCollapsible').on('shown.bs.collapse', function () {
-                $('.collapse').collapse()
+                $('.collapse').collapse();
                 console.log('test');
             })
 
@@ -204,56 +211,6 @@
             });
 
             getDataMerchant();
-            function getDataMerchant() {
-                $('#merchantTable').dxDataGrid({
-                    dataSource: `{{ route('getdata.merchant') }}`,
-                    keyExpr: 'Id',
-                    columnAutoWidth: true,
-                    hoverStateEnabled: true,
-                    selection: {
-                        mode: "single" // or "multiple" | "none"
-                    },
-                    columns: [
-                        {
-                            caption: 'No',
-                            width: 40,
-                            cellTemplate: function(container, options) {
-                                container.html(`${options.row.rowIndex + 1}`);
-                            }
-                        },
-                        {
-                            dataField: 'Nama',
-                        },
-                        {
-                            dataField: 'Alamat',
-                        },
-                        {
-                            dataField: 'Pic',
-                        },
-                        {
-                            dataField: 'PicTelp',
-                        },
-                        {
-                            dataField: 'Email',
-                        },
-                        {
-                            dataField: 'Kebutuhan',
-                        },
-                        // {
-                        //     dataField: 'NIB',
-                        //     caption: 'NIB',
-                        // },
-                        {
-                            dataField: 'Id',
-                            cellTemplate: memberCellTemplate,
-                        }
-                    ],
-                    showBorders: false,
-                    showColumnLines: false,
-                    showRowLines: true,
-                    activeStateEnabled: true,
-                }).dxDataGrid('instance').refresh();
-            }
 
             $('#memberTable').dxDataGrid({
                 dataSource: members,
@@ -291,15 +248,14 @@
             });
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Call modal Create Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             $(document).on('click', '#create', function () {
-                // $('.editorassets').find('form')[0].reset();
-                $.get('{{ route("editor.merchant") }}', function(data) {
+                $.get('{{ route("merchants.create") }}', function(data) {
                     $('.modalMerchant').find('.modal-content').html(data);
                     $('.modalMerchant').modal('show');
+                    showRedStarRequired();
                 });
             });
 
             $('.modalMerchant').on('hidden.bs.modal', function (event) {
-                console.log('cek');
                 if (submitted) {
                     getDataMerchant();
                     submitted = false;
@@ -314,55 +270,57 @@
                 $.get(`{{ route("merchants.index") }}/${merchant_id}/edit`, function(data) {
                     $('.modalMerchant').find('.modal-content').html(data);
                     $('.modalMerchant').modal('show');
+                    showRedStarRequired();
                 });
             });
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Edit Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        });
 
-            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-            $(document).on('click', '#delete', function() {
-                let merchant_id = $(this).attr('data-id');
-                let url = '{{ route("delete.merchant") }}';
-                Swal.fire({
-                    title: 'Are you sure?',
-                    html: 'You want to <b>delete</b> this Merchant',
-                    showCancelButton: true,
-                    showCloseButton: true,
-                    cancelButtonText: 'Cancel',
-                    confirmButtonText: 'Yes, Delete',
-                    cancelButtonColor: '#0d6efd',
-                    confirmButtonColor: '#d33',
-                    width: 300,
-                    allowOutsideClick: false
-                }).then(function(result) {
-                    if (result.value) {
-                        $.post(url, {merchant_id: merchant_id}, function(data) {
-                            if (data.code == 1) {
+        function memberCellTemplate(container, options) {
+            container.html(`
+                <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="edit">
+                    <i class="fas fa-pencil-alt fa-sm"></i>
+                </button>
+                <button onclick="deleteMerchant(${options.value})" class="btn btn-danger btn-sm rounded-xxl">
+                    <i class="fas fa-trash-alt fa-sm"></i>
+                </button>
+            `);
+        }
+
+        function deleteMerchant(id) {
+            Swal.fire({
+                title: 'Do you want to delete this merchant?',
+                showCancelButton: true,
+                showConfirmButton: false,
+                showDenyButton: true,
+                denyButtonText: 'Delete this merchant',
+                cancelButtonText: `No!`,
+            }).then((result) => {
+                if (result.isDenied) {
+                    $.ajax({
+                        url: `{{ route('merchants.index') }}/${id}`,
+                        type: "DELETE",
+                        data: {},
+                        success: (res) => {
+                            if (res.code == 1) {
                                 getDataMerchant();
                                 Toast.fire({
                                     icon: 'success',
-                                    title: data.msg
+                                    title: res.msg
                                 });
                             } else {
                                 Toast.fire({
                                     icon: 'error',
-                                    title: data.msg
+                                    title: res.msg
                                 });
                             }
-                        }, 'json');
-                    }
-                });
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
+                }
             });
-            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        });
-        function memberCellTemplate(container, options) {
-            container.html(`
-                <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="edit">
-                    <i class="fas fa-edit fa-sm"></i>
-                </button>
-                <a href="#" class="btn btn-danger btn-sm rounded-xxl" data-id="${options.value}" id="delete">
-                    <i class="fas fa-trash-alt fa-sm"></i>
-                </a>
-            `)
         }
     </script>
 @endsection
