@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Web;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,13 +51,15 @@ Route::get('/dashboard', function () {
     return view('/pages/dashboard/index');
 });
 
-Route::get('/events', function () {
-    return view('pages.event.index');
-});
+// Route::get('/events', function () {
+//     return view('pages.event.index');
+// });
 
-Route::get('/events/id/detail', function () {
-    return view('pages.event.event-detail');
-});
+// Route::get('/events/id/detail', function () {
+//     return view('pages.event.event-detail');
+// });
+
+Route::resource('events', Web\EventController::class);
 
 Route::get('/merchants', function () {
     return view('/pages/merchant/index');

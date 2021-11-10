@@ -13256,3 +13256,8 @@ body {
     background-color: var(--ekky-light-cyan) !important;
     color: #232323 !important;
 }
+
+.disabled-container {
+    pointer-events: none;
+    opacity: 0.4;
+}

@@ -35,14 +35,14 @@
             <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <img class="rounded-circle" src="https://ui-avatars.com/api/?name=John+Doe" class="img-fluid" width="40" height="40" alt="Avatar">
             </a>
-            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown">
                 <li>
-                    <a class="dropdown-item" href="#!">
+                    <a class="small dropdown-item" href="#!">
                         <i class="fas fa-cogs me-1"></i> Settings
                     </a>
                 </li>
                 <li>
-                    <a class="dropdown-item" href="#!">
+                    <a class="small dropdown-item" href="#!">
                         <i class="fas fa-list me-1"></i> Activity Log
                     </a>
                 </li>
@@ -50,7 +50,7 @@
                     <hr class="dropdown-divider" />
                 </li>
                 <li>
-                    <a class="dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <a class="small dropdown-item text-danger" href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                         <i class="fas fa-sign-out-alt me-1"></i> Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
