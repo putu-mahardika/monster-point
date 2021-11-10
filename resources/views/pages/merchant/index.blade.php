@@ -10,13 +10,16 @@
 @endsection
 
 @section('content')
+{{-- @for ($val = 0; $val < count($merchant); $val++)
+    <input type="hidden" id="id" data-id="{{ $merchant[$val] }}">
+@endfor --}}
     <div class="row">
         <div class="col-md-8">
             <div class="card rounded-xxl">
                 <div class="card-body" style="min-height: calc(100vh - 10.3rem);">
                     <div class="row mb-3">
                         <div class="col">
-                            <button type="button" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMerchantModal">
+                            <button type="button" id="create" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMerchantModal">
                                 Add Merchant <i class="fas fa-plus ms-3"></i>
                             </button>
                         </div>
@@ -58,70 +61,10 @@
 
 @section('modal')
     {{-- Add Merchant Modal --}}
-    <div class="modal fade" id="addMerchantModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addMerchantModalLabel" aria-hidden="true">
+    <div class="modal fade modalMerchant" id="addMerchantModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addMerchantModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-xxl">
-                <div class="modal-header px-4">
-                    <h5 class="modal-title" id="addMerchantModalLabel">Add New Merchant</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body px-4">
-                    <form action="#" method="POST">
-                        @csrf
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="merchant_name">Merchant Name</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="merchant_name" id="merchant_name" type="text" class="form-control rounded-xl" autofocus autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="merchant_address">Address</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="merchant_address" id="merchant_address" type="text" class="form-control rounded-xl" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="merchant_pic">Peron in Charge</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="merchant_pic" id="merchant_pic" type="text" class="form-control rounded-xl" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="merchant_pic_phone">PIC Phone</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="merchant_pic_phone" id="merchant_pic_phone" type="text" class="form-control rounded-xl" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="merchant_pic_email">Email</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="merchant_pic_email" id="merchant_pic_email" type="email" class="form-control rounded-xl" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="use_for">Use For</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="use_for" id="use_for" type="text" class="form-control rounded-xl" autocomplete="off" required>
-                            </div>
-                        </div>
 
-                        <div class="d-flex justify-content-end mt-5">
-                            <button type="submit" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Save</button>
-                        </div>
-                    </form>
-                </div>
             </div>
         </div>
     </div>
@@ -174,6 +117,14 @@
 @section('js')
     <script>
         let merchantPicPhone = null;
+        let submitted = false;
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
         const merchants = [
             {
                 ID: 1,
@@ -239,10 +190,10 @@
         ];
 
         $(document).ready(() => {
-            merchantPicPhone = new Cleave('#merchant_pic_phone', {
-                phone: true,
-                phoneRegionCode: 'id'
-            });
+            $('#myCollapsible').on('shown.bs.collapse', function () {
+                $('.collapse').collapse()
+                console.log('test');
+            })
 
             $('#addMerchantModal').on('shown.bs.modal', function () {
                 $(this).find('#merchant_name').focus();
@@ -252,35 +203,57 @@
                 $(this).find('#member_key').focus();
             });
 
-            $('#merchantTable').dxDataGrid({
-                dataSource: merchants,
-                keyExpr: 'ID',
-                columnAutoWidth: true,
-                hoverStateEnabled: true,
-                selection: {
-                    mode: "single" // or "multiple" | "none"
-                },
-                columns: [
-                    {
-                        dataField: 'MerchantName',
+            getDataMerchant();
+            function getDataMerchant() {
+                $('#merchantTable').dxDataGrid({
+                    dataSource: `{{ route('getdata.merchant') }}`,
+                    keyExpr: 'Id',
+                    columnAutoWidth: true,
+                    hoverStateEnabled: true,
+                    selection: {
+                        mode: "single" // or "multiple" | "none"
                     },
-                    {
-                        dataField: 'BussinessType',
-                    },
-                    {
-                        dataField: 'NIB',
-                        caption: 'NIB',
-                    },
-                    {
-                        dataField: 'Member',
-                        cellTemplate: memberCellTemplate,
-                    }
-                ],
-                showBorders: false,
-                showColumnLines: false,
-                showRowLines: true,
-                activeStateEnabled: true,
-            });
+                    columns: [
+                        {
+                            caption: 'No',
+                            width: 40,
+                            cellTemplate: function(container, options) {
+                                container.html(`${options.row.rowIndex + 1}`);
+                            }
+                        },
+                        {
+                            dataField: 'Nama',
+                        },
+                        {
+                            dataField: 'Alamat',
+                        },
+                        {
+                            dataField: 'Pic',
+                        },
+                        {
+                            dataField: 'PicTelp',
+                        },
+                        {
+                            dataField: 'Email',
+                        },
+                        {
+                            dataField: 'Kebutuhan',
+                        },
+                        // {
+                        //     dataField: 'NIB',
+                        //     caption: 'NIB',
+                        // },
+                        {
+                            dataField: 'Id',
+                            cellTemplate: memberCellTemplate,
+                        }
+                    ],
+                    showBorders: false,
+                    showColumnLines: false,
+                    showRowLines: true,
+                    activeStateEnabled: true,
+                }).dxDataGrid('instance').refresh();
+            }
 
             $('#memberTable').dxDataGrid({
                 dataSource: members,
@@ -316,10 +289,80 @@
                 showColumnLines: false,
                 showRowLines: true,
             });
-        });
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Call modal Create Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            $(document).on('click', '#create', function () {
+                // $('.editorassets').find('form')[0].reset();
+                $.get('{{ route("editor.merchant") }}', function(data) {
+                    $('.modalMerchant').find('.modal-content').html(data);
+                    $('.modalMerchant').modal('show');
+                });
+            });
 
+            $('.modalMerchant').on('hidden.bs.modal', function (event) {
+                console.log('cek');
+                if (submitted) {
+                    getDataMerchant();
+                    submitted = false;
+                }
+            });
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Call modal Create Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Edit Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            $(document).on('click', '#edit', function() {
+                let merchant_id = $(this).data('id');
+                $('.modalMerchant').find('span.error-text').text('');
+                $.get(`{{ route("merchants.index") }}/${merchant_id}/edit`, function(data) {
+                    $('.modalMerchant').find('.modal-content').html(data);
+                    $('.modalMerchant').modal('show');
+                });
+            });
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Edit Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            $(document).on('click', '#delete', function() {
+                let merchant_id = $(this).attr('data-id');
+                let url = '{{ route("delete.merchant") }}';
+                Swal.fire({
+                    title: 'Are you sure?',
+                    html: 'You want to <b>delete</b> this Merchant',
+                    showCancelButton: true,
+                    showCloseButton: true,
+                    cancelButtonText: 'Cancel',
+                    confirmButtonText: 'Yes, Delete',
+                    cancelButtonColor: '#0d6efd',
+                    confirmButtonColor: '#d33',
+                    width: 300,
+                    allowOutsideClick: false
+                }).then(function(result) {
+                    if (result.value) {
+                        $.post(url, {merchant_id: merchant_id}, function(data) {
+                            if (data.code == 1) {
+                                getDataMerchant();
+                                Toast.fire({
+                                    icon: 'success',
+                                    title: data.msg
+                                });
+                            } else {
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: data.msg
+                                });
+                            }
+                        }, 'json');
+                    }
+                });
+            });
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+        });
         function memberCellTemplate(container, options) {
-            container.html(`${options.value} <i class="fas fa-user ms-1"></i><i class="fas fa-chevron-right ms-5"></i>`);
+            container.html(`
+                <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="edit">
+                    <i class="fas fa-edit fa-sm"></i>
+                </button>
+                <a href="#" class="btn btn-danger btn-sm rounded-xxl" data-id="${options.value}" id="delete">
+                    <i class="fas fa-trash-alt fa-sm"></i>
+                </a>
+            `)
         }
     </script>
 @endsection
