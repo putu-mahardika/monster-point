@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Web\MemberController;
+use App\Http\Controllers\Web\MerchantController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -45,9 +47,26 @@ Route::get('/billing-company', function () {
     return view('/pages/billing/billing-company');
 });
 
-Route::get('/merchants', function () {
-    return view('pages.merchant.index');
-});
+// Route::get('/merchants', function () {
+//     return view('pages.merchant.index');
+// });
+
+Route::get('editorMerchant', [MerchantController::class, 'editorMerchant'])->name('editor.merchant');
+Route::get('getdataMerchant', [MerchantController::class, 'getdataMerchant'])->name('getdata.merchant');
+Route::post('deleteMerchant', [MerchantController::class, 'deleteMerchant'])->name('delete.merchant');
+Route::resource('merchants', MerchantController::class);
+// Route::get('editMerchant/{id}', [MerchantController::class, 'editMerchant'])->name('edit.merchant');
+// Route::patch('updateMerchant/{Id}', [MerchantController::class, 'update'])->name('update.merchant');
+
+
+
+Route::get('editorMember', [MemberController::class, 'editorMember'])->name('editor.member');
+Route::get('getdataMember', [MemberController::class, 'getdataMember'])->name('getdata.member');
+Route::post('deleteMember', [MemberController::class, 'deleteMember'])->name('delete.member');
+Route::resource('merchants', MemberController::class);
+
+
+
 
 Route::get('/dashboard', function () {
     return view('/pages/dashboard/index');
@@ -59,10 +78,6 @@ Route::get('/events', function () {
 
 Route::get('/events/id/detail', function () {
     return view('pages.event.event-detail');
-});
-
-Route::get('/members', function () {
-    return view('pages.member.index');
 });
 
 Route::get('/members/id/detail', function () {

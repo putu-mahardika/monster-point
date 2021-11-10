@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         @yield('meta')
         <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
         <title>@yield('title', 'title') | {{ config('app.name') }}</title>
