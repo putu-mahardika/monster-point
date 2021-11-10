@@ -85,7 +85,7 @@ class GreetingController extends Controller
     /**
     * @OA\Get(
     *     path="/greet",
-    *     tags={"greeting"},
+    *     tags={"Contoh Dokumentasi Api"},
     *     summary="Returns a Sample API response",
     *     description="A sample greeting to test out the API",
     *     operationId="greet",

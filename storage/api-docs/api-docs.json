@@ -1,23 +1,14 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Contoh API documentation",
-        "description": "Contoh API doc menggunakan OpenAPI/Swagger",
-        "termsOfService": "http://swagger.io/terms/",
-        "contact": {
-            "email": "ekkys99@gmail@gmail.com"
-        },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
-        "version": "8.0"
+        "title": "Dokumentasi Monster Point Service",
+        "version": "1.0.0"
     },
     "paths": {
         "/greet": {
             "get": {
                 "tags": [
-                    "greeting"
+                    "Contoh Dokumentasi Api"
                 ],
                 "summary": "Returns a Sample API response",
                 "description": "A sample greeting to test out the API",
@@ -50,21 +41,6 @@
             }
         }
     },
-    "components": {
-        "securitySchemes": {
-            "api_key": {
-                "type": "apiKey",
-                "name": "Authorization",
-                "in": "header"
-            }
-        }
-    },
-    "tags": [
-        {
-            "name": "greeting",
-            "description": "greet combines first and last name"
-        }
-    ],
     "security": [
         []
     ]
