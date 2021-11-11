@@ -6,17 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Merchant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 class MerchantController extends Controller
 {
-    public function editorMerchant(Request $request)
-    {
-        $merchant = Merchant::find($request->merchant_id);
-        // dd($merchant);
-        return view('pages.merchant.editor', compact('merchant'));
-    }
     /**
      * Display a listing of the resource.
      *
@@ -24,6 +18,10 @@ class MerchantController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            $merchants = Merchant::orderBy('id', 'DESC')->get();
+            return response()->json($merchants);
+        }
         return view('pages.merchant.index');
     }
 
@@ -34,13 +32,7 @@ class MerchantController extends Controller
      */
     public function create()
     {
-        //
-    }
-
-    public function getdataMerchant()
-    {
-        $merchants = Merchant::orderBy('id', 'DESC')->get();
-        return $merchants;
+        return view('pages.merchant.editor');
     }
 
     /**
@@ -62,9 +54,9 @@ class MerchantController extends Controller
         // dd($request->merchant_address);
 
         if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
-            $query = Merchant::create([
+            Merchant::create([
                 'CreateDate' => now(),
                 'Token' => Str::random(25),
                 'Nama' => $request->merchant_name,
@@ -78,13 +70,8 @@ class MerchantController extends Controller
                 'Akif' => 1,
                 'Validasi' => 1
             ]);
-
-            if ($query) {
-                return response()->json(['code' => 1, 'msg' => 'New Merchant has been successfuly saved']);
-            } else {
-                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-            }
         }
+        return response(['msg' => 'The Merchant has been created']);
     }
 
     /**
@@ -106,16 +93,8 @@ class MerchantController extends Controller
      */
     public function edit(Merchant $merchant)
     {
-        // dd($merchant);
         return view('pages.merchant.editor', compact('merchant'));
     }
-
-    // public function editMerchant(Request $request)
-    // {
-    //     $merchant = Merchant::find($request->id);
-    //     // dd($merchant);
-    //     return response()->json(['details' => $merchant]);
-    // }
 
     /**
      * Update the specified resource in storage.
@@ -126,9 +105,6 @@ class MerchantController extends Controller
      */
     public function update(Request $request, Merchant $merchant)
     {
-        // dd($merchant);
-        // dd($request->merchant_name);
-        $merchant_id = $merchant->Id;
         $validator = Validator::make($request->all(), [
             'merchant_name' => ['required'],
             'merchant_address' => ['required'],
@@ -139,9 +115,9 @@ class MerchantController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
-            $query = $merchant->where('id', $merchant->Id)->update([
+            Merchant::where('id', $merchant->Id)->update([
                 'Nama' => $request->merchant_name,
                 'Alamat' => $request->merchant_address,
                 'Pic' => $request->merchant_pic,
@@ -149,13 +125,7 @@ class MerchantController extends Controller
                 'Email' => $request->merchant_pic_email,
                 'Kebutuhan' => $request->use_for,
             ]);
-            // dd($query);
-        }
-
-        if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Merchant Has Been Updated']);
-        } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            return response(['msg' => 'The Merchant has been updated']);
         }
     }
 
@@ -165,21 +135,9 @@ class MerchantController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Merchant $merchant)
     {
-
-    }
-
-    public function deleteMerchant(Request $request)
-    {
-        $merchant_id = $request->merchant_id;
-        // dd($merchant_id);
-        $query = Merchant::where('Id', $merchant_id)->delete();
-
-        if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Merchant Has Been Deleted From Databases']);
-        } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-        }
+        Merchant::where('id', $merchant->Id)->delete();
+        return response(['message' => 'The merchant has been deleted']);
     }
 }

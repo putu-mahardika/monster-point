@@ -72,12 +72,10 @@
         </form>
 </div>
 <script>
-    if ( @json($merchant == null || $merchant != null) ) {
-        merchantPicPhone = new Cleave('#merchant_pic_phone', {
-            phone: true,
-            phoneRegionCode: 'id'
-        });
-    }
+    merchantPicPhone = new Cleave('#merchant_pic_phone', {
+        phone: true,
+        phoneRegionCode: 'id'
+    });
 
     $('#addMerchantModal').on('shown.bs.modal', function () {
         $(this).find('#merchant_name').focus();
