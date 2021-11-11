@@ -29,7 +29,7 @@
                             </div>
 
                             {{-- Login Form --}}
-                            <form action="#" method="POST">
+                            <form action="{{ url('login') }}" method="POST">
                                 @csrf
                                 <div class="row justify-content-center mb-3">
                                     <div class="col-md-3">

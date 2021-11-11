@@ -15,8 +15,13 @@ use App\Http\Controllers\Web;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/login');
+Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('/pages/dashboard/index');
+    });
 });
 
 Route::get('/test', function () {
@@ -25,12 +30,7 @@ Route::get('/test', function () {
 Route::get('/home', function () {
     return view('/home');
 });
-// Route::get('/register', function () {
-//     return view('register');
-// });
-// Route::get('/login', function () {
-//     return view('login');
-// });
+
 Route::get('/email-success', function () {
     return view('email-success');
 });
@@ -59,9 +59,7 @@ Route::get('/billing-company', function () {
 
 
 
-Route::get('/dashboard', function () {
-    return view('/pages/dashboard/index');
-});
+
 
 Route::resource('events', Web\EventController::class);
 Route::resource('merchants', Web\MerchantController::class);
@@ -77,8 +75,7 @@ Route::get('/help', function () {
 });
 
 
-Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
-Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
+
 
 
 Route::get('/coba', function () {

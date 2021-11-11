@@ -178,7 +178,6 @@ return [
 
         App\Providers\MqttHelperServiceProvider::class,
         App\Providers\FunctionHelperServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
