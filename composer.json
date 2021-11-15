@@ -11,6 +11,7 @@
         "f9webltd/laravel-api-response-helpers": "^1.5",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/fortify": "^1.8",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",

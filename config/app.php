@@ -123,6 +123,18 @@ return [
 
     'cipher' => 'AES-256-CBC',
 
+
+    /*
+     | -----------------------------------------------------------------------
+     | Merchant default password
+     | -----------------------------------------------------------------------
+     |
+     | This is the default password for every newly registered merchant.
+     | This password will be sent via a verification email
+     |
+     */
+    'default_password' => '12345678',
+
     /*
     |--------------------------------------------------------------------------
     | Autoloaded Service Providers
@@ -180,6 +192,7 @@ return [
         App\Providers\MqttHelperServiceProvider::class,
         App\Providers\MemberHelperServiceProvider::class,
         App\Providers\FunctionHelperServiceProvider::class,
+        App\Providers\FortifyServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],

@@ -30,6 +30,31 @@
             </div>
         </div>
 
+        @if (!auth()->user()->isShowPopupVerify)
+            <div class="modal fade" id="popupVerify" tabindex="-1" aria-labelledby="popupVerifyLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content rounded-xxl position-relative">
+                        {{-- <div class="modal-header">
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div> --}}
+                        <canvas id="popupVerifyCanvas" class="position-absolute" style="width: 100%;"></canvas>
+                        <div class="modal-body position-relative py-5">
+                            <h3 class="text-center">
+                                Congratulation!
+                            </h3>
+                            <h5 class="text-center">
+                                Your email is verified...
+                            </h5>
+                            <h6 class="text-center mt-5">
+                                This popup will automatically close in <span id="popupTimer">3</span> seconds.
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
+
         @yield('modal')
 
         <script src="{{ asset('js/app.js') }}"></script>
@@ -40,6 +65,30 @@
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
                 });
+
+                // if (!{{ auth()->user()->isShowPopupVerify }}) {
+                //     $('#popupVerify').modal('show');
+                //     const canvas = document.querySelector('#popupVerifyCanvas');
+                //     const jsConfetti = new JSConfetti({ canvas });
+                //     $('#popupVerify').on('shown.bs.modal', function () {
+                //         jsConfetti.addConfetti();
+                //         setInterval(() => {
+                //             // Stop here!
+                //         }, interval);
+                //     });
+
+                    // $.ajax({
+                    //     url: "{{ route('popup-verify', auth()->id()) }}",
+                    //     type: "POST",
+                    //     data: [],
+                    //     success: (res) => {
+                    //         jsConfetti.addConfetti();
+                    //     },
+                    //     error: (error) => {
+                    //         console.log(error);
+                    //     }
+                    // });
+                }
             });
         </script>
         @yield('js')
