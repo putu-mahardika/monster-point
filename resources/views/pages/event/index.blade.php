@@ -13,7 +13,7 @@
     <div class="card rounded-xxl">
         <div class="card-body" style="min-height: calc(100vh - 10.3rem);">
             <div class="d-flex mb-3">
-                <a href="#" class="btn btn-primary rounded-xxl">
+                <a href="{{ route('events.create') }}" class="btn btn-primary rounded-xxl">
                     New Event <i class="fas fa-plus ms-2"></i>
                 </a>
             </div>
@@ -33,71 +33,40 @@
 
 @section('js')
     <script>
-        const events = [
-            {
-                Code: 'AAA',
-                Event: 'Event 1',
-                Formula: 'formula.buy.point.something<somecodeoverhere?>',
-                Type: 'Daily',
-                DelayLock: 'Yes',
-                Note: 'Dolore anim adipisicing in consequat est.',
-                Link: '#'
-            },
-            {
-                Code: 'AAB',
-                Event: 'Event 2',
-                Formula: 'formula.buy.point.something<somecodeoverhere?>',
-                Type: 'Daily',
-                DelayLock: 'Yes',
-                Note: 'Dolore anim adipisicing in consequat est.',
-                Link: '#'
-            },
-            {
-                Code: 'AAC',
-                Event: 'Event 3',
-                Formula: 'formula.buy.point.something<somecodeoverhere?>',
-                Type: 'Daily',
-                DelayLock: 'Yes',
-                Note: 'Dolore anim adipisicing in consequat est.',
-                Link: '#'
-            },
-            {
-                Code: 'ABA',
-                Event: 'Event 4',
-                Formula: 'formula.buy.point.something<somecodeoverhere?>',
-                Type: 'Daily',
-                DelayLock: 'Yes',
-                Note: 'Dolore anim adipisicing in consequat est.',
-                Link: '#'
-            },
-            {
-                Code: 'ABB',
-                Event: 'Event 5',
-                Formula: 'formula.buy.point.something<somecodeoverhere?>',
-                Type: 'Daily',
-                DelayLock: 'Yes',
-                Note: 'Dolore anim adipisicing in consequat est.',
-                Link: '#'
-            },
-            {
-                Code: 'ABC',
-                Event: 'Event 6',
-                Formula: 'formula.buy.point.something<somecodeoverhere?>',
-                Type: 'Daily',
-                DelayLock: 'Yes',
-                Note: 'Dolore anim adipisicing in consequat est.',
-                Link: '#'
-            },
-        ];
+        let eventTable = null;
+        function deleteEvent(id) {
+            Swal.fire({
+                title: 'Do you want to delete this event?',
+                showCancelButton: true,
+                showConfirmButton: false,
+                showDenyButton: true,
+                denyButtonText: 'Delete this event',
+                cancelButtonText: `No!`,
+            }).then((result) => {
+                if (result.isDenied) {
+                    $.ajax({
+                        url: `{{ route('events.index') }}/${id}`,
+                        type: "DELETE",
+                        data: {},
+                        success: (res) => {
+                            Toast.fire({
+                                icon: 'success',
+                                title: res.message
+                            });
+                            eventTable.refresh();
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        }
 
         $(document).ready(() => {
-            $('#addEventModal').on('shown.bs.modal', function () {
-                $(this).find('#member_key').focus();
-            });
-
-            $('#eventTable').dxDataGrid({
-                dataSource: events,
-                keyExpr: 'Code',
+            eventTable = $('#eventTable').dxDataGrid({
+                dataSource: "{{ route('events.index') }}",
+                keyExpr: 'Id',
                 columnAutoWidth: true,
                 hoverStateEnabled: true,
                 columns: [
@@ -108,7 +77,7 @@
                         }
                     },
                     {
-                        dataField: 'Code',
+                        dataField: 'Kode',
                     },
                     {
                         dataField: 'Event',
@@ -117,31 +86,43 @@
                         dataField: 'Formula'
                     },
                     {
-                        dataField: 'Type',
-                        caption: 'Daily/Once'
+                        dataField: 'Daily',
                     },
                     {
-                        dataField: 'DelayLock'
+                        dataField: 'Once',
                     },
                     {
-                        dataField: 'Note'
+                        dataField: 'LockDelay',
+                        dataType: 'number',
+                        cellTemplate: function (container, options) {
+                            container.html(`
+                                ${options.value} min
+                            `);
+                        }
                     },
                     {
-                        dataField: 'Link',
+                        dataField: 'Keterangan'
+                    },
+                    {
+                        dataField: 'Id',
                         caption: '',
                         cellTemplate: function (container, options) {
                             container.html(`
-                                <a href="${options.value}" class="text-dark text-decoration-none px-2">
-                                    <i class="fas fa-ellipsis-v"></i>
+                                <a href="{{ route('events.index') }}/${options.value}/edit" class="btn btn-primary btn-sm rounded-xxl" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                    <i class="fas fa-pencil-alt fa-sm"></i>
                                 </a>
+                                <button onclick="deleteEvent(${options.value});" class="btn btn-danger btn-sm rounded-xxl" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
+                                    <i class="fas fa-trash-alt fa-sm"></i>
+                                </button>
                             `);
+                            activateTooltip();
                         }
                     }
                 ],
                 showBorders: false,
                 showColumnLines: false,
                 showRowLines: true,
-            });
+            }).dxDataGrid('instance');
         });
     </script>
 @endsection

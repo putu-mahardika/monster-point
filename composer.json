@@ -6,11 +6,14 @@
     "license": "MIT",
     "require": {
         "php": "^7.3|^8.0",
+<<<<<<< HEAD
         "darkaonline/l5-swagger": "^8.0",
+=======
+        "doctrine/dbal": "^3.1",
+>>>>>>> 388a0ffea64bae4c64630e489dda8b5d94775914
         "f9webltd/laravel-api-response-helpers": "^1.5",
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
-        "laravel/fortify": "^1.8",
         "laravel/framework": "^8.65",
         "laravel/sanctum": "^2.11",
         "laravel/socialite": "^5.2",
@@ -22,6 +25,7 @@
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
+        "barryvdh/laravel-ide-helper": "^2.10",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "laravel/sail": "^1.0.1",

@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\GreetingController;
+use App\Http\Controllers\Web;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,8 +15,13 @@ use App\Http\Controllers\GreetingController;
 |
 */
 
-Route::get('/', function () {
-    return redirect('/login');
+Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('/pages/dashboard/index');
+    });
 });
 
 Route::get('/test', function () {
@@ -26,12 +30,7 @@ Route::get('/test', function () {
 Route::get('/home', function () {
     return view('/home');
 });
-// Route::get('/register', function () {
-//     return view('register');
-// });
-// Route::get('/login', function () {
-//     return view('login');
-// });
+
 Route::get('/email-success', function () {
     return view('email-success');
 });
@@ -44,24 +43,27 @@ Route::get('/billing', function () {
 Route::get('/billing-company', function () {
     return view('/pages/billing/billing-company');
 });
-Route::get('/company', function () {
-    return view('/pages/company/index');
-});
-Route::get('/dashboard', function () {
-    return view('/pages/dashboard/index');
-});
 
-Route::get('/events', function () {
-    return view('pages.event.index');
-});
+// Route::get('/merchants', function () {
+//     return view('pages.merchant.index');
+// });
 
-Route::get('/events/id/detail', function () {
-    return view('pages.event.event-detail');
-});
 
-Route::get('/merchants', function () {
-    return view('/pages/merchant/index');
-});
+
+
+// Route::get('editorMember', [MemberController::class, 'editorMember'])->name('editor.member');
+// Route::get('getdataMember', [MemberController::class, 'getdataMember'])->name('getdata.member');
+// Route::post('deleteMember', [MemberController::class, 'deleteMember'])->name('delete.member');
+// Route::resource('merchants', MemberController::class);
+
+
+
+
+
+
+Route::resource('events', Web\EventController::class);
+Route::resource('merchants', Web\MerchantController::class);
+
 Route::get('/members', function () {
     return view('/pages/member/index');
 });
@@ -76,6 +78,7 @@ Route::get('/help', function () {
 Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
 Route::get('/greet', [SocialiteController::class, 'greet']);
+
 
 
 Route::get('/coba', function () {

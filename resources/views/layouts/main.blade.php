@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
+        <meta name="csrf-token" content="{{ csrf_token() }}" />
         @yield('meta')
         <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
         <title>@yield('title', 'title') | {{ config('app.name') }}</title>
@@ -32,6 +33,15 @@
         @yield('modal')
 
         <script src="{{ asset('js/app.js') }}"></script>
+        <script>
+            $(document).ready(() => {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+            });
+        </script>
         @yield('js')
     </body>
 </html>
