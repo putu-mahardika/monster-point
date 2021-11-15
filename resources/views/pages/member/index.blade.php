@@ -45,7 +45,7 @@
             </div>
             <div class="row mb-3">
                 <div class="col-auto">
-                    <button type="button" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+                    <button type="button" id="create" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMemberModal">
                         Add Member <i class="fas fa-plus ms-2"></i>
                     </button>
                 </div>
@@ -61,46 +61,11 @@
 @endsection
 
 @section('modal')
-    {{-- Add Merchant Modal --}}
-    <div class="modal fade" id="addMemberModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
+    {{-- Add Member Modal --}}
+    <div class="modal fade modalMember" id="addMemberModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="addMemberModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content rounded-xxl">
-                <div class="modal-header px-4">
-                    <h5 class="modal-title" id="addMemberModalLabel">Add New Member</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body px-4">
-                    <form action="#" method="POST">
-                        @csrf
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="member_key">Member Key</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="member_key" id="member_key" type="text" class="form-control rounded-xl" autofocus autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="member_name">Member Name</label>
-                            </div>
-                            <div class="col-md-7">
-                                <input name="member_name" id="member_name" type="text" class="form-control rounded-xl" autocomplete="off" required>
-                            </div>
-                        </div>
-                        <div class="row justify-content-center mb-3">
-                            <div class="col-md-5">
-                                <label for="member_note">Note</label>
-                            </div>
-                            <div class="col-md-7">
-                                <textarea class="form-control rounded-xl" name="member_note" id="member_note" cols="30" rows="3" style="resize: none;"></textarea>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-end mt-5">
-                            <button type="submit" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Save</button>
-                        </div>
-                    </form>
-                </div>
+
             </div>
         </div>
     </div>
@@ -108,6 +73,8 @@
 
 @section('js')
     <script>
+        let submitted = false;
+        let eventTable = null;
         const members = [
             {
                 Key: 1,
@@ -146,14 +113,44 @@
             }
         ];
 
+        function deleteMember(id) {
+            Swal.fire({
+                title: 'Do you want to delete this member?',
+                showCancelButton: true,
+                showConfirmButton: false,
+                showDenyButton: true,
+                denyButtonText: 'Delete this Member',
+                cancelButtonText: `No!`,
+            }).then((result) => {
+                if (result.isDenied) {
+                    $.ajax({
+                        url: `{{ route('members.index') }}/${id}`,
+                        type: "DELETE",
+                        data: {},
+                        success: (res) => {
+                            Toast.fire({
+                                icon: 'success',
+                                title: res.message
+                            });
+                            // return getDataMember();
+                            eventTable.refresh();
+                        },
+                        error: (error) => {
+                            console.log(error);
+                        }
+                    });
+                }
+            });
+        }
+
         $(document).ready(() => {
             $('#addMemberModal').on('shown.bs.modal', function () {
                 $(this).find('#member_key').focus();
             });
 
-            $('#memberTable').dxDataGrid({
-                dataSource: members,
-                keyExpr: 'Key',
+            eventTable = $('#memberTable').dxDataGrid({
+                dataSource: `{{ route('members.index') }}`,
+                keyExpr: 'Id',
                 columnAutoWidth: true,
                 hoverStateEnabled: true,
                 columns: [
@@ -164,30 +161,67 @@
                         }
                     },
                     {
-                        dataField: 'Name',
+                        dataField: 'Nama',
                     },
                     {
                         dataField: 'Point',
                     },
                     {
-                        dataField: 'Note'
+                        dataField: 'Keterangan'
                     },
                     {
-                        dataField: 'Link',
+                        dataField: 'Id',
                         caption: '',
                         cellTemplate: function (container, options) {
                             container.html(`
+                                <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="edit">
+                                    <i class="fas fa-edit fa-sm"></i>
+                                </button>
+                                <button onclick="deleteMember(${options.value});" class="btn btn-danger btn-sm rounded-xxl" data-bs-toggle="tooltip" data-bs-placement="top" id="delete">
+                                    <i class="fas fa-trash-alt fa-sm"></i>
+                                </button>
                                 <a href="${options.value}" class="text-dark text-decoration-none px-2">
                                     <i class="fas fa-ellipsis-v"></i>
                                 </a>
                             `);
+                            activateTooltip();
                         }
                     }
                 ],
                 showBorders: false,
                 showColumnLines: false,
                 showRowLines: true,
+            }).dxDataGrid('instance');
+
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Call modal Create Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            $(document).on('click', '#create', function () {
+                // $('.editorassets').find('form')[0].reset();
+                $.get('{{ route("members.create") }}', function(data) {
+                    $('.modalMember').find('.modal-content').html(data);
+                    $('.modalMember').modal('show');
+                });
             });
+
+            $('.modalMember').on('hidden.bs.modal', function (event) {
+                console.log('cek');
+                if (submitted) {
+                    eventTable.refresh();
+                    submitted = false;
+                }
+            });
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Call modal Create Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Edit Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+            $(document).on('click', '#edit', function() {
+                let member_id = $(this).data('id');
+                console.log(member_id);
+                $('.modalMember').find('span.error-text').text('');
+                $.get(`{{ route("members.index") }}/${member_id}/edit`, function(data) {
+                    $('.modalMember').find('.modal-content').html(data);
+                    $('.modalMember').modal('show');
+                });
+            });
+            // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Edit Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
         });
     </script>
 @endsection
