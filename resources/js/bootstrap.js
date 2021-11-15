@@ -22,3 +22,4 @@ require('codemirror/mode/javascript/javascript.js');
 require('cleave.js');
 require('cleave.js/dist/addons/cleave-phone.id.js');
 
+window.JSConfetti = require('js-confetti/dist/js-confetti.min.js');
