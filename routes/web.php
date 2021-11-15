@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+// use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\Web;
 
 /*
@@ -44,11 +45,29 @@ Route::get('/billing-company', function () {
     return view('/pages/billing/billing-company');
 });
 
-Route::resource('merchants', Web\MerchantController::class);
-Route::resource('members', Web\MemberController::class);
+// Route::get('/merchants', function () {
+//     return view('pages.merchant.index');
+// });
+
+
+
+
+// Route::get('editorMember', [MemberController::class, 'editorMember'])->name('editor.member');
+// Route::get('getdataMember', [MemberController::class, 'getdataMember'])->name('getdata.member');
+// Route::post('deleteMember', [MemberController::class, 'deleteMember'])->name('delete.member');
+// Route::resource('merchants', MemberController::class);
+
+
+
+
+
+
 Route::resource('events', Web\EventController::class);
+Route::resource('merchants', Web\MerchantController::class);
 
-
+Route::get('/members', function () {
+    return view('/pages/member/index');
+});
 Route::get('/member-detail', function () {
     return view('/pages/merchant-member/member-detail');
 });
@@ -56,9 +75,15 @@ Route::get('/help', function () {
     return view('/pages/help/index');
 });
 
-Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
+Route::get('/dashboard', function () {
+    return view('/pages/dashboard/index');
+});
+
+
+// Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
 Route::get('/greet', [SocialiteController::class, 'greet']);
+
 
 
 Route::get('/coba', function () {
@@ -68,3 +93,6 @@ Route::get('/coba', function () {
         die("Could not connect to the database.  Please check your configuration. error:" . $e );
     }
 });
+
+//riset swagger
+Route::get('/greet', [GreetingController::class, 'greets']);
