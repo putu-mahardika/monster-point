@@ -12,7 +12,7 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
             <div class="card rounded-xxl">
                 <div class="card-body">
                     <div class="row justify-content-between mb-3">
@@ -56,29 +56,29 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6 mb-3">
                 <div class="card rounded-xxl">
                     <div class="card-body">
-                        <div class="row justify-content-between mb-3">
-                            <div class="col-auto">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <select class="form-control" id="month" name="month">
-                                            <option value="">Click per month</option>
-                                            <option value="">January</option>
-                                            <option value="">February</option>
-                                            <option value="">Maret</option>
-                                        </select>
-                                    </div>
-                                    <div class="col">
-
-                                    </div>
+                        <div class="row justify-content-between">
+                            <div class="col-lg-6 mb-3">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
+                                    <button type="button" class="btn btn-sm py-0 px-3 btn-outline-primary">M</button>
+                                    <button type="button" class="btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
                                 </div>
                             </div>
-                            <div class="col-auto d-flex">
-                                <a href="#" class="small text-dark text-decoration-none text-muted">
-                                   <input class="form-control" type="date" value=""><i class="fas fa-date"></i>
-                                </a>
+                            <div class="col-lg-6 mb-3">
+                                <div class="float-end">
+                                    <button type="button" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-sm py-0 px-2 rounded-xl btn-primary mx-2 px-2">
+                                        {{ now()->format('d M Y') }}
+                                    </button>
+                                    <button type="button" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="row">
@@ -90,25 +90,18 @@
                 </div>
         </div>
     </div>
-    <div class="row mt-2 mb-2">
+    <div class="row mb-3">
          <div class="col">
             <div class="card rounded-xxl">
                 <div class="card-body">
                     <div class="row justify-content-between mb-3">
-                        <div class="col-auto">
-                            <div class="row">
-                                <div class="col">
-                                   <select class="form-control" id="month" name="month">
-                                        <option value="">Click per month</option>
-                                        <option value="">January</option>
-                                        <option value="">February</option>
-                                        <option value="">Maret</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto d-flex">
-
+                        <div class="col-md-3 col-sm-5">
+                            <select class="form-select py-0" id="month" name="month" style="font-size: .8rem;">
+                                <option value="">Click per month</option>
+                                <option value="">January</option>
+                                <option value="">February</option>
+                                <option value="">Maret</option>
+                            </select>
                         </div>
                     </div>
                     <div class="row">
@@ -173,7 +166,6 @@
         $('#chart1').dxChart({
             size: {
                 height: 250
-
             },
             palette: 'Harmony Light',
             dataSource,
@@ -231,11 +223,11 @@
             },
         });
 
-
-
-
         $(() => {
             $('#chart2').dxChart({
+                size: {
+                    height: 300
+                },
                 series: {
                     argumentField: 'day',
                     valueField: 'oranges',
@@ -243,18 +235,37 @@
                     type: 'bar',
                     color: '#ffaa66',
                 },
+                legend: {
+                    visible: false,
+                },
                 rotated: true
             });
         });
 
         $(() => {
             $('#chart3').dxChart({
+                size: {
+                    height: 250
+                },
+                valueAxis: [
+                    {
+                        enabled: true,
+                        position: 'left',
+                    },
+                    {
+                        enabled: true,
+                        position: 'right',
+                    }
+                ],
                 series: {
                     argumentField: 'day',
                     valueField: 'oranges',
                     name: 'My oranges',
                     type: 'bar',
                     color: '#ffaa66',
+                },
+                legend: {
+                    visible: false,
                 },
                 rotated: false
             });

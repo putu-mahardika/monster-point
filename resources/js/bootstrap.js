@@ -1,10 +1,10 @@
 window._ = require('lodash');
 window.Popper = require("@popperjs/core").default;
 window.$ = window.jQuery = require("jquery");
-require("bootstrap");
+window.bootstrap = require("bootstrap");
 require("devextreme/dist/js/dx.all.js");
-window.Swal = require("sweetalert2");
-window.Toats = Swal.mixin({
+window.Swal = require("sweetalert2/dist/sweetalert2.js");
+window.Toast = Swal.mixin({
     toast: true,
     position: 'top-end',
     showConfirmButton: false,
@@ -19,7 +19,6 @@ window.Toats = Swal.mixin({
 require('select2');
 window.CodeMirror = require('codemirror');
 require('codemirror/mode/javascript/javascript.js');
-require('codemirror/mode/sql/sql.js');
 require('cleave.js');
 require('cleave.js/dist/addons/cleave-phone.id.js');
 

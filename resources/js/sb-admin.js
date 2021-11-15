@@ -3,6 +3,9 @@
     * Copyright 2013-2021 Start Bootstrap
     * Licensed under MIT (https://github.com/StartBootstrap/startbootstrap-sb-admin/blob/master/LICENSE)
     */
+
+const { isArguments } = require("lodash");
+
     //
 // Scripts
 //
@@ -22,14 +25,41 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
+    showRedStarRequired();
 });
 
-let formControlElements = $('.form-control');
-jQuery.each(formControlElements, (index, element) => {
-    if ($(element).prop('required')) {
-        let label = $(`label[for='${element.id}']`);
-        if (label) {
-            label.append(`<span class="text-danger">*</span>`);
+window.showRedStarRequired = () => {
+    let formControlElements = $('.form-control');
+    jQuery.each(formControlElements, (index, element) => {
+        if ($(element).prop('required')) {
+            let label = $(`label[for='${element.id}']`);
+            if (label) {
+                label.append(`<span class="text-danger">*</span>`);
+            }
         }
-    }
-});
+    });
+}
+
+window.showErrorField = (errors) => {
+    Object.keys(errors).forEach(key => {
+        let errorField = $(`#${key}_error_field`);
+        if (errorField) {
+            errorField.html(errors[key].join(' | '));
+            errorField.removeClass('d-none');
+        }
+    });
+}
+
+window.clearErrorField = () => {
+    $('.error-field').each(el => {
+        $(el).html('');
+        $(el).addClass('d-none');
+    });
+}
+
+window.activateTooltip = () => {
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+}

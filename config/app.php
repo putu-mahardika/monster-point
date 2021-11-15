@@ -177,7 +177,8 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
 
         App\Providers\MqttHelperServiceProvider::class,
-        App\Providers\FortifyServiceProvider::class,
+        App\Providers\FunctionHelperServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
 
     ],
 
@@ -234,6 +235,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'MqttHelper' => App\Helpers\MqttHelper::class,
+        'FunctionHelper' => App\Helpers\FunctionHelper::class,
 
     ],
 
