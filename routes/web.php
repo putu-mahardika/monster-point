@@ -40,9 +40,6 @@ Route::get('/test', function () {
 
 Route::view('test2', 'test2');
 
-Route::get('/home', function () {
-    return view('/home');
-});
 
 Route::get('/email-success', function () {
     return view('auth.email-success');
@@ -100,3 +97,8 @@ Route::get('/coba', function () {
 
 //riset swagger
 Route::get('/greet', [GreetingController::class, 'greets']);
+
+//landing page
+Route::get('/landing', function () {
+    return view('/landing');
+});
