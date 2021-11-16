@@ -189,6 +189,7 @@ return [
         Spatie\Permission\PermissionServiceProvider::class,
 
         App\Providers\MqttHelperServiceProvider::class,
+        App\Providers\MemberHelperServiceProvider::class,
         App\Providers\FunctionHelperServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
@@ -249,7 +250,7 @@ return [
 
         'MqttHelper' => App\Helpers\MqttHelper::class,
         'FunctionHelper' => App\Helpers\FunctionHelper::class,
-
+        'MemberHelper' => App\Helpers\MemberHelper::class,
     ],
 
 ];

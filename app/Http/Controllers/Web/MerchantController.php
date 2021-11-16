@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Merchant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
+use Illuminate\Http\Response;
 
 class MerchantController extends Controller
 {
@@ -19,8 +19,8 @@ class MerchantController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            $merchants = Merchant::all();
-            return response($merchants);
+            $merchants = Merchant::orderBy('id', 'DESC')->get();
+            return response()->json($merchants);
         }
         return view('pages.merchant.index');
     }
@@ -53,9 +53,9 @@ class MerchantController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
-            $query = Merchant::create([
+            Merchant::create([
                 'CreateDate' => now(),
                 'Token' => Str::random(25),
                 'Nama' => $request->merchant_name,
@@ -69,13 +69,8 @@ class MerchantController extends Controller
                 'Akif' => 1,
                 'Validasi' => 1
             ]);
-
-            if ($query) {
-                return response()->json(['code' => 1, 'msg' => 'New Merchant has been successfuly saved']);
-            } else {
-                return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
-            }
         }
+        return response(['msg' => 'The Merchant has been created']);
     }
 
     /**
@@ -119,9 +114,9 @@ class MerchantController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['code' => 0, 'error' => $validator->errors()->toArray()]);
+            return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
-            $query = $merchant->where('id', $merchant->Id)->update([
+            $query = Merchant::where('id', $merchant->Id)->update([
                 'Nama' => $request->merchant_name,
                 'Alamat' => $request->merchant_address,
                 'Pic' => $request->merchant_pic,
