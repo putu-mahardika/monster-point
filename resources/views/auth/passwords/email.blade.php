@@ -7,7 +7,7 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
-        <title>Confirm Email | {{ config('app.name') }}</title>
+        <title>Request Password Reset Link | {{ config('app.name') }}</title>
         <link href="{{ asset('css/app.css') }}" rel="stylesheet" />
     </head>
     <body class="">
@@ -20,25 +20,33 @@
                                 <div class="d-flex justify-content-center mb-4">
                                     <img  src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
                                 </div>
-                                @if (session('status') == 'verification-link-sent')
+                                @if (session('status'))
                                     <div class="alert alert-success mb-4 alert-dismissible fade show rounded-xl">
-                                        A new email verification link has been emailed to you!
+                                        {{ session('status') }}
                                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                     </div>
                                 @endif
 
                                 <div class="card mb-4 rounded-xl">
                                     <div class="card-body text-center">
-                                        <p>
-                                            Before proceeding, please check your email for a verification link.
-                                        </p>
-                                        <p>
-                                            If you did not receive the email
-                                        </p>
-                                        <form class="d-inline" method="POST" action="{{ url('/email/verification-notification') }}">
+                                        <form method="POST" action="{{ url('/forgot-password') }}">
                                             @csrf
+                                            <div class="row justify-content-center mb-3">
+                                                <div class="col-xl-1 col-lg-2 col-md-3 col-sm-2 text-start">
+                                                    <label for="email">Email</label>
+                                                </div>
+                                                <div class="col-xl-5 col-lg-6 col-md-7 col-sm-7">
+                                                    <input name="email" id="email" type="email" class="form-control rounded-xl @error('email') is-invalid @enderror" autofocus autocomplete="on" value="{{ old('email') }}">
+                                                    @error('email')
+                                                        <em class="small text-danger d-block text-start">
+                                                            {{ $message }}
+                                                        </em>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
                                             <button type="submit" class="btn btn-primary rounded-xxl">
-                                                {{ __('click here to request another') }}
+                                                Send Password Reset Link
                                             </button>
                                         </form>
                                     </div>

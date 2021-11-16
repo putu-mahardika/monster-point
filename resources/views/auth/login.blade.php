@@ -1,3 +1,6 @@
+@php
+    // dd(auth()->user());
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,6 +31,13 @@
                                 </div>
                             </div>
 
+                            @if (session('password_reset'))
+                                <div class="alert alert-success mb-4 alert-dismissible fade show rounded-xl">
+                                    {{ session('password_reset') }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            @endif
+
                             {{-- Login Form --}}
                             <form action="{{ url('login') }}" method="POST">
                                 @csrf
@@ -36,7 +46,12 @@
                                         <label for="email">Email</label>
                                     </div>
                                     <div class="col-md-7">
-                                        <input name="email" id="email" type="email" class="form-control rounded-xl" autofocus autocomplete="on">
+                                        <input name="email" id="email" type="email" class="form-control rounded-xl @error('email') is-invalid @enderror" autofocus autocomplete="on" value="{{ old('email') }}">
+                                        @error('email')
+                                            <em class="small text-danger">
+                                                {{ $message }}
+                                            </em>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="row justify-content-center mb-2">
@@ -45,10 +60,15 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="input-group mb-3">
-                                            <input name="password" id="password" type="password" class="form-control rounded-xl-start border-end-0" aria-describedby="showPassword">
+                                            <input name="password" id="password" type="password" class="form-control rounded-xl-start border-end-0 @error('password') is-invalid @enderror" aria-describedby="showPassword">
                                             <button id="btnShowPassword" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="toogleShowPassword();">
                                                 <i class="fas fa-eye"></i>
                                             </button>
+                                            @error('password')
+                                                <em class="small text-danger">
+                                                    {{ $message }}
+                                                </em>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -58,7 +78,7 @@
                                         <label for="remember">Remember Me</label>
                                     </div>
                                     <div class="col-md-6 text-center text-md-end">
-                                        <a href="#">Forgot Password?</a>
+                                        <a href="{{ url('/forgot-password') }}">Forgot Password?</a>
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-center mt-4">

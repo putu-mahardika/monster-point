@@ -29,16 +29,16 @@ class FortifyServiceProvider extends ServiceProvider
         $this->app->instance(LogoutResponse::class, new class implements LogoutResponse {
             public function toResponse($request)
             {
-                return redirect('/email-success');
+                return redirect('/login');
             }
         });
 
-        $this->app->instance(VerifyEmailViewResponse::class, new class implements VerifyEmailViewResponse {
-            public function toResponse($request)
-            {
-                return redirect('/email-success');
-            }
-        });
+        // $this->app->instance(VerifyEmailViewResponse::class, new class implements VerifyEmailViewResponse {
+        //     public function toResponse($request)
+        //     {
+        //         return redirect('/email-success');
+        //     }
+        // });
     }
 
     /**
@@ -49,8 +49,8 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot()
     {
         Fortify::createUsersUsing(CreateNewUser::class);
-        Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
-        Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
+        // Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
+        // Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
 
         Fortify::registerView(function () {
@@ -65,12 +65,20 @@ class FortifyServiceProvider extends ServiceProvider
             return view('auth.verify');
         });
 
+        Fortify::requestPasswordResetLinkView(function () {
+            return view('auth.passwords.email');
+        });
+
+        Fortify::resetPasswordView(function (Request $request) {
+            return view('auth.passwords.reset', compact('request'));
+        });
+
         RateLimiter::for('login', function (Request $request) {
             return Limit::perMinute(5)->by($request->email.$request->ip());
         });
 
-        RateLimiter::for('two-factor', function (Request $request) {
-            return Limit::perMinute(5)->by($request->session()->get('login.id'));
-        });
+        // RateLimiter::for('two-factor', function (Request $request) {
+        //     return Limit::perMinute(5)->by($request->session()->get('login.id'));
+        // });
     }
 }
