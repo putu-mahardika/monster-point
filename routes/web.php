@@ -1,9 +1,11 @@
 <?php
 
+use App\Helpers\EmailChangeHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Web;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,16 +24,21 @@ Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProvi
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('/pages/dashboard/index');
-    });
+    })->name('dashboard.index');
+
+    Route::resource('profile', Web\UserControler::class);
+    Route::resource('events', Web\EventController::class);
+    Route::resource('merchants', Web\MerchantController::class);
+    Route::resource('members', Web\MemberController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
         $user->save();
     })->name('popup-verify');
 
-    Route::resource('events', Web\EventController::class);
-    Route::resource('merchants', Web\MerchantController::class);
-    Route::resource('members', Web\MemberController::class);
+    Route::get('verify-email-change', function (Request $request) {
+        return EmailChangeHelper::validateToken($request->token);
+    })->name('verify-email-change');
 });
 
 Route::get('/test', function () {

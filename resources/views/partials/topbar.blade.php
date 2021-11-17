@@ -41,7 +41,7 @@
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown">
                     <li>
-                        <a class="small dropdown-item" href="#!">
+                        <a class="small dropdown-item" href="{{ route('profile.index') }}">
                             <i class="fas fa-user me-1"></i> Profile
                         </a>
                     </li>
