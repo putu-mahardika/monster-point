@@ -14,5 +14,5 @@ class Merchant extends Model
     protected $fillable = ['CreateDate', 'Token', 'Nama', 'Alamat', 'Pic', 'PicTelp', 'Email', 'Pass', 'Kebutuhan', 'LastUpdate', 'Akif', 'Validasi'];
     const CREATED_AT = 'CreateDate';
     const UPDATED_AT = 'LastUpdate';
-    protected $hidden = ['Times'];
+    // protected $hidden = ['Times'];
 }
