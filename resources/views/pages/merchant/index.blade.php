@@ -204,11 +204,8 @@
                     const data = selectedItems.selectedRowsData[0];
                     if (data) {
                         let merchantId = data.Id;
-                        console.log('merchantId : ' + merchantId);
                         document.getElementById('merchant-name').innerText = data.Nama;
                         getMembers(merchantId);
-                        // document.getElementById('total-member').innerText = data.Nama;
-                        // console.log(recordCount);
                     }
                 },
             }).dxDataGrid('instance');
@@ -257,14 +254,10 @@
                     showRowLines: true,
                 }).dxDataGrid('instance');
 
-                // =========== Get Total Member ===========
-                const dataSource1 = memberTable.getDataSource();
-                // console.log(dataSource1);
-                setTimeout(() => {
-                    memberCount = dataSource1.items().length;
-                    // console.log(memberCount);
-                    document.getElementById('total-member').innerText = memberCount;
-                }, 400);
+                // =========== Get Total Member ==========
+                var countMembers = memberTable.getDataSource().load().done(function (data) {
+                    document.getElementById('total-member').innerText = data.length;
+                })
             }
 
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -29,19 +29,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('profile', Web\UserControler::class);
     Route::resource('events', Web\EventController::class);
     Route::resource('merchants', Web\MerchantController::class);
+
+    Route::get('members/getMembers', [Web\MemberController::class, 'getMembers'])->name('members.getMembers');
     Route::resource('members', Web\MemberController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
         $user->save();
     })->name('popup-verify');
-
-    Route::get('members/getMembers', [Web\MemberController::class, 'getMembers'])->name('members.getMembers');
-
-
-    Route::resource('events', Web\EventController::class);
-    Route::resource('merchants', Web\MerchantController::class);
-    Route::resource('members', Web\MemberController::class);
 
     Route::get('verify-email-change', function (Request $request) {
         return EmailChangeHelper::validateToken($request->token);
