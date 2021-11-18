@@ -29,9 +29,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         $user->save();
     })->name('popup-verify');
 
+    Route::get('members/getMembers', [Web\MemberController::class, 'getMembers'])->name('members.getMembers');
+
+
     Route::resource('events', Web\EventController::class);
     Route::resource('merchants', Web\MerchantController::class);
     Route::resource('members', Web\MemberController::class);
+
 });
 
 Route::get('/test', function () {
