@@ -1,10 +1,12 @@
 <?php
 
+use App\Helpers\EmailChangeHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
 // use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\Web;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,15 +25,21 @@ Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProvi
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         return view('/pages/dashboard/index');
-    });
+    })->name('dashboard.index');
+
+    Route::resource('profile', Web\UserControler::class);
+    Route::resource('events', Web\EventController::class);
+    Route::resource('merchants', Web\MerchantController::class);
+    Route::resource('members', Web\MemberController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
         $user->save();
     })->name('popup-verify');
 
-    Route::resource('events', Web\EventController::class);
-    Route::resource('merchants', Web\MerchantController::class);
+    Route::get('verify-email-change', function (Request $request) {
+        return EmailChangeHelper::validateToken($request->token);
+    })->name('verify-email-change');
 });
 
 Route::get('/test', function () {
@@ -41,51 +49,17 @@ Route::get('/test', function () {
 Route::view('test2', 'test2');
 
 
-Route::get('/email-success', function () {
-    return view('auth.email-success');
-});
-Route::get('/confirm-email', function () {
-    return view('auth.confirm-email');
-});
 Route::get('/billing', function () {
     return view('/pages/billing/index');
 });
+
 Route::get('/billing-company', function () {
     return view('/pages/billing/billing-company');
 });
 
-// Route::get('/merchants', function () {
-//     return view('pages.merchant.index');
-// });
-
-
-
-
-// Route::get('editorMember', [MemberController::class, 'editorMember'])->name('editor.member');
-// Route::get('getdataMember', [MemberController::class, 'getdataMember'])->name('getdata.member');
-// Route::post('deleteMember', [MemberController::class, 'deleteMember'])->name('delete.member');
-// Route::resource('merchants', MemberController::class);
-
-// Route::get('/members', function () {
-//     return view('/pages/member/index');
-// });
-// Route::get('/member-detail', function () {
-//     return view('/pages/merchant-member/member-detail');
-// });
-// Route::get('/help', function () {
-//     return view('/pages/help/index');
-// });
-
-// Route::get('/dashboard', function () {
-//     return view('/pages/dashboard/index');
-// });
-
-
-// Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
-Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
-Route::get('/greet', [SocialiteController::class, 'greet']);
-
-
+Route::get('/help', function () {
+    return view('/pages/help/index');
+});
 
 Route::get('/coba', function () {
     try {

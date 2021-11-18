@@ -13243,7 +13243,7 @@ body {
     padding: .25rem;
     color: var(--bs-dark);
     z-index: 11;
-    left: calc(50% - 1rem);
+    /* left: calc(50% - 0); */
 }
 
 .dx-datagrid-headers .dx-header-row {

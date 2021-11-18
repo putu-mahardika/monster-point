@@ -37,17 +37,12 @@
         @if ($settings['userAvatar'] ?? true)
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img class="rounded-circle" src="https://ui-avatars.com/api/?name=John+Doe" class="img-fluid" width="40" height="40" alt="Avatar">
+                    <img class="rounded-circle" src="https://ui-avatars.com/api/?name={{ str_replace(' ', '+', auth()->user()->name) }}" class="img-fluid" width="40" height="40" alt="Avatar">
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="navbarDropdown">
                     <li>
-                        <a class="small dropdown-item" href="#!">
-                            <i class="fas fa-cogs me-1"></i> Settings
-                        </a>
-                    </li>
-                    <li>
-                        <a class="small dropdown-item" href="#!">
-                            <i class="fas fa-list me-1"></i> Activity Log
+                        <a class="small dropdown-item" href="{{ route('profile.index') }}">
+                            <i class="fas fa-user me-1"></i> Profile
                         </a>
                     </li>
                     <li>

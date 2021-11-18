@@ -242,7 +242,12 @@
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Call modal Create Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+<<<<<<< HEAD
             $(document).on('click', '#create', function () {
+=======
+            $(document).on('click', '#createMerchant', function () {
+                // $('.editorassets').find('form')[0].reset();
+>>>>>>> 3fb7533f219b3e192ee25b2aa50e33454e9c7bbf
                 $.get('{{ route("merchants.create") }}', function(data) {
                     $('.modalMerchant').find('.modal-content').html(data);
                     $('.modalMerchant').modal('show');
