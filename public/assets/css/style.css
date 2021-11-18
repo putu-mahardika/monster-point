@@ -256,7 +256,7 @@ section {
   font-size: 12px;
 }
 .navbar .dropdown ul a:hover, .navbar .dropdown ul .active:hover, .navbar .dropdown ul li:hover > a {
-  color: #4154f1;
+  color: #64d6eb;
 }
 .navbar .dropdown:hover > ul {
   opacity: 1;
@@ -588,7 +588,7 @@ section {
   transition: 0.3s;
 }
 .features .feature-box:hover i {
-  background: #4154f1;
+  background: #64d6eb;
   color: #fff;
 }
 .features .feture-tabs {
@@ -1349,7 +1349,7 @@ section {
   font-size: 18px;
 }
 .recent-blog-posts .post-box:hover .post-title {
-  color: #4154f1;
+  color: #64d6eb;
 }
 .recent-blog-posts .post-box:hover .post-img img {
   transform: rotate(6deg) scale(1.2);
@@ -1438,7 +1438,7 @@ section {
   padding: 12px 15px;
 }
 .contact .php-email-form button[type=submit] {
-  background: #4154f1;
+  background: var(--ekky-cyan) ;
   border: 0;
   padding: 10px 30px;
   color: #fff;
@@ -1446,7 +1446,7 @@ section {
   border-radius: 4px;
 }
 .contact .php-email-form button[type=submit]:hover {
-  background: #5969f3;
+  background: #64d6eb;
 }
 @-webkit-keyframes animate-loading {
   0% {
@@ -1926,13 +1926,13 @@ section {
   font-size: 16px;
   padding: 0 30px;
   margin: 3px;
-  background: #4154f1;
+  background: var(--ekky-cyan) ;
   color: #fff;
   transition: 0.3s;
   border-radius: 4px;
 }
 .footer .footer-newsletter form input[type=submit]:hover {
-  background: #5969f3;
+  background: #64d6eb;
 }
 .footer .footer-top {
   background: white url(../img/footer-bg.png) no-repeat right top;
@@ -2034,4 +2034,7 @@ section {
   text-align: center;
   font-size: 13px;
   color: #012970;
+}
+.rounded-xxl {
+    border-radius: 0.8rem !important;
 }

@@ -28,7 +28,6 @@
   <!-- Template Main CSS File -->
   <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
 
-
   <!-- =======================================================
   * Template Name: FlexStart - v1.7.0
   * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
@@ -43,8 +42,8 @@
   <header id="header" class="header fixed-top">
     <div class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-      <a href="#" class="logo d-flex align-items-center">
-        <img src="img/logo_ps_long.png" alt="logo_ps" style="width:100%; height:auto;">
+      <a href="#" class="d-flex align-items-center">
+          <img src="img/logo_ps_long.png" alt="logo_ps" width="100">
       </a>
 
       <nav id="navbar" class="navbar">
@@ -73,7 +72,7 @@
             </ul>
           </li>
           <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
-          <li><a class="getstarted scrollto" href="/login">Login</a></li>
+          <li><a class="rounded-xxl getstarted scrollto" href="/login">Login</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
@@ -91,7 +90,7 @@
           <h2 data-aos="fade-up" data-aos-delay="400">Service ini dibuat untuk melayani point dari perusahaan yang membutukan point pada saat transaksi.</h2>
           <div data-aos="fade-up" data-aos-delay="600">
             <div class="text-center text-lg-start">
-              <a href="#" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center">
+              <a href="#" class="btn-get-started scrollto d-inline-flex align-items-center justify-content-center align-self-center rounded-xxl">
                 <span>Register Here</span>
                 <i class="bi bi-arrow-right"></i>
               </a>
@@ -468,7 +467,7 @@
               <i class="ri-discuss-line icon"></i>
               <h3>Eosle Commodi</h3>
               <p>Ut autem aut autem non a. Sint sint sit facilis nam iusto sint. Libero corrupti neque eum hic non ut nesciunt dolorem.</p>
-              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+              <a href="#" class="read-more rounded-xxl"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
 
@@ -486,7 +485,7 @@
               <i class="ri-discuss-line icon"></i>
               <h3>Asperiores Commodi</h3>
               <p>Non et temporibus minus omnis sed dolor esse consequatur. Cupiditate sed error ea fuga sit provident adipisci neque.</p>
-              <a href="#" class="read-more"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
+              <a href="#" class="read-more rounded-xxl"><span>Read More</span> <i class="bi bi-arrow-right"></i></a>
             </div>
           </div>
 
@@ -1200,7 +1199,7 @@
                   <div class="error-message"></div>
                   <div class="sent-message">Your message has been sent. Thank you!</div>
 
-                  <button type="submit">Send Message</button>
+                  <button class="rounded-xxl" type="submit">Send Message</button>
                 </div>
 
               </div>
@@ -1228,7 +1227,7 @@
           </div>
           <div class="col-lg-6">
             <form action="" method="post">
-              <input type="email" name="email"><input type="submit" value="Subscribe">
+              <input class="" type="email" name="email"><input class="btn rounded-xxl" type="submit" value="Subscribe">
             </form>
           </div>
         </div>
@@ -1239,8 +1238,8 @@
       <div class="container">
         <div class="row gy-4">
           <div class="col-lg-5 col-md-12 footer-info">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <img src="/img/logo_ps_long.png" alt="logo" width="300" height="300">
+            <a href="index.html" class=" d-flex align-items-center">
+              <img src="/img/logo_ps_long.png" alt="logo" width="200">
             </a>
             <p>Cras fermentum odio eu feugiat lide par naso tierra. Justo eget nada terra videa magna derita valies darta donna mare fermentum iaculis eu non diam phasellus.</p>
             <div class="social-links mt-3">
