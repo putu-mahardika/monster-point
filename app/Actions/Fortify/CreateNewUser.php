@@ -49,7 +49,7 @@ class CreateNewUser implements CreatesNewUsers
         ]);
 
         return User::create([
-            'name' => $input['merchant_pic'],
+            'name' => $input['merchant_name'],
             'email' => $input['merchant_email'],
             // 'password' => Hash::make($input['password']),
             'password' => $password,

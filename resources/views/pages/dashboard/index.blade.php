@@ -11,6 +11,12 @@
 @section('title', 'Dashboard')
 
 @section('content')
+    @if (session('status'))
+        <div class="alert alert-success mb-4 alert-dismissible fade show rounded-xl">
+            {{ session('status') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-6 mb-3">
             <div class="card rounded-xxl">
@@ -62,9 +68,9 @@
                         <div class="row justify-content-between">
                             <div class="col-lg-6 mb-3">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
-                                    <button type="button" class="btn btn-sm py-0 px-3 btn-outline-primary">M</button>
-                                    <button type="button" class="btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
+                                    <button id="btnDay" type="button" data-code="d" class="btn-type-date btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
+                                    <button id="btnMonth" type="button" data-code="m" class="btn-type-date btn btn-sm py-0 px-3 btn-outline-primary">M</button>
+                                    <button id="btnYear" type="button" data-code="y" class="btn-type-date btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
                                 </div>
                             </div>
                             <div class="col-lg-6 mb-3">
@@ -121,6 +127,49 @@
 
 @section('js')
     <script>
+        let config = {
+            type: {
+                d: 'day',
+                m: 'month',
+                y: 'year',
+                curr: 'd'
+            },
+            date: {
+                prev: "2021-11-14",
+                curr: "2021-11-15",
+                next: "2021-11-16",
+                now: "2021-11-15"
+            },
+            format: {
+                d: 'dd MM YYYY',
+                m: 'MM YYYY',
+                y: 'YYYY'
+            }
+        };
+
+        $('.btn-type-date').on('click', function () {
+            $('.btn-type-date').addClass('btn-outline-primary');
+            $('.btn-type-date').removeClass('btn-primary');
+
+            $(this).removeClass('btn-outline-primary');
+            $(this).addClass('btn-primary');
+
+            config.type.curr = $(this).data('code');
+        });
+
+        function reloadChart() {
+            //  dsnsjkfjkdsfkls
+        }
+
+        console.log(
+            config.format[config.type.curr]
+        );
+
+        $(document).ready(() => {
+            console.log(
+                @json(auth()->user())
+            );
+        });
         const complaintsData = [{
                 complaint: 'Sunday',
                 count: 780

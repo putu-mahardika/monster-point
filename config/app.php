@@ -193,6 +193,7 @@ return [
         App\Providers\FunctionHelperServiceProvider::class,
         App\Providers\FortifyServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        App\Providers\EmailChangeServiceProvider::class,
 
     ],
 
@@ -251,6 +252,7 @@ return [
         'MqttHelper' => App\Helpers\MqttHelper::class,
         'FunctionHelper' => App\Helpers\FunctionHelper::class,
         'MemberHelper' => App\Helpers\MemberHelper::class,
+        'EmailChangeHelper' => \App\Helpers\EmailChangeHelper::class,
     ],
 
 ];
