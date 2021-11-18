@@ -34,19 +34,14 @@
                     @method('put')
             @endif
                 @csrf
-                <div class="row mb-3">
+                <div class="row">
                     <div class="col-xl-6">
                         <div class="row">
                             <div class="col-xl-2 col-lg-3 py-2">
                                 <label for="code">Code</label>
                             </div>
                             <div class="col-xl-10 col-lg-9 mb-3">
-                                <div class="input-group">
-                                    <input type="text" name="code" id="code" class="form-control rounded-xl-start border-end-0" autofocus autocomplete="off" required value="{{ old('code', $event->Kode ?? '') }}">
-                                    <span class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </span>
-                                </div>
+                                <input type="text" name="code" id="code" class="form-control rounded-xl" autofocus autocomplete="off" required value="{{ old('code', $event->Kode ?? '') }}">
                                 <x-error-message-field for="code" class="d-none"></x-error-message-field>
                             </div>
                         </div>
@@ -55,12 +50,7 @@
                                 <label for="name">Event</label>
                             </div>
                             <div class="col-xl-10 col-lg-9 mb-3">
-                                <div class="input-group">
-                                    <input type="text" name="name" id="name" class="form-control rounded-xl-start border-end-0" autocomplete="off" required value="{{ old('name', $event->Event ?? '') }}">
-                                    <span class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);">
-                                        <i class="fas fa-pencil-alt"></i>
-                                    </span>
-                                </div>
+                                <input type="text" name="name" id="name" class="form-control rounded-xl" autocomplete="off" required value="{{ old('name', $event->Event ?? '') }}">
                                 <x-error-message-field for="name" class="d-none"></x-error-message-field>
                             </div>
                         </div>
@@ -73,6 +63,45 @@
                             <div class="col-xl-10 col-lg-9">
                                 <textarea name="note" id="note" class="form-control rounded-xl" cols="30" rows="3" style="resize: none;">{{ old('note', $event->Keterangan ?? '') }}</textarea>
                                 <x-error-message-field for="note" class="d-none"></x-error-message-field>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-xl-2 col-lg-3 py-2">
+                                <label for="action">Action</label>
+                            </div>
+                            <div class="col-xl-10 col-lg-9 mb-3">
+                                <div class="input-group">
+                                    <select name="action" id="action" class="form-select rounded-xl-start" required>
+                                        <option value="none">None</option>
+                                        <option value="daily" @if(in_array(old('action', $event->Daily ?? false), ['daily', true])) selected @endif>Daily</option>
+                                        <option value="oncetime" @if(in_array(old('action', $event->OnceTime ?? false), ['oncetime', true])) selected @endif>Once Time</option>
+                                    </select>
+                                    <button type="button" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" data-bs-toggle="modal" data-bs-target="#modalActionFieldInfo">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                                <x-error-message-field for="action" class="d-none"></x-error-message-field>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-xl-2 col-lg-3">
+                                <label for="rate_limiter">Rate Limiter</label>
+                            </div>
+                            <div class="col-xl-10 col-lg-9 mb-3">
+                                <div class="input-group">
+                                    <input type="number" class="form-control rounded-xl-start" value="{{ old('rate_limiter', $event->LockDelay ?? 15) }}" min="0" name="rate_limiter" id="rate_limiter" required>
+                                    <button type="button" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" data-bs-toggle="modal" data-bs-target="#modalRateLimiterFieldInfo">
+                                        <i class="fas fa-info-circle"></i>
+                                    </button>
+                                </div>
+                                <x-error-message-field for="rate_limiter" class="d-none"></x-error-message-field>
                             </div>
                         </div>
                     </div>
@@ -116,7 +145,7 @@
                 @if (request()->route()->getName() == 'events.edit')
                     <div class="col-md-2 mb-2">
                         <div class="d-grid gap-2">
-                            <button id="btnTest" type="button" class="btn btn-dark rounded-xxl">
+                            <button id="btnTest" type="button" class="btn btn-dark rounded-xxl" data-bs-toggle="modal" data-bs-target="#modalFormulaTester">
                                 Test
                             </button>
                         </div>
@@ -142,39 +171,92 @@
 @endsection
 
 @section('modal')
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
-        aria-labelledby="staticBackdropLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+    <!-- Modal -->
+    <div class="modal fade" id="modalActionFieldInfo" tabindex="-1" aria-labelledby="modalActionFieldInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content rounded-xxl">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Testing</h5>
+                    <h5 class="modal-title" id="modalActionFieldInfoLabel">Action Field</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="text" class="form-control mb-2" placeholder="Event Name">
-                    <input type="text" class="form-control mb-2" placeholder="Formula" style="height:200px">
+                    <p>"Action" field adalah inputan untuk menentukan apakah event yang dibuat membutuhkan pengecekan terhadap data transaksi member</p>
+                    <p>Terdapat 3 opsi yang dapat dipilih. yaitu "None", "Daily", dan "Once Time"</p>
+                    <p>
+                        <h5 style="fw-bolder">None</h5>
+                        <p>Event yang dibuat tidak memerlukan pengecekan transaksi member untuk kemudian mendapatkan poin.</p>
+                        <p>Poin akan ditambahkan pada member (sesuai formula yang dibuat) tepat setelah event dijalankan.</p>
+                    </p>
+                    <p>
+                        <h5 style="fw-bolder">Daily</h5>
+                        <p>Event yang dibuat memerlukan pengecekan transaksi member untuk kemudian mendapatkan poin.</p>
+                        <p>Sistem kami akan memastikan event dengan action ini hanya bisa dijalankan 1x (satu kali) sehari untuk tiap member.</p>
+                    </p>
+                    <p>
+                        <h5 style="fw-bolder">Once Time</h5>
+                        <p>Event yang dibuat memerlukan pengecekan transaksi member untuk kemudian mendapatkan poin.</p>
+                        <p>Sistem kami akan memastikan event dengan action ini hanya bisa dijalankan 1x (satu kali) sejak member terdaftar.</p>
+                    </p>
                 </div>
-                <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Result/Notes</h5>
-
-                </div>
-                <div class="modal-body">
-                    <input type="text" class="form-control mb-2" placeholder="" style="height: 100px">
-                </div>
-
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-md rounded-xl" style="background-color:#CCCCCC; color:white"
-                        data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary rounded-xxl" data-bs-dismiss="modal">Close</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalRateLimiterFieldInfo" tabindex="-1" aria-labelledby="modalRateLimiterFieldInfoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg">
+            <div class="modal-content rounded-xxl">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRateLimiterFieldInfoLabel">Rate Limiter Field</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>"Rate Limiter" field adalah inputan untuk mengontrol jumlah request terhadap event dalam rentang waktu tertentu.</p>
+                    <p>Ini dapat digunakan untuk mencegah DoS, dan penyalahgunaan permintaan penambahan poin.</p>
+                    <p>field ini menggunakan satuan detik. input angka 0 (Nol) untuk menjadikannya tidak terbatas.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary rounded-xxl" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (request()->route()->getName() == 'events.edit')
+        <div class="modal fade" id="modalFormulaTester" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalFormulaTesterLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable modal-lg">
+                <div class="modal-content rounded-xxl">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormulaTesterLabel">Formula Tester</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-2">
+                            <input type="text" class="form-control rounded-xl" placeholder="Event Name">
+                        </div>
+                        <div class="mb-2 border rounded-xl" id="formulaTesterContainer">
+                            <span class="d-block text-center py-3">Please Wait...</span>
+                        </div>
+                        <div class="border rounded-xxl p-3"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary rounded-xxl" data-bs-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 
 @section('js')
     <script>
         let eventFormula = null;
         let eventExample = null;
+        let eventTester = null;
         let logs = null;
 
         function loadFormula(search = '') {
@@ -287,6 +369,38 @@
                         $('#btnSave').removeClass('disabled');
                     }
                 });
+            });
+
+            $('#modalFormulaTester').on('show.bs.modal', function (e) {
+                $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
+                eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
+                    lineNumbers: true,
+                    autoRefresh: true,
+                    mode: 'text/monsterpoint',
+                    readOnly: 'nocursor',
+                    // lineNumbers: true,
+                    // lineWrapping: true,
+                });
+                eventTester.setSize('100%', '10rem');
+            });
+
+            $('#modalFormulaTester').on('shown.bs.modal', function (e) {
+                eventTester.refresh();
+
+                $.ajax({
+                    url: "{{ route('event-test', $event->Id) }}",
+                    type: "POST",
+                    data: {
+                        event_id: {{ $event->Id }}
+                    },
+                    success: (res) => {
+
+                    },
+                    error: (error) => {
+
+                    }
+                });
+
             });
         });
     </script>
