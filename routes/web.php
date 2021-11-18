@@ -99,6 +99,6 @@ Route::get('/coba', function () {
 Route::get('/greet', [GreetingController::class, 'greets']);
 
 //landing page
-Route::get('/landing', function () {
+Route::get('/', function () {
     return view('/landing');
 });
