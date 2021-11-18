@@ -116,7 +116,7 @@ class MerchantController extends Controller
         if ($validator->fails()) {
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
-            Merchant::where('id', $merchant->Id)->update([
+            $query = Merchant::where('id', $merchant->Id)->update([
                 'Nama' => $request->merchant_name,
                 'Alamat' => $request->merchant_address,
                 'Pic' => $request->merchant_pic,
@@ -124,7 +124,16 @@ class MerchantController extends Controller
                 'Email' => $request->merchant_pic_email,
                 'Kebutuhan' => $request->use_for,
             ]);
+<<<<<<< HEAD
             return response(['msg' => 'The Merchant has been updated']);
+=======
+        }
+
+        if ($query) {
+            return response()->json(['code' => 1, 'msg' => 'Merchant Has Been Updated']);
+        } else {
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+>>>>>>> 3fb7533f219b3e192ee25b2aa50e33454e9c7bbf
         }
     }
 
@@ -136,7 +145,16 @@ class MerchantController extends Controller
      */
     public function destroy(Merchant $merchant)
     {
+<<<<<<< HEAD
         Merchant::where('id', $merchant->Id)->delete();
         return response(['message' => 'The merchant has been deleted']);
+=======
+        $query = $merchant->delete();
+        if ($query) {
+            return response()->json(['code' => 1, 'msg' => 'Merchant Has Been Deleted From Databases']);
+        } else {
+            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+        }
+>>>>>>> 3fb7533f219b3e192ee25b2aa50e33454e9c7bbf
     }
 }

@@ -17,10 +17,8 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'id', 'created_at', 'updated_at', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'
     ];
 
     /**
@@ -44,5 +42,25 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function socialAccounts(){
         return $this->hasMany(SocialAccount::class);
+    }
+
+    /**
+     * Get the merchant associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function merchant()
+    {
+        return $this->hasOne(Merchant::class, 'email', 'email');
+    }
+
+    /**
+     * Get all of the emailChangeTokens for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function emailChangeTokens()
+    {
+        return $this->hasMany(EmailChangeVerification::class, 'user_id', 'id');
     }
 }
