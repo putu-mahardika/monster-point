@@ -20,6 +20,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->name('api.')->group(function () {
-    Route::post('/{token}/v1/{event}/{id}', [v1\LogApiController::class, 'create'])->name('create');
+    Route::post('{token}/{event}/{id}/{value}', [v1\LogApiController::class, 'index'])->name('index');
 });
 
