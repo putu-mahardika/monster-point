@@ -18,13 +18,16 @@ use Illuminate\Http\Request;
 |
 */
 
+// SOCIALITE AUTH ROUTES
 Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
 
+// LANDING PAGE
+Route::view('/', 'landing');
+
+// AFTER LOGIN ROUTES
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('/pages/dashboard/index');
-    })->name('dashboard.index');
+    Route::view('/dashboard', 'pages.dashboard.index')->name('dashboard.index');
 
     Route::resource('profile', Web\UserControler::class);
     Route::resource('merchants', Web\MerchantController::class);
@@ -34,7 +37,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::resource('events', Web\EventController::class);
     Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
-
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
@@ -49,16 +51,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
         Route::get('events/{merchant}', [Web\EventController::class, 'dx'])->name('events');
     });
-});
-
-Route::get('/test', function () {
-    return view('/test');
-});
-
-Route::view('test2', 'test2');
-
-Route::get('/home', function () {
-    return view('/home');
 });
 
 Route::get('/billing', function () {
@@ -84,7 +76,4 @@ Route::get('/coba', function () {
 //riset swagger
 Route::get('/greet', [GreetingController::class, 'greets']);
 
-//landing page
-Route::get('/', function () {
-    return view('/landing');
-});
+
