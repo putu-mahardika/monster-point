@@ -22,4 +22,9 @@ class Billing extends Model
     {
         return $this->hasMany(BillingDetail::class, 'billing_id', 'Id');
     }
+
+    public function merchant()
+    {
+        return $this->belongsTo(Merchant::class, 'IdMerchant', 'Id');
+    }
 }
