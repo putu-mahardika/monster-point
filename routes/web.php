@@ -18,20 +18,25 @@ use Illuminate\Http\Request;
 |
 */
 
+// SOCIALITE AUTH ROUTES
 Route::get('auth/{provider}', [SocialiteController::class, 'redirectToProvider']);
 Route::get('auth/{provider}/callback', [SocialiteController::class, 'handleProviderCallback']);
 
+// LANDING PAGE
+Route::view('/', 'landing');
+
+// AFTER LOGIN ROUTES
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('/pages/dashboard/index');
-    })->name('dashboard.index');
+    Route::view('/dashboard', 'pages.dashboard.index')->name('dashboard.index');
 
     Route::resource('profile', Web\UserControler::class);
-    Route::resource('events', Web\EventController::class);
     Route::resource('merchants', Web\MerchantController::class);
 
     Route::get('members/getMembers', [Web\MemberController::class, 'getMembers'])->name('members.getMembers');
     Route::resource('members', Web\MemberController::class);
+
+    Route::resource('events', Web\EventController::class);
+    Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
@@ -41,16 +46,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('verify-email-change', function (Request $request) {
         return EmailChangeHelper::validateToken($request->token);
     })->name('verify-email-change');
-});
 
-Route::get('/test', function () {
-    return view('/test');
-});
-
-Route::view('test2', 'test2');
-
-Route::get('/home', function () {
-    return view('/home');
+    Route::prefix('dx')->name('dx.')->group(function () {
+        Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
+        Route::get('events/{merchant}', [Web\EventController::class, 'dx'])->name('events');
+    });
 });
 
 Route::get('/billing', function () {
@@ -72,3 +72,8 @@ Route::get('/coba', function () {
         die("Could not connect to the database.  Please check your configuration. error:" . $e );
     }
 });
+
+//riset swagger
+Route::get('/greet', [GreetingController::class, 'greets']);
+
+
