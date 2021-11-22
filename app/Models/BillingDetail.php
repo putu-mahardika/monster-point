@@ -15,7 +15,7 @@ class BillingDetail extends Model
 
     public function billing()
     {
-        return $this->belongsTo(BillingDetail::class, 'billing_id', 'Id');
+        return $this->belongsTo(Billing::class, 'billing_id', 'Id');
     }
 
 }
