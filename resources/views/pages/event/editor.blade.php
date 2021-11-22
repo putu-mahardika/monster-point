@@ -175,16 +175,35 @@
     <!-- Modal -->
     <div class="modal fade" id="modalActionFieldInfo" tabindex="-1" aria-labelledby="modalActionFieldInfoLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable modal-lg">
-            <div class="modal-content rounded-xxl">
+            <div class="modal-content rounded-xxl ms-2">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modalActionFieldInfoLabel">Action Field</h5>
+                    <h3 class="modal-title" id="modalActionFieldInfoLabel">Action Field</h3>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <p> <small> The "Action" column is input to determine whether the event that is created requires checking the member transaction data</small></p>
+                    <p> <small> There are 3 options to choose from. i.e. <b> "None", "Daily", dan "Once Time"</b></small></p>
+                    <p> <small>
+                        <h4 style="fw-bolder">None</h4>
+                        <p> <small> Events that are created do not require checking member transactions to get points.</small></p>
+                        <p> <small> Points will be added to members (according to the formula) right after the event runs.</small></p>
+                    </small></p>
+                    <p> <small>
+                        <h4 style="fw-bolder">Daily</h4>
+                        <p> <small> Events that are created require checking member transactions to get points.</small></p>
+                        <p> <small> Our system will ensure that events with this action can only be run once a day for each member.</small></p>
+                    </small></p>
+                    <p> <small>
+                        <h4 style="fw-bolder">Once Time</h4>
+                        <p> <small>Events that are created require checking member transactions to get points.</small></p>
+                        <p> <small> Our system will ensure that the event with this action can only be run once (once) since the member has been registered.</p>
+                    </p>
+                </div>
+                {{-- <div class="modal-body">
                     <p>"Action" field adalah inputan untuk menentukan apakah event yang dibuat membutuhkan pengecekan terhadap data transaksi member</p>
                     <p>Terdapat 3 opsi yang dapat dipilih. yaitu "None", "Daily", dan "Once Time"</p>
                     <p>
-                        <h5 style="fw-bolder">None</h5>
+                        <h4 style="fw-bolder">None</h5>
                         <p>Event yang dibuat tidak memerlukan pengecekan transaksi member untuk kemudian mendapatkan poin.</p>
                         <p>Poin akan ditambahkan pada member (sesuai formula yang dibuat) tepat setelah event dijalankan.</p>
                     </p>
@@ -198,7 +217,7 @@
                         <p>Event yang dibuat memerlukan pengecekan transaksi member untuk kemudian mendapatkan poin.</p>
                         <p>Sistem kami akan memastikan event dengan action ini hanya bisa dijalankan 1x (satu kali) sejak member terdaftar.</p>
                     </p>
-                </div>
+                </div> --}}
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary rounded-xxl" data-bs-dismiss="modal">Close</button>
                 </div>
@@ -214,9 +233,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <p>"Rate Limiter" field adalah inputan untuk mengontrol jumlah request terhadap event dalam rentang waktu tertentu.</p>
-                    <p>Ini dapat digunakan untuk mencegah DoS, dan penyalahgunaan permintaan penambahan poin.</p>
-                    <p>field ini menggunakan satuan detik. input angka 0 (Nol) untuk menjadikannya tidak terbatas.</p>
+                    <p>The "Rate Limiter" field is an input to control the number of requests for an event within a certain time range.</p>
+                    <p>This can be used to prevent DoS, and requests from accumulating.</p>
+                    <p>This field uses seconds. input the 0 (Zero) for unlimited uses.</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary rounded-xxl" data-bs-dismiss="modal">Close</button>
@@ -276,8 +295,7 @@
                     if (formula.name.indexOf(search.toUpperCase()) >= 0) {
                         list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
                     }
-                }
-                else {
+                } else {
                     list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
                 }
                 index++;
@@ -304,7 +322,7 @@
 
         $(document).ready(() => {
             $('#formulaContainer').html(`<textarea name="formula" id="formula" cols="30" rows="3"></textarea>`);
-            @if (request()->route()->getName() == 'events.edit')
+            @if(request() - > route() - > getName() == 'events.edit')
                 $('#formulaContainer').html(`<textarea name="formula" id="formula" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
             @endif
             eventFormula = CodeMirror.fromTextArea(document.getElementById('formula'), {
@@ -326,7 +344,6 @@
                 readOnly: 'nocursor',
             });
             eventExample.setSize('100%', '10rem');
-
             loadFormula();
 
             $('#searchFormula').on('keyup', function () {
@@ -348,27 +365,29 @@
 
                 $.ajax({
                     url: $(this).attr('action'),
-                    @if (request()->route()->getName() == 'events.create')
-                        type: "POST",
-                    @elseif (request()->route()->getName() == 'events.edit')
-                        type: "PUT",
+                    @if(request() - > route() - > getName() == 'events.create')
+                    type: "POST",
+                    @elseif(request() - > route() - > getName() == 'events.edit')
+                    type: "PUT",
                     @endif
                     data: $(this).serialize(),
                     success: (res) => {
                         Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: res.message,
-                        })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = res.url;
-                            }
-                        })
+                                icon: 'success',
+                                title: 'Success!',
+                                text: res.message,
+                            })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = res.url;
+                                }
+                            })
                     },
                     error: (error) => {
                         showErrorField(error.responseJSON);
-                        $('html, body').animate({ scrollTop: 0 });
+                        $('html, body').animate({
+                            scrollTop: 0
+                        });
                         $(this).removeClass('disabled-container');
                         $('#btnSave').html(`
                             Save
@@ -380,7 +399,7 @@
                 });
             });
 
-            @if (request()->route()->getName() == 'events.edit')
+            @if(request() - > route() - > getName() == 'events.edit')
                 $('#modalFormulaTester').on('show.bs.modal', function (e) {
                     $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
                     eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
@@ -398,7 +417,11 @@
                         url: "{{ route('event-test', $event->Id) }}",
                         type: "POST",
                         data: {
-                            event_id: {{ $event->Id }}
+                            event_id: {
+                                {
+                                    $event - > Id
+                                }
+                            }
                         },
                         success: (res) => {
                             new JsonViewer({
@@ -411,16 +434,23 @@
                         },
                         error: (error) => {
                             $('#resultTest').html(`
-                                <span class="text-danger">${error.responseJSON.message}</span>
-                            `);
+                                    <span class="text-danger">${error.responseJSON.message}</span>
+                                `);
                         }
                     });
+                });
+                eventTester.setSize('100%', '10rem');
+
+                $('#modalFormulaTester').on('shown.bs.modal', function (e) {
+                    eventTester.refresh();
                 });
 
                 $('#modalFormulaTester').on('hidden.bs.modal', function (e) {
                     $('#resultTest').html('');
+
                 });
             @endif
         });
+
     </script>
 @endsection
