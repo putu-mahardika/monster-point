@@ -80,3 +80,11 @@ Route::get('/coba', function () {
         die("Could not connect to the database.  Please check your configuration. error:" . $e );
     }
 });
+
+//riset swagger
+Route::get('/greet', [GreetingController::class, 'greets']);
+
+//landing page
+Route::get('/', function () {
+    return view('/landing');
+});
