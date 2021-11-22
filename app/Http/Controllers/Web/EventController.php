@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Web;
 use App\Helpers\FunctionHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
+use App\Models\Merchant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -48,8 +50,10 @@ class EventController extends Controller
         $validator = Validator::make($request->all(),[
             'code' => ['required', 'unique:events,Kode', 'string', 'max:10'],
             'name' => ['required', 'string', 'max:250'],
-            'note' => ['string', 'max:250'],
+            'note' => ['nullable', 'string', 'max:250'],
             'formula' => ['required', 'string', 'max:500'],
+            'action' => ['required'],
+            'rate_limiter' => ['required', 'min:0', 'numeric']
         ]);
 
         if ($validator->fails()) {
@@ -57,11 +61,14 @@ class EventController extends Controller
         }
 
         $event = Event::create([
-            'IdMerchant' => 1,
+            'IdMerchant' => $request->merchant_id,
             'Kode' => $request->code,
             'Event' => $request->name,
             'Keterangan' => $request->note,
-            'Formula' => FunctionHelper::formatFormula($request->formula)
+            'Formula' => FunctionHelper::formatFormula($request->formula),
+            'Daily' => $request->action == 'daily' ? true : null,
+            'OnceTime' => $request->action == 'oncetime' ? true : null,
+            'LockDelay' => $request->rate_limiter
         ]);
 
         return response([
@@ -116,7 +123,10 @@ class EventController extends Controller
             'Kode' => $request->code,
             'Event' => $request->name,
             'Keterangan' => $request->note,
-            'Formula' => FunctionHelper::formatFormula($request->formula)
+            'Formula' => FunctionHelper::formatFormula($request->formula),
+            'Daily' => $request->action == 'daily' ? true : null,
+            'OnceTime' => $request->action == 'oncetime' ? true : null,
+            'LockDelay' => $request->rate_limiter
         ]);
         $event->refresh();
 
@@ -138,5 +148,26 @@ class EventController extends Controller
         return response([
             'message' => 'The event has been deleted',
         ]);
+    }
+
+    public function eventTest(Event $event)
+    {
+        try {
+            $exec = DB::select('SET NOCOUNT ON; EXEC dbo.sp_FormulaTesting @token = ?, @event = ?, @value = ?', [
+                $event->merchant->Token,
+                $event->Kode,
+                rand(1, 10)
+            ]);
+            $event->update(['tested' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Something went wrong!'], 400);
+        }
+        return response()->json($exec);
+    }
+
+    public function dx(Request $request, $merchant_id)
+    {
+        $events = Event::where('IdMerchant', $merchant_id)->get();
+        return response()->json($events);
     }
 }

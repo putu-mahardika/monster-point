@@ -27,9 +27,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard.index');
 
     Route::resource('profile', Web\UserControler::class);
-    Route::resource('events', Web\EventController::class);
     Route::resource('merchants', Web\MerchantController::class);
     Route::resource('members', Web\MemberController::class);
+
+    Route::resource('events', Web\EventController::class);
+    Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
+
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
@@ -39,6 +42,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('verify-email-change', function (Request $request) {
         return EmailChangeHelper::validateToken($request->token);
     })->name('verify-email-change');
+
+    Route::prefix('dx')->name('dx.')->group(function () {
+        Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
+        Route::get('events/{merchant}', [Web\EventController::class, 'dx'])->name('events');
+    });
 });
 
 Route::get('/test', function () {
