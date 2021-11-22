@@ -13,9 +13,11 @@ class LogHelper {
                 $event,
                 $value
             ]);
+            unset($exec[0]->Times);
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong!'], 400);
         }
         return response()->json($exec);
     }
+
 }
