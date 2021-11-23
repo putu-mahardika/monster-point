@@ -24,4 +24,9 @@ class Merchant extends Model
     {
         return $this->hasMany(Event::class, 'IdMerchant', 'Id');
     }
+
+    public function billings()
+    {
+        return $this->hasMany(Billing::class, 'IdMerchant', 'Id');
+    }
 }
