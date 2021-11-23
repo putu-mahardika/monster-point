@@ -171,15 +171,6 @@
             //  dsnsjkfjkdsfkls
         }
 
-        console.log(
-            config.format[config.type.curr]
-        );
-
-        $(document).ready(() => {
-            console.log(
-                @json(auth()->user())
-            );
-        });
         const complaintsData = [{
                 complaint: 'Sunday',
                 count: 780

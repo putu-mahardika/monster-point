@@ -40,9 +40,17 @@
 </div>
 
 <script>
+    const getRootPathDocumentLocation = () => {
+        return window.location.pathname.split('/').filter((item) => {
+            if (item !== '') {
+                return item;
+            }
+        })[0];
+    }
+
     let lists = document.querySelectorAll('a');
     lists.forEach(list => {
-        if (list.href == location.href) {
+        if (list.href.indexOf(getRootPathDocumentLocation()) >= 0) {
             list.classList.add('active');
         } else {
             list.classList.remove('active');
