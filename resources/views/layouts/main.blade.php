@@ -1,3 +1,6 @@
+@php
+    $roles = auth()->user()->roles;
+@endphp
 <!DOCTYPE html>
 <html lang="en">
     <head>

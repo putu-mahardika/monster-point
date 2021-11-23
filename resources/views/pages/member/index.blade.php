@@ -11,7 +11,7 @@
 @section('content')
     <div class="card rounded-xxl">
         <div class="card-body" style="min-height: calc(100vh - 10.3rem);">
-            <div class="row mb-3">
+            {{-- <div class="row mb-3">
                 <div class="col">
                     <div class="row">
                         <div class="col-auto py-2">
@@ -42,14 +42,17 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-auto">
-                    <button type="button" id="create" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMemberModal">
-                        Add Member <i class="fas fa-plus ms-2"></i>
-                    </button>
+            </div> --}}
+
+            @can('members create')
+                <div class="row mb-3">
+                    <div class="col-auto">
+                        <button type="button" id="create" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addMemberModal">
+                            Add Member <i class="fas fa-plus ms-2"></i>
+                        </button>
+                    </div>
                 </div>
-            </div>
+            @endcan
 
             <div class="row">
                 <div class="col">
@@ -75,43 +78,6 @@
     <script>
         let submitted = false;
         let eventTable = null;
-        const members = [
-            {
-                Key: 1,
-                Name: 'John Doe',
-                Point: '150',
-                Note: 'Proident ea pariatur do magna labore in do dolore.',
-                Link: '#'
-            },
-            {
-                Key: 2,
-                Name: 'John Doe',
-                Point: '150',
-                Note: 'Est eiusmod est enim quis ipsum.',
-                Link: '#'
-            },
-            {
-                Key: 3,
-                Name: 'John Doe',
-                Point: '150',
-                Note: 'Do consectetur eiusmod non dolor cupidatat proident ea eu sint est fugiat ipsum.',
-                Link: '#'
-            },
-            {
-                Key: 4,
-                Name: 'John Doe',
-                Point: '150',
-                Note: 'Sit ad culpa excepteur veniam nisi.',
-                Link: '#'
-            },
-            {
-                Key: 5,
-                Name: 'John Doe',
-                Point: '150',
-                Note: 'Esse sint veniam ad id incididunt magna voluptate et culpa.',
-                Link: '#'
-            }
-        ];
 
         function deleteMember(id) {
             Swal.fire({
@@ -149,7 +115,7 @@
             });
 
             eventTable = $('#memberTable').dxDataGrid({
-                dataSource: `{{ route('members.index') }}`,
+                dataSource: `{{ route('dx.members', auth()->user()->merchant->Id ?? null) }}`,
                 keyExpr: 'Id',
                 columnAutoWidth: true,
                 hoverStateEnabled: true,
@@ -159,6 +125,16 @@
                         cellTemplate: function(container, options) {
                             container.html(`${options.row.rowIndex + 1}`);
                         }
+                    },
+                    @if (auth()->user()->is_admin)
+                        {
+                            dataField: 'merchant.Nama',
+                            caption: 'Merchant'
+                        },
+                    @endif
+                    {
+                        dataField: 'MerchentMemberKey',
+                        caption: 'Key'
                     },
                     {
                         dataField: 'Nama',
@@ -173,17 +149,18 @@
                         dataField: 'Id',
                         caption: '',
                         cellTemplate: function (container, options) {
-                            container.html(`
-                                <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="edit">
+                            let html = '';
+                            @can('members edit')
+                                html += `<button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" data-bs-toggle="tooltip" data-bs-placement="top" id="edit" title="Edit">
                                     <i class="fas fa-edit fa-sm"></i>
-                                </button>
-                                <button onclick="deleteMember(${options.value});" class="btn btn-danger btn-sm rounded-xxl" data-bs-toggle="tooltip" data-bs-placement="top" id="delete">
+                                </button>`;
+                            @endcan
+                            @can('members delete')
+                                html += `<button onclick="deleteMember(${options.value});" class="btn btn-danger btn-sm rounded-xxl" data-bs-toggle="tooltip" data-bs-placement="top" id="delete" title="Delete">
                                     <i class="fas fa-trash-alt fa-sm"></i>
-                                </button>
-                                <a href="${options.value}" class="text-dark text-decoration-none px-2">
-                                    <i class="fas fa-ellipsis-v"></i>
-                                </a>
-                            `);
+                                </button>`;
+                            @endcan
+                            container.html(html);
                             activateTooltip();
                         }
                     }
@@ -199,6 +176,7 @@
                 $.get('{{ route("members.create") }}', function(data) {
                     $('.modalMember').find('.modal-content').html(data);
                     $('.modalMember').modal('show');
+                    showRedStarRequired();
                 });
             });
 

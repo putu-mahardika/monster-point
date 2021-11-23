@@ -6,6 +6,7 @@ use App\Helpers\FunctionHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Event;
 use App\Models\Merchant;
+use App\Rules\UniqueInGroup;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\JsonResponse;
@@ -22,10 +23,10 @@ class EventController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            $events = Event::all();
-            return response()->json($events);
-        }
+        // if (request()->ajax()) {
+        //     $events = Event::all();
+        //     return response()->json($events);
+        // }
         return view('pages.event.index');
     }
 
@@ -47,14 +48,19 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('events create')) {
+            return response(['msg' => 'You are not allowed to create events'], Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(),[
-            'code' => ['required', 'unique:events,Kode', 'string', 'max:10'],
+            'code' => ['required', new UniqueInGroup('events', 'Kode', 'IdMerchant', $request->merchant_id), 'string', 'max:10'],
             'name' => ['required', 'string', 'max:250'],
             'note' => ['nullable', 'string', 'max:250'],
             'formula' => ['required', 'string', 'max:500'],
             'action' => ['required'],
             'rate_limiter' => ['required', 'min:0', 'numeric']
         ]);
+        // dd('stop');
 
         if ($validator->fails()) {
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
@@ -108,8 +114,12 @@ class EventController extends Controller
      */
     public function update(Request $request, Event $event)
     {
+        if (!auth()->user()->can('events edit')) {
+            return response(['msg' => 'You are not allowed to edit events'], Response::HTTP_FORBIDDEN);
+        }
+
         $validator = Validator::make($request->all(),[
-            'code' => ['required', 'unique:events,Kode,'.$event->Id, 'string', 'max:10'],
+            'code' => ['required', new UniqueInGroup('events', 'Kode', 'IdMerchant', $event->merchant->Id, $request->code), 'string', 'max:10'],
             'name' => ['required', 'string', 'max:250'],
             'note' => ['string', 'max:250'],
             'formula' => ['required', 'string', 'max:500'],
@@ -144,6 +154,10 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
+        if (!auth()->user()->can('events delete')) {
+            return response(['msg' => 'You are not allowed to delete events'], Response::HTTP_FORBIDDEN);
+        }
+
         $event->delete();
         return response([
             'message' => 'The event has been deleted',

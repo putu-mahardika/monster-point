@@ -83,6 +83,7 @@
         let merchantTable = null;
         let memberTable = null;
         let memberCount = null;
+        let selectedMerchant = 0;
 
         $.ajaxSetup({
             headers: {
@@ -204,6 +205,7 @@
                     const data = selectedItems.selectedRowsData[0];
                     if (data) {
                         let merchantId = data.Id;
+                        selectedMerchant = data.Id;
                         console.log('merchantId : ' + merchantId);
                         document.getElementById('merchant-name').innerText = data.Nama;
                         getMembers(merchantId);
@@ -288,7 +290,7 @@
 
             $(document).on('click', '#createMember', function () {
                 // $('.editorassets').find('form')[0].reset();
-                $.get('{{ route("members.create") }}', function(data) {
+                $.get(`{{ route("members.create") }}?m=${selectedMerchant}`, function(data) {
                     $('.modalMember').find('.modal-content').html(data);
                     $('.modalMember').modal('show');
                 });

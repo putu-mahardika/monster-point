@@ -1,6 +1,3 @@
-@php
-    $isAdmin = true;
-@endphp
 @extends('layouts.main')
 @section('meta')
 
@@ -14,18 +11,20 @@
 
 @section('content')
     <div class="row">
-        <div class="col-md-4">
-            <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
-                <div class="card-body">
-                    <div id="merchantTable"></div>
+        @if (auth()->user()->is_admin)
+            <div class="col-md-4">
+                <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
+                    <div class="card-body">
+                        <div id="merchantTable"></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="{{ ($isAdmin ?? false) ? 'col-md-8' : 'col' }}">
+        @endif
+        <div class="{{ auth()->user()->is_admin ? 'col-md-8' : 'col' }}">
             <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
                 <div class="card-body">
                     <div class="d-flex mb-3">
-                        <a id="btnCreateEvent" href="javascript:void(0);" class="btn btn-primary rounded-xxl">
+                        <a id="btnCreateEvent" href="{{ auth()->user()->is_admin ? 'javascript:void(0);' : route('events.create') . '?m=' . auth()->user()->merchant->Id }}" class="btn btn-primary rounded-xxl">
                             New Event <i class="fas fa-plus ms-2"></i>
                         </a>
                     </div>
@@ -44,7 +43,7 @@
     <script>
         let eventTable = null;
         let merchantTable = null;
-        let selectedMerchant = 0;
+        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->merchant->Id }};
         function deleteEvent(id) {
             Swal.fire({
                 title: 'Do you want to delete this event?',
@@ -74,42 +73,46 @@
             });
         }
 
-        function loadEventByMerchant() {
-            $('#btnCreateEvent').attr('href', `{{ route('events.create') }}?m=${selectedMerchant}`);
-            eventTable.option('dataSource', `{{ url('dx/events') }}/${selectedMerchant}`);
-            eventTable.refresh();
-        }
+        @if (auth()->user()->is_admin)
+            function loadEventByMerchant() {
+                $('#btnCreateEvent').attr('href', `{{ route('events.create') }}?m=${selectedMerchant}`);
+                eventTable.option('dataSource', `{{ url('dx/events') }}/${selectedMerchant}`);
+                eventTable.refresh();
+            }
+        @endif
 
         $(document).ready(() => {
-            merchantTable = $('#merchantTable').dxDataGrid({
-                dataSource: `{{ route('dx.merchants') }}`,
-                keyExpr: 'Id',
-                columnAutoWidth: true,
-                hoverStateEnabled: true,
-                selection: {
-                    mode: "single" // or "multiple" | "none"
-                },
-                columns: [
-                    {
-                        caption: 'No',
-                        width: 40,
-                        cellTemplate: function(container, options) {
-                            container.html(`${options.row.rowIndex + 1}`);
-                        }
+            @if (auth()->user()->is_admin)
+                merchantTable = $('#merchantTable').dxDataGrid({
+                    dataSource: `{{ route('dx.merchants') }}`,
+                    keyExpr: 'Id',
+                    columnAutoWidth: true,
+                    hoverStateEnabled: true,
+                    selection: {
+                        mode: "single" // or "multiple" | "none"
                     },
-                    {
-                        dataField: 'Nama',
-                    }
-                ],
-                onSelectionChanged(selectedItems) {
-                    selectedMerchant = selectedItems.currentSelectedRowKeys[0].Id;
-                    loadEventByMerchant();
-                },
-                showBorders: false,
-                showColumnLines: false,
-                showRowLines: true,
-                activeStateEnabled: true,
-            }).dxDataGrid('instance');
+                    columns: [
+                        {
+                            caption: 'No',
+                            width: 40,
+                            cellTemplate: function(container, options) {
+                                container.html(`${options.row.rowIndex + 1}`);
+                            }
+                        },
+                        {
+                            dataField: 'Nama',
+                        }
+                    ],
+                    onSelectionChanged(selectedItems) {
+                        selectedMerchant = selectedItems.currentSelectedRowKeys[0].Id;
+                        loadEventByMerchant();
+                    },
+                    showBorders: false,
+                    showColumnLines: false,
+                    showRowLines: true,
+                    activeStateEnabled: true,
+                }).dxDataGrid('instance');
+            @endif
 
             eventTable = $('#eventTable').dxDataGrid({
                 dataSource: `{{ url('dx/events') }}/${selectedMerchant}`,

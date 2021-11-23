@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Helpers\MemberHelper;
+use App\Models\Merchant;
+use Illuminate\Http\Response;
 
 class MemberController extends Controller
 {
@@ -37,6 +39,9 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        if (!auth()->user()->can('members create')) {
+            return response(['msg' => 'You are not allowed to create members'], Response::HTTP_FORBIDDEN);
+        }
         return MemberHelper::storeMember($request);
     }
 
@@ -71,6 +76,9 @@ class MemberController extends Controller
      */
     public function update(Request $request, Member $member)
     {
+        if (!auth()->user()->can('members edit')) {
+            return response(['msg' => 'You are not allowed to edit members'], Response::HTTP_FORBIDDEN);
+        }
         return MemberHelper::updateMember($request, $member);
     }
 
@@ -82,6 +90,9 @@ class MemberController extends Controller
      */
     public function destroy(Member $member)
     {
+        if (!auth()->user()->can('members delete')) {
+            return response(['msg' => 'You are not allowed to delete members'], Response::HTTP_FORBIDDEN);
+        }
         return MemberHelper::destroyMember($member);
     }
 
@@ -89,4 +100,13 @@ class MemberController extends Controller
     {
         return MemberHelper::getMembers($request);
     }
+
+    public function dx(Request $request, $merchant_id = null)
+    {
+        $members = Member::when(!empty($merchant_id), function ($query) use ($merchant_id) {
+            return $query->where('IdMerhant', $merchant_id);
+        })->get();
+        return response()->json($members);
+    }
+
 }

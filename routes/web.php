@@ -49,7 +49,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::prefix('dx')->name('dx.')->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
-        Route::get('events/{merchant}', [Web\EventController::class, 'dx'])->name('events');
+        Route::get('members/{merchant_id?}', [Web\MemberController::class, 'dx'])->name('members');
+        Route::get('events/{merchant_id}', [Web\EventController::class, 'dx'])->name('events');
     });
 });
 

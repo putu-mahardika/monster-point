@@ -17,12 +17,16 @@
         @method('PATCH')
     @endif
             @csrf
+            @if (!auth()->user()->is_admin)
+                <input type="hidden" name="merchant_id" value="{{ auth()->user()->merchant->Id }}">
+            @endif
             <div class="row justify-content-center mb-3">
                 <div class="col-md-5">
                     <label for="member_key">Member Key</label>
                 </div>
                 <div class="col-md-7">
-                    <input type="text" name="member_key" id="member_key" @if ( !empty($member) ) value="{{ old('member_key', $member->Point) }}" @endif class="form-control rounded-xl" autofocus autocomplete="off" required>
+                    <input type="text" name="member_key" id="member_key" @if ( !empty($member) ) value="{{ old('member_key', $member->MerchentMemberKey) }}" @endif class="form-control rounded-xl" autofocus autocomplete="off" required>
+                    <x-error-message-field for="member_key" class="d-none"></x-error-message-field>
                 </div>
             </div>
             <div class="row justify-content-center mb-3">
@@ -31,6 +35,7 @@
                 </div>
                 <div class="col-md-7">
                     <input type="text" name="member_name" id="member_name" @if ( !empty($member) ) value="{{ old('member_name', $member->Nama) }}" @endif class="form-control rounded-xl" autocomplete="off" required>
+                    <x-error-message-field for="member_name" class="d-none"></x-error-message-field>
                 </div>
             </div>
             <div class="row justify-content-center mb-3">
@@ -38,9 +43,8 @@
                     <label for="member_note">Note</label>
                 </div>
                 <div class="col-md-7">
-                    <textarea class="form-control rounded-xl" name="member_note" id="member_note" cols="30" rows="3" style="resize: none;">
-                        @if ( !empty($member) ) {{ $member->Keterangan }} @endif
-                    </textarea>
+                    <textarea class="form-control rounded-xl" name="member_note" id="member_note" cols="30" rows="3" style="resize: none;">@if ( !empty($member) ) {{ $member->Keterangan }} @endif</textarea>
+                    <x-error-message-field for="member_note" class="d-none"></x-error-message-field>
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-5">
@@ -52,6 +56,7 @@
     $(function () {
         $('#memberForm').on('submit', function(e) {
             e.preventDefault();
+            clearErrorField();
             $.ajax({
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
@@ -75,6 +80,17 @@
                             title: data.msg
                         });
                         submitted = true;
+                    }
+                },
+                error: function (errors) {
+                    if (errors.status == 403) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: errors.responseJSON.msg
+                        });
+                    }
+                    else {
+                        showErrorField(errors.responseJSON);
                     }
                 }
             })

@@ -159,13 +159,16 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-2 mb-2">
-                    <div class="d-grid gap-2">
-                        <button id="btnSave" type="submit" form="eventForm" class="btn btn-primary rounded-xxl">
-                            Save
-                        </button>
+
+                @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
+                    <div class="col-md-2 mb-2">
+                        <div class="d-grid gap-2">
+                            <button id="btnSave" type="submit" form="eventForm" class="btn btn-primary rounded-xxl">
+                                Save
+                            </button>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -322,7 +325,7 @@
 
         $(document).ready(() => {
             $('#formulaContainer').html(`<textarea name="formula" id="formula" cols="30" rows="3"></textarea>`);
-            @if(request() - > route() - > getName() == 'events.edit')
+            @if(request()->route()->getName() == 'events.edit')
                 $('#formulaContainer').html(`<textarea name="formula" id="formula" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
             @endif
             eventFormula = CodeMirror.fromTextArea(document.getElementById('formula'), {
@@ -352,27 +355,28 @@
                 );
             });
 
-            $('#eventForm').on('submit', function (e) {
-                e.preventDefault();
-                $(this).addClass('disabled-container');
-                $('#btnSave').html(`
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving
-                `);
-                $('#btnTest').addClass('disabled');
-                $('#btnClose').addClass('disabled');
-                $('#btnSave').addClass('disabled');
-                clearErrorField();
+            @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
+                $('#eventForm').on('submit', function (e) {
+                    e.preventDefault();
+                    $(this).addClass('disabled-container');
+                    $('#btnSave').html(`
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving
+                    `);
+                    $('#btnTest').addClass('disabled');
+                    $('#btnClose').addClass('disabled');
+                    $('#btnSave').addClass('disabled');
+                    clearErrorField();
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    @if(request() - > route() - > getName() == 'events.create')
-                    type: "POST",
-                    @elseif(request() - > route() - > getName() == 'events.edit')
-                    type: "PUT",
-                    @endif
-                    data: $(this).serialize(),
-                    success: (res) => {
-                        Swal.fire({
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        @if(auth()->user()->can('events create') && request()->route()->getName() == 'events.create')
+                            type: "POST",
+                        @elseif(auth()->user()->can('events edit') && request()->route()->getName() == 'events.edit')
+                            type: "PUT",
+                        @endif
+                        data: $(this).serialize(),
+                        success: (res) => {
+                            Swal.fire({
                                 icon: 'success',
                                 title: 'Success!',
                                 text: res.message,
@@ -381,25 +385,37 @@
                                 if (result.isConfirmed) {
                                     window.location.href = res.url;
                                 }
-                            })
-                    },
-                    error: (error) => {
-                        showErrorField(error.responseJSON);
-                        $('html, body').animate({
-                            scrollTop: 0
-                        });
-                        $(this).removeClass('disabled-container');
-                        $('#btnSave').html(`
-                            Save
-                        `);
-                        $('#btnTest').removeClass('disabled');
-                        $('#btnClose').removeClass('disabled');
-                        $('#btnSave').removeClass('disabled');
-                    }
-                });
-            });
+                            });
+                        },
+                        error: (error) => {
+                            if (error.status == 403) {
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: error.responseJSON.msg
+                                });
+                            }
+                            else {
+                                showErrorField(error.responseJSON);
+                            }
 
-            @if(request() - > route() - > getName() == 'events.edit')
+                            $('html, body').animate({
+                                scrollTop: 0
+                            });
+                            $(this).removeClass('disabled-container');
+                            $('#btnSave').html(`
+                                Save
+                            `);
+                            $('#btnTest').removeClass('disabled');
+                            $('#btnClose').removeClass('disabled');
+                            $('#btnSave').removeClass('disabled');
+                        }
+                    });
+                });
+            @endif
+
+
+
+            @if(request()->route()->getName() == 'events.edit')
                 $('#modalFormulaTester').on('show.bs.modal', function (e) {
                     $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
                     eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
@@ -417,11 +433,7 @@
                         url: "{{ route('event-test', $event->Id) }}",
                         type: "POST",
                         data: {
-                            event_id: {
-                                {
-                                    $event - > Id
-                                }
-                            }
+                            event_id: {{ $event->Id }}
                         },
                         success: (res) => {
                             new JsonViewer({
@@ -451,6 +463,5 @@
                 });
             @endif
         });
-
     </script>
 @endsection
