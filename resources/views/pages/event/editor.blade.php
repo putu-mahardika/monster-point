@@ -34,6 +34,7 @@
                     @method('put')
             @endif
                 @csrf
+                <input type="hidden" name="merchant_id" value="{{ request()->m }}">
                 <div class="row">
                     <div class="col-xl-6">
                         <div class="row">
@@ -158,13 +159,16 @@
                         </button>
                     </div>
                 </div>
-                <div class="col-md-2 mb-2">
-                    <div class="d-grid gap-2">
-                        <button id="btnSave" type="submit" form="eventForm" class="btn btn-primary rounded-xxl">
-                            Save
-                        </button>
+
+                @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
+                    <div class="col-md-2 mb-2">
+                        <div class="d-grid gap-2">
+                            <button id="btnSave" type="submit" form="eventForm" class="btn btn-primary rounded-xxl">
+                                Save
+                            </button>
+                        </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -258,7 +262,15 @@
                         <div class="mb-2 border rounded-xl" id="formulaTesterContainer">
                             <span class="d-block text-center py-3">Please Wait...</span>
                         </div>
-                        <div class="border rounded-xxl p-3"></div>
+                        <div class="card">
+                            <div class="card-body">
+                                <div id="resultTest" class="border rounded-xxl p-3 d-flex justify-content-center">
+                                    <div id="loadingTest" class="spinner-border text-info" role="status">
+                                        <span class="visually-hidden">Loading...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary rounded-xxl" data-bs-dismiss="modal">
@@ -286,8 +298,7 @@
                     if (formula.name.indexOf(search.toUpperCase()) >= 0) {
                         list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
                     }
-                }
-                else {
+                } else {
                     list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
                 }
                 index++;
@@ -314,7 +325,7 @@
 
         $(document).ready(() => {
             $('#formulaContainer').html(`<textarea name="formula" id="formula" cols="30" rows="3"></textarea>`);
-            @if (request()->route()->getName() == 'events.edit')
+            @if(request()->route()->getName() == 'events.edit')
                 $('#formulaContainer').html(`<textarea name="formula" id="formula" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
             @endif
             eventFormula = CodeMirror.fromTextArea(document.getElementById('formula'), {
@@ -336,7 +347,6 @@
                 readOnly: 'nocursor',
             });
             eventExample.setSize('100%', '10rem');
-
             loadFormula();
 
             $('#searchFormula').on('keyup', function () {
@@ -345,70 +355,113 @@
                 );
             });
 
-            $('#eventForm').on('submit', function (e) {
-                e.preventDefault();
-                $(this).addClass('disabled-container');
-                $('#btnSave').html(`
-                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving
-                `);
-                $('#btnTest').addClass('disabled');
-                $('#btnClose').addClass('disabled');
-                $('#btnSave').addClass('disabled');
-                clearErrorField();
+            @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
+                $('#eventForm').on('submit', function (e) {
+                    e.preventDefault();
+                    $(this).addClass('disabled-container');
+                    $('#btnSave').html(`
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving
+                    `);
+                    $('#btnTest').addClass('disabled');
+                    $('#btnClose').addClass('disabled');
+                    $('#btnSave').addClass('disabled');
+                    clearErrorField();
 
-                $.ajax({
-                    url: $(this).attr('action'),
-                    @if (request()->route()->getName() == 'events.create')
-                        type: "POST",
-                    @elseif (request()->route()->getName() == 'events.edit')
-                        type: "PUT",
-                    @endif
-                    data: $(this).serialize(),
-                    success: (res) => {
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success!',
-                            text: res.message,
-                        })
-                        .then((result) => {
-                            if (result.isConfirmed) {
-                                window.location.href = res.url;
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        @if(auth()->user()->can('events create') && request()->route()->getName() == 'events.create')
+                            type: "POST",
+                        @elseif(auth()->user()->can('events edit') && request()->route()->getName() == 'events.edit')
+                            type: "PUT",
+                        @endif
+                        data: $(this).serialize(),
+                        success: (res) => {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Success!',
+                                text: res.message,
+                            })
+                            .then((result) => {
+                                if (result.isConfirmed) {
+                                    window.location.href = res.url;
+                                }
+                            });
+                        },
+                        error: (error) => {
+                            if (error.status == 403) {
+                                Toast.fire({
+                                    icon: 'error',
+                                    title: error.responseJSON.msg
+                                });
                             }
-                        })
-                    },
-                    error: (error) => {
-                        showErrorField(error.responseJSON);
-                        $('html, body').animate({ scrollTop: 0 });
-                        $(this).removeClass('disabled-container');
-                        $('#btnSave').html(`
-                            Save
-                        `);
-                        $('#btnTest').removeClass('disabled');
-                        $('#btnClose').removeClass('disabled');
-                        $('#btnSave').removeClass('disabled');
-                    }
-                });
-            });
+                            else {
+                                showErrorField(error.responseJSON);
+                            }
 
-            $('#modalFormulaTester').on('show.bs.modal', function (e) {
-                $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
-                eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
-                    lineNumbers: true,
-                    autoRefresh: true,
-                    mode: 'text/monsterpoint',
-                    readOnly: 'nocursor',
-                    // lineNumbers: true,
-                    // lineWrapping: true,
+                            $('html, body').animate({
+                                scrollTop: 0
+                            });
+                            $(this).removeClass('disabled-container');
+                            $('#btnSave').html(`
+                                Save
+                            `);
+                            $('#btnTest').removeClass('disabled');
+                            $('#btnClose').removeClass('disabled');
+                            $('#btnSave').removeClass('disabled');
+                        }
+                    });
+                });
+            @endif
+
+
+
+            @if(request()->route()->getName() == 'events.edit')
+                $('#modalFormulaTester').on('show.bs.modal', function (e) {
+                    $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
+                    eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
+                        lineNumbers: true,
+                        autoRefresh: true,
+                        mode: 'text/monsterpoint',
+                        readOnly: 'nocursor',
+                    });
+                    eventTester.setSize('100%', '10rem');
+                });
+
+                $('#modalFormulaTester').on('shown.bs.modal', function (e) {
+                    eventTester.refresh();
+                    $.ajax({
+                        url: "{{ route('event-test', $event->Id) }}",
+                        type: "POST",
+                        data: {
+                            event_id: {{ $event->Id }}
+                        },
+                        success: (res) => {
+                            new JsonViewer({
+                                container: document.querySelector('#resultTest'),
+                                data: JSON.stringify(res[0]),
+                                theme: 'light',
+                                expand: true
+                            });
+                            $('#loadingTest').addClass('d-none');
+                        },
+                        error: (error) => {
+                            $('#resultTest').html(`
+                                    <span class="text-danger">${error.responseJSON.message}</span>
+                                `);
+                        }
+                    });
                 });
                 eventTester.setSize('100%', '10rem');
-            });
 
-            $('#modalFormulaTester').on('shown.bs.modal', function (e) {
-                eventTester.refresh();
+                $('#modalFormulaTester').on('shown.bs.modal', function (e) {
+                    eventTester.refresh();
+                });
 
+                $('#modalFormulaTester').on('hidden.bs.modal', function (e) {
+                    $('#resultTest').html('');
 
-
-            });
+                });
+            @endif
         });
     </script>
 @endsection

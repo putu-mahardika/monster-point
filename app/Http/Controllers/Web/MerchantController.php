@@ -148,4 +148,10 @@ class MerchantController extends Controller
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
     }
+
+    public function dx(Request $request)
+    {
+        $merchants = Merchant::all();
+        return response()->json($merchants);
+    }
 }

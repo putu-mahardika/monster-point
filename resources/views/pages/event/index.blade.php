@@ -10,16 +10,24 @@
 @section('title', 'Events')
 
 @section('content')
-    <div class="card rounded-xxl">
-        <div class="card-body" style="min-height: calc(100vh - 10.3rem);">
-            <div class="d-flex mb-3">
-                <a href="{{ route('events.create') }}" class="btn btn-primary rounded-xxl">
-                    New Event <i class="fas fa-plus ms-2"></i>
-                </a>
+    <div class="row">
+        @if (auth()->user()->is_admin)
+            <div class="col-md-4">
+                <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
+                    <div class="card-body">
+                        <div id="merchantTable"></div>
+                    </div>
+                </div>
             </div>
-
-            <div class="row">
-                <div class="col">
+        @endif
+        <div class="{{ auth()->user()->is_admin ? 'col-md-8' : 'col' }}">
+            <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
+                <div class="card-body">
+                    <div class="d-flex mb-3">
+                        <a id="btnCreateEvent" href="{{ auth()->user()->is_admin ? 'javascript:void(0);' : route('events.create') . '?m=' . auth()->user()->merchant->Id }}" class="btn btn-primary rounded-xxl">
+                            New Event <i class="fas fa-plus ms-2"></i>
+                        </a>
+                    </div>
                     <div id="eventTable"></div>
                 </div>
             </div>
@@ -34,6 +42,8 @@
 @section('js')
     <script>
         let eventTable = null;
+        let merchantTable = null;
+        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->merchant->Id }};
         function deleteEvent(id) {
             Swal.fire({
                 title: 'Do you want to delete this event?',
@@ -63,9 +73,49 @@
             });
         }
 
+        @if (auth()->user()->is_admin)
+            function loadEventByMerchant() {
+                $('#btnCreateEvent').attr('href', `{{ route('events.create') }}?m=${selectedMerchant}`);
+                eventTable.option('dataSource', `{{ url('dx/events') }}/${selectedMerchant}`);
+                eventTable.refresh();
+            }
+        @endif
+
         $(document).ready(() => {
+            @if (auth()->user()->is_admin)
+                merchantTable = $('#merchantTable').dxDataGrid({
+                    dataSource: `{{ route('dx.merchants') }}`,
+                    keyExpr: 'Id',
+                    columnAutoWidth: true,
+                    hoverStateEnabled: true,
+                    selection: {
+                        mode: "single" // or "multiple" | "none"
+                    },
+                    columns: [
+                        {
+                            caption: 'No',
+                            width: 40,
+                            cellTemplate: function(container, options) {
+                                container.html(`${options.row.rowIndex + 1}`);
+                            }
+                        },
+                        {
+                            dataField: 'Nama',
+                        }
+                    ],
+                    onSelectionChanged(selectedItems) {
+                        selectedMerchant = selectedItems.currentSelectedRowKeys[0].Id;
+                        loadEventByMerchant();
+                    },
+                    showBorders: false,
+                    showColumnLines: false,
+                    showRowLines: true,
+                    activeStateEnabled: true,
+                }).dxDataGrid('instance');
+            @endif
+
             eventTable = $('#eventTable').dxDataGrid({
-                dataSource: "{{ route('events.index') }}",
+                dataSource: `{{ url('dx/events') }}/${selectedMerchant}`,
                 keyExpr: 'Id',
                 columnAutoWidth: true,
                 hoverStateEnabled: true,

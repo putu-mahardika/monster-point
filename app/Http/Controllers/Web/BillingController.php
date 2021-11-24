@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Web;
+
 use App\Http\Controllers\Controller;
+use App\Models\Billing;
 use Illuminate\Http\Request;
 
-class GreetingController extends Controller
+class BillingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,9 +15,8 @@ class GreetingController extends Controller
      */
     public function index()
     {
-        //
+        return view('pages.billing.index');
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -82,47 +83,10 @@ class GreetingController extends Controller
     {
         //
     }
-    /**
-    * @OA\Get(
-    *     path="/greet",
-    *     tags={"Contoh Dokumentasi Api"},
-    *     summary="Returns a Sample API response",
-    *     description="A sample greeting to test out the API",
-    *     operationId="greet",
-    *     @OA\Parameter(
-    *          name="firstname",
-    *          description="nama depan",
-    *          required=true,
-    *          in="query",
-    *          @OA\Schema(
-    *              type="string"
-    *          )
-    *     ),
-    *     @OA\Parameter(
-    *          name="lastname",
-    *          description="nama belakang",
-    *          required=true,
-    *          in="query",
-    *          @OA\Schema(
-    *              type="string"
-    *          )
-    *     ),
-    *     @OA\Response(
-    *         response="default",
-    *         description="successful operation"
-    *     )
-    * )
-    */
 
-    public function greets(Request $request)
-   {
-       $userData = $request->only([
-           'namadepan',
-           'namabelakang',
-       ]);
-       if (empty($userData['namadepan']) && empty($userData['namabelakang'])) {
-           return new \Exception('Missing data', 404);
-       }
-       return 'Halo ' . $userData['namadepan'] . ' ' . $userData['namabelakang'];
-   }
+    public function dx(Request $request, $merchant_id)
+    {
+        $billings = Billing::where('IdMerchant', $merchant_id)->get();
+        return response()->json($billings);
+    }
 }

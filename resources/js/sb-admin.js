@@ -5,7 +5,6 @@
     */
 
 const { isArguments } = require("lodash");
-
     //
 // Scripts
 //
@@ -25,12 +24,14 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
+
     showRedStarRequired();
     setLabelTextDivider();
+    autoResizeMoreCard();
 });
 
 window.showRedStarRequired = () => {
-    let formControlElements = $('.form-control');
+    let formControlElements = $('.form-control, .form-select');
     jQuery.each(formControlElements, (index, element) => {
         if ($(element).prop('required')) {
             let label = $(`label[for='${element.id}']`);
@@ -109,4 +110,16 @@ window.copyToClipboard = (elem) => {
         succeed = false;
     }
     return succeed;
+}
+
+window.autoResizeMoreCard = () => {
+    let cards = document.querySelectorAll('.card-auto-resize');
+    let heights = [];
+    cards.forEach(card => {
+        heights.push($(card).height());
+    });
+    let maxHeight = Math.max(...heights);
+    cards.forEach(card => {
+        $(card).css({height: `${maxHeight}px`});
+    });
 }

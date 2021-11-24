@@ -25,17 +25,18 @@ class MemberHelper {
     {
         $validator = Validator::make($request->all(), [
             'member_key' => ['required'],
-            'member_name' => ['required', 'string', 'max:250'],
-            'member_note' => ['string', 'max:250'],
+            'member_name' => ['required', 'string', 'max:150'],
+            'member_note' => ['nullable', 'string', 'max:150'],
         ]);
 
         if ($validator->fails()) {
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
+            // dd($request);
             Member::create([
-                'IdMerhant' => 1,
-                'MerchentMemberKey' => 3,
-                'Point' => $request->member_key,
+                'IdMerhant' => $request->merchant_id,
+                'MerchentMemberKey' => $request->member_key,
+                'Point' => 0,
                 'Nama' => $request->member_name,
                 'Keterangan' => $request->member_note,
             ]);
@@ -60,7 +61,7 @@ class MemberHelper {
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
             Member::where('id', $member->Id)->update([
-                'Point' => $request->member_key,
+                'MerchentMemberKey' => $request->member_key,
                 'Nama' => $request->member_name,
                 'Keterangan' => $request->member_note,
             ]);
@@ -73,4 +74,11 @@ class MemberHelper {
         Member::where('id', $member->Id)->delete();
         return response(['message' => 'The member has been deleted']);
     }
+
+    public static function getMembers(Request $request)
+    {
+        $members = Member::where('IdMerhant', $request->id)->orderBy('id', 'DESC')->get();
+        return response()->json($members);
+    }
+
 }
