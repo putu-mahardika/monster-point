@@ -5,6 +5,8 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+  <link rel="icon" href="{{ asset('img/logo_ps.png') }}">
+  {{-- <title>@yield('title', 'title') | {{ config('app.name') }}</title> --}}
   <title>Point Service | Landing</title>
   <meta content="" name="description">
 

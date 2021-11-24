@@ -158,7 +158,7 @@
         });
 
         function reloadChart() {
-            //  dsnsjkfjkdsfkls
+
         }
 
         console.log(
