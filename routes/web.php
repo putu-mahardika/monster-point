@@ -58,14 +58,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('/billing', function () {
-    return view('/pages/billing/index');
-});
-
-Route::get('/billing-company', function () {
-    return view('/pages/billing/billing-company');
-});
-
 Route::get('/help', function () {
     return view('/pages/help/index');
 });
