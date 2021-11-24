@@ -4,6 +4,7 @@ use App\Helpers\EmailChangeHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Web;
+use App\Models\GlobalSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -46,6 +47,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('verify-email-change', function (Request $request) {
         return EmailChangeHelper::validateToken($request->token);
     })->name('verify-email-change');
+
+    Route::resource('settings', Web\GlobalSettingController::class);
 
     Route::prefix('dx')->name('dx.')->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');

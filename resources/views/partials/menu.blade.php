@@ -34,6 +34,10 @@
                     <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
                     Helps
                 </a>
+                <a class="nav-link menu-halfround" href="{{ url('/settings')}}">
+                    <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
+                    Settings
+                </a>
             </div>
         </div>
     </nav>
