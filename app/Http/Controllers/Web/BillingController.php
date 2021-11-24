@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
+use App\Models\Billing;
 use Illuminate\Http\Request;
 
 class BillingController extends Controller
@@ -81,5 +82,11 @@ class BillingController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function dx(Request $request, $merchant_id)
+    {
+        $billings = Billing::where('IdMerchant', $merchant_id)->get();
+        return response()->json($billings);
     }
 }

@@ -38,6 +38,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('events', Web\EventController::class);
     Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
 
+    Route::resource('billings', Web\BillingController::class);
+
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
         $user->save();
@@ -51,7 +53,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
         Route::get('members/{merchant_id?}', [Web\MemberController::class, 'dx'])->name('members');
         Route::get('events/{merchant_id}', [Web\EventController::class, 'dx'])->name('events');
+        Route::get('billings/{merchant_id}', [Web\BillingController::class, 'dx'])->name('billings');
     });
+
 });
 
 Route::get('/billing', function () {
