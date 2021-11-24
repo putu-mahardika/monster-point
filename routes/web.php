@@ -75,6 +75,6 @@ Route::get('/coba', function () {
 });
 
 //riset swagger
-Route::get('/greet', [GreetingController::class, 'greets']);
+// Route::get('/greet', [GreetingController::class, 'greets']);
 
 
