@@ -10,7 +10,7 @@ class Member extends Model
     use HasFactory;
     protected $hidden = ['Times'];
     protected $table = 'dbo.Member';
-    protected $fillable = ['IdMerhant', 'MerchentMemberKey', 'Nama', 'Point', 'Keterangan'];
+    protected $fillable = ['IdMerhant', 'MerchentMemberKey', 'Nama', 'Point', 'Keterangan', 'Aktif'];
     const CREATED_AT = 'CreateDate';
     const UPDATED_AT = 'LastUpdate';
 }
