@@ -20,8 +20,12 @@ class GlobalSettingController extends Controller
      */
     public function index()
     {
+        // if (request()->ajax()) {
+        //     $globalSettings = GlobalSetting::all();
+        //     return response()->json($globalSettings);
+        // }
         if (request()->ajax()) {
-            $globalSettings = GlobalSetting::all();
+            $globalSettings = GlobalSetting::orderBy('id', 'DESC')->get();
             return response()->json($globalSettings);
         }
         return view('pages.global-setting.index');
@@ -79,10 +83,10 @@ class GlobalSettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(GlobalSetting $globalSetting)
+    public function edit(GlobalSetting $setting)
     {
-        // dd($globalSetting);
-        return view('pages.global-setting.editor', compact('globalSetting'));
+        // dd($setting);
+        return view('pages.global-setting.editor', compact('setting'));
     }
 
     /**
@@ -92,7 +96,7 @@ class GlobalSettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, GlobalSetting $globalSetting)
+    public function update(Request $request, GlobalSetting $setting)
     {
         $validator = Validator::make($request->all(), [
             'code' => ['required', 'string', 'max:10'],
@@ -104,12 +108,12 @@ class GlobalSettingController extends Controller
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         }
 
-        GlobalSetting::where('Id', $globalSetting->Id)->update([
+        GlobalSetting::where('Id', $setting->Id)->update([
             'Kode' => $request->code,
             'Value' => $request->value,
             'Keterangan' => $request->note
         ]);
-        $globalSetting->refresh();
+        $setting->refresh();
         return response(['msg' => 'The Setting has been updated']);
     }
 
@@ -119,9 +123,9 @@ class GlobalSettingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(GlobalSetting $globalSetting)
+    public function destroy(GlobalSetting $setting)
     {
-        $query = $globalSetting->delete();
+        $query = $setting->delete();
         if ($query) {
             return response()->json(['code' => 1, 'msg' => 'Setting Has Been Deleted From Databases']);
         } else {

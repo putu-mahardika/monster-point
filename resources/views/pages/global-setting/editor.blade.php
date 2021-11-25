@@ -1,6 +1,6 @@
 <div class="modal-header px-4">
     <h5 class="modal-title" id="addSettingModalLabel">
-        @if(!isset($globalSetting))
+        @if(!isset($setting))
             Add Setting
         @else
             Edit Setting
@@ -10,10 +10,10 @@
 </div>
 
 <div class="modal-body px-4">
-    @if (!isset($globalSetting))
+    @if (!isset($setting))
         <form action="{{ route('settings.store') }}" method="POST" id="editor-setting-form">
     @else
-        <form action="{{ route('settings.update', $globalSetting->Id) }}" method="POST" id="editor-setting-form">
+        <form action="{{ route('settings.update', $setting->Id) }}" method="POST" id="editor-setting-form">
         @method('PATCH')
     @endif
         @csrf
@@ -22,7 +22,7 @@
                 <label for="code">Code</label>
             </div>
             <div class="col-md-7">
-                <input type="text" name="code" id="code" class="form-control rounded-xl" autocomplete="off" required value="{{ old('code', $globalSetting->Kode ?? '') }}">
+                <input type="text" name="code" id="code" class="form-control rounded-xl" autocomplete="off" required value="{{ old('code', $setting->Kode ?? '') }}">
                 <x-error-message-field for="code" class="d-none"></x-error-message-field>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <label for="value">Value</label>
             </div>
             <div class="col-md-7">
-                <input type="text" name="value" id="value" class="form-control rounded-xl" autocomplete="off" required value="{{ old('value', $globalSetting->Value ?? '') }}">
+                <input type="text" name="value" id="value" class="form-control rounded-xl" autocomplete="off" required value="{{ old('value', $setting->Value ?? '') }}">
                 <x-error-message-field for="value" class="d-none"></x-error-message-field>
             </div>
         </div>
@@ -42,7 +42,7 @@
                 <label for="note">Note</label>
             </div>
             <div class="col-md-7">
-                <textarea name="note" id="note" class="form-control rounded-xl" cols="30" rows="3" style="resize: none;">{{ old('note', $globalSetting->Keterangan ?? '') }}</textarea>
+                <textarea name="note" id="note" class="form-control rounded-xl" cols="30" rows="3" style="resize: none;">{{ old('note', $setting->Keterangan ?? '') }}</textarea>
                 <x-error-message-field for="note" class="d-none"></x-error-message-field>
             </div>
         </div>

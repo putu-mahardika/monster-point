@@ -67,10 +67,8 @@
 
 @section('js')
     <script>
-        let eventTable = null;
-        let merchantTable = null;
-        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->merchant->Id }};
-        function deleteEvent(id) {
+        let settingTable = null;
+        function deleteData(id) {
             Swal.fire({
                 title: 'Do you want to delete this setting?',
                 showCancelButton: true,
@@ -89,7 +87,7 @@
                                 icon: 'success',
                                 title: res.message
                             });
-                            eventTable.refresh();
+                            settingTable.refresh();
                         },
                         error: (error) => {
                             console.log(error);
@@ -99,17 +97,9 @@
             });
         }
 
-        @if (auth()->user()->is_admin)
-            function loadEventByMerchant() {
-                $('#btnCreateEvent').attr('href', `{{ route('settings.create') }}?m=${selectedMerchant}`);
-                eventTable.option('dataSource', `{{ url('dx/events') }}/${selectedMerchant}`);
-                eventTable.refresh();
-            }
-        @endif
-
         $(document).ready(() => {
             @if (auth()->user()->is_admin)
-                merchantTable = $('#settingsTable').dxDataGrid({
+                settingTable = $('#settingsTable').dxDataGrid({
                     dataSource: `{{ route('settings.index') }}`,
                     keyExpr: 'Id',
                     columnAutoWidth: true,
@@ -172,7 +162,7 @@
 
             $('.modalSetting').on('hidden.bs.modal', function (event) {
                 if (submitted) {
-                    merchantTable.refresh();
+                    settingTable.refresh();
                     submitted = false;
                 }
             });

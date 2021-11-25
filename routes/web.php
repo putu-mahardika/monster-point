@@ -39,6 +39,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('events', Web\EventController::class);
     Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
 
+    Route::resource('settings', Web\GlobalSettingController::class);
+
+
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
         $user->save();
@@ -48,7 +51,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return EmailChangeHelper::validateToken($request->token);
     })->name('verify-email-change');
 
-    Route::resource('settings', Web\GlobalSettingController::class);
 
     Route::prefix('dx')->name('dx.')->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
