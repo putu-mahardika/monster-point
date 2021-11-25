@@ -42,6 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/getSettings', [Web\GlobalSettingController::class, 'getSettings'])->name('settings.getSettings');
     Route::resource('settings', Web\GlobalSettingController::class);
 
+    Route::resource('billings', Web\BillingController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;
@@ -57,15 +58,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
         Route::get('members/{merchant_id?}', [Web\MemberController::class, 'dx'])->name('members');
         Route::get('events/{merchant_id}', [Web\EventController::class, 'dx'])->name('events');
+        Route::get('billings/{merchant_id}', [Web\BillingController::class, 'dx'])->name('billings');
     });
-});
 
-Route::get('/billing', function () {
-    return view('/pages/billing/index');
-});
-
-Route::get('/billing-company', function () {
-    return view('/pages/billing/billing-company');
 });
 
 Route::get('/help', function () {
