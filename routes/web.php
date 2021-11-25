@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('events', Web\EventController::class);
     Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
 
+    Route::get('settings/getSettings', [Web\GlobalSettingController::class, 'getSettings'])->name('settings.getSettings');
     Route::resource('settings', Web\GlobalSettingController::class);
 
 

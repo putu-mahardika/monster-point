@@ -24,11 +24,13 @@ class GlobalSettingController extends Controller
         //     $globalSettings = GlobalSetting::all();
         //     return response()->json($globalSettings);
         // }
-        if (request()->ajax()) {
-            $globalSettings = GlobalSetting::orderBy('id', 'DESC')->get();
-            return response()->json($globalSettings);
-        }
-        return view('pages.global-setting.index');
+        // if (request()->ajax()) {
+            $settings = $this->getSettings();
+            // dd($settings);
+            // dd(response()->json($globalSettings));
+            // return response()->json($globalSettings);
+        // }
+        return view('pages.global-setting.index', compact('settings'));
     }
 
     /**
@@ -38,7 +40,7 @@ class GlobalSettingController extends Controller
      */
     public function create()
     {
-        return view('pages.global-setting.editor');
+        // return view('pages.global-setting.editor');
     }
 
     /**
@@ -49,21 +51,21 @@ class GlobalSettingController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'code' => ['required', 'string', 'max:10'],
-            'value' => ['required'],
-            'note' => ['string', 'max:250'],
-        ]);
+        // $validator = Validator::make($request->all(), [
+        //     'code' => ['required', 'string', 'max:10'],
+        //     'value' => ['required'],
+        //     'note' => ['string', 'max:250'],
+        // ]);
 
-        if ($validator->fails()) {
-            return response($validator->errors(), Response::HTTP_BAD_REQUEST);
-        }
-        $globalSetting = GlobalSetting::create([
-            'Kode' => $request->code,
-            'Value' => $request->value,
-            'Keterangan' => $request->note
-        ]);
-        return response(['msg' => 'The Setting has been created']);
+        // if ($validator->fails()) {
+        //     return response($validator->errors(), Response::HTTP_BAD_REQUEST);
+        // }
+        // $globalSetting = GlobalSetting::create([
+        //     'Kode' => $request->code,
+        //     'Value' => $request->value,
+        //     'Keterangan' => $request->note
+        // ]);
+        // return response(['msg' => 'The Setting has been created']);
     }
 
     /**
@@ -99,7 +101,7 @@ class GlobalSettingController extends Controller
     public function update(Request $request, GlobalSetting $setting)
     {
         $validator = Validator::make($request->all(), [
-            'code' => ['required', 'string', 'max:10'],
+            // 'code' => ['required', 'string', 'max:10'],
             'value' => ['required'],
             'note' => ['string', 'max:250'],
         ]);
@@ -109,7 +111,7 @@ class GlobalSettingController extends Controller
         }
 
         GlobalSetting::where('Id', $setting->Id)->update([
-            'Kode' => $request->code,
+            // 'Kode' => $request->code,
             'Value' => $request->value,
             'Keterangan' => $request->note
         ]);
@@ -131,5 +133,11 @@ class GlobalSettingController extends Controller
         } else {
             return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
         }
+    }
+
+    public function getSettings()
+    {
+        $settings = GlobalSetting::orderBy('id', 'DESC')->get();
+        return $settings;
     }
 }

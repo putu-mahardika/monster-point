@@ -11,35 +11,11 @@
 
 @section('content')
     <div class="row">
-        {{-- @if (auth()->user()->is_admin)
-            <div class="col-md-4">
-                <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
-                    <div class="card-body">
-                        <div id="merchantTable"></div>
-                    </div>
-                </div>
-            </div>
-        @endif
-        <div class="{{ auth()->user()->is_admin ? 'col-md-8' : 'col' }}">
-            <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
-                <div class="card-body">
-                    <div class="d-flex mb-3">
-                        <a id="btnCreateEvent" href="{{ auth()->user()->is_admin ? 'javascript:void(0);' : route('events.create') . '?m=' . auth()->user()->merchant->Id }}" class="btn btn-primary rounded-xxl">
-                            New Event <i class="fas fa-plus ms-2"></i>
-                        </a>
-                    </div>
-                    <div id="eventTable"></div>
-                </div>
-            </div>
-        </div> --}}
         @if (auth()->user()->is_admin)
             <div class="col">
                 <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
                     <div class="card-body">
-                        <div class="d-flex mb-3">
-                            {{-- <a id="btnCreateEvent" href="{{ auth()->user()->is_admin ? 'javascript:void(0);' : route('events.create') . '?m=' . auth()->user()->merchant->Id }}" class="btn btn-primary rounded-xxl">
-                                New Event <i class="fas fa-plus ms-2"></i>
-                            </a> --}}
+                        {{-- <div class="d-flex mb-3">
                             <div class="col">
                                 <button type="button" id="createSetting" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addSettingModal">
                                     Add Setting <i class="fas fa-plus ms-3"></i>
@@ -47,6 +23,29 @@
                             </div>
                         </div>
                         <div id="settingsTable"></div>
+                    </div> --}}
+                    @foreach ($settings as $key=>$setting)
+                        <div class="row mb-2">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-xl-4 col-lg-4 py-2">
+                                        <label id="title-{{$key}}">{{$setting->Kode}}</label>
+                                        <button class="btn btn-primary btn-sm rounded-xxl" data-id="{{$setting->Id}}" id="editSetting">
+                                            <i class="fas fa-edit fa-sm"></i>
+                                        </button>
+                                    </div>
+                                    <div class="col-xl-8 col-lg-8 mb-3">
+                                        <input type="text" id="value-{{$key}}" class="form-control rounded-xl" value="{{$setting->Value}}" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6" id="note-{{$key}}">
+                                {{$setting->Keterangan}}
+                            </div>
+                        </div>
+                    @endforeach
+                    <div id="anu">
+                        <p></p>
                     </div>
                 </div>
             </div>
@@ -162,7 +161,14 @@
 
             $('.modalSetting').on('hidden.bs.modal', function (event) {
                 if (submitted) {
-                    settingTable.refresh();
+                    // settingTable.refresh();
+                    // $( ".card-body" ).load(window.location.href + " .card-body" );
+                    $.get(`{{ route('settings.getSettings') }}`, function(data) {
+                        $.each(data, function(index, value){
+                            $('#value-'+index).val(value.Value);
+                            $('#note-'+index).html(value.Keterangan);
+                        });
+                    });
                     submitted = false;
                 }
             });
@@ -170,7 +176,7 @@
 
             $(document).on('click', '#editSetting', function() {
                 let setting_id = $(this).data('id');
-                console.log(setting_id);
+                // console.log(setting_id);
                 $('.modalSetting').find('span.error-text').text('');
                 $.get(`{{ route("settings.index") }}/${setting_id}/edit`, function(data) {
                     $('.modalSetting').find('.modal-content').html(data);
