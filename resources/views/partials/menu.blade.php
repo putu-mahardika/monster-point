@@ -26,7 +26,7 @@
                         Events
                     </a>
                 @endcan
-                <a class="nav-link menu-halfround" href="{{ url('/billing')}}">
+                <a class="nav-link menu-halfround" href="{{ url('/billings')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
                     Billings
                 </a>
