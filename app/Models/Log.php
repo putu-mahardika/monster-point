@@ -12,7 +12,9 @@ class Log extends Model
     protected $table = 'Log';
     protected $primaryKey = 'Id';
 
+    public $timestamps = ["created_at"]; //only want to used created_at column
     const CREATED_AT = 'CreateDate';
+    const UPDATED_AT = null; //and updated by default null set
 
     protected $guarded = ['Id', 'Guid', 'CreateDate'];
     protected $hidden = ['Times'];
