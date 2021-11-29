@@ -24,6 +24,24 @@
                 <div class="@cannot('dashboard chart 2 access') col @endcannot @can('dashboard chart 2 access') col-md-6 @endcan mb-3">
                     <div class="card rounded-xxl">
                         <div class="card-body">
+                            <div class="row justify-content-between">
+                                <div class="col-lg-6 mb-3 text-lg-start text-center">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button id="btnDay_chart1" type="button" data-code="d" class="btn-type-date-chart1 btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
+                                        <button id="btnMonth_chart1" type="button" data-code="M" class="btn-type-date-chart1 btn btn-sm py-0 px-3 btn-outline-primary">M</button>
+                                        <button id="btnYear_chart1" type="button" data-code="y" class="btn-type-date-chart1 btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 mb-3 text-lg-end text-center">
+                                    <button type="button" id="btnDatePrev_chart1" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" id="btnDateLabel_chart1" class="btn btn-sm py-0 px-2 rounded-xl btn-primary mx-2 px-2"></button>
+                                    <button type="button" id="btnDateNext_chart1" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
                             <div class="row justify-content-between mb-3">
                                 <div class="col-auto">
                                     <div class="row">
@@ -68,62 +86,62 @@
             @endcan
             @can('dashboard chart 2 access')
                 <div class="@cannot('dashboard chart 1 access') col @endcannot @can('dashboard chart 1 access') col-md-6 @endcan mb-3">
-                        <div class="card rounded-xxl">
-                            <div class="card-body">
-                                <div class="row justify-content-between">
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="btn-group" role="group" aria-label="Basic example">
-                                            <button id="btnDay" type="button" data-code="d" class="btn-type-date btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
-                                            <button id="btnMonth" type="button" data-code="m" class="btn-type-date btn btn-sm py-0 px-3 btn-outline-primary">M</button>
-                                            <button id="btnYear" type="button" data-code="y" class="btn-type-date btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 mb-3">
-                                        <div class="float-end">
-                                            <button type="button" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
-                                                <i class="fas fa-chevron-left"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-sm py-0 px-2 rounded-xl btn-primary mx-2 px-2">
-                                                {{ now()->format('d M Y') }}
-                                            </button>
-                                            <button type="button" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </button>
-                                        </div>
+                    <div class="card rounded-xxl">
+                        <div class="card-body">
+                            <div class="row justify-content-between">
+                                <div class="col-lg-6 mb-3 text-lg-start text-center">
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button id="btnDay_chart2" type="button" data-code="d" class="btn-type-date-chart2 btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
+                                        <button id="btnMonth_chart2" type="button" data-code="M" class="btn-type-date-chart2 btn btn-sm py-0 px-3 btn-outline-primary">M</button>
+                                        <button id="btnYear_chart2" type="button" data-code="y" class="btn-type-date-chart2 btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
                                     </div>
                                 </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <div id="chart2"></div>
-                                    </div>
+                                <div class="col-lg-6 mb-3 text-lg-end text-center">
+                                    <button type="button" id="btnDatePrev_chart2" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <button type="button" id="btnDateLabel_chart2" class="btn btn-sm py-0 px-2 rounded-xl btn-primary mx-2 px-2"></button>
+                                    <button type="button" id="btnDateNext_chart2" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div id="chart2"></div>
                                 </div>
                             </div>
                         </div>
+                    </div>
                 </div>
             @endcan
         </div>
     @endif
 
     @can('dashboard chart 3 access')
-        <div class="row mb-3">
-            <div class="col">
-                <div class="card rounded-xxl">
-                    <div class="card-body">
-                        <div class="row justify-content-between mb-3">
-                            <div class="col-md-3 col-sm-5">
-                                <select class="form-select py-0" id="month" name="month" style="font-size: .8rem;">
-                                    <option value="">Click per month</option>
-                                    <option value="">January</option>
-                                    <option value="">February</option>
-                                    <option value="">Maret</option>
-                                </select>
-                            </div>
+        <div class="card rounded-xxl">
+            <div class="card-body">
+                <div class="row justify-content-between">
+                    <div class="col-lg-6 mb-3 text-lg-start text-center">
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button id="btnDay_chart3" type="button" data-code="d" class="btn-type-date-chart3 btn btn-sm py-0 px-3 rounded-xl-start btn-primary">D</button>
+                            <button id="btnMonth_chart3" type="button" data-code="M" class="btn-type-date-chart3 btn btn-sm py-0 px-3 btn-outline-primary">M</button>
+                            <button id="btnYear_chart3" type="button" data-code="y" class="btn-type-date-chart3 btn btn-sm py-0 px-3 rounded-xl-end btn-outline-primary">Y</button>
                         </div>
-                        <div class="row">
-                            <div class="col">
-                                <div id="chart3"></div>
-                            </div>
-                        </div>
+                    </div>
+                    <div class="col-lg-6 mb-3 text-lg-end text-center">
+                        <button type="button" id="btnDatePrev_chart3" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button type="button" id="btnDateLabel_chart3" class="btn btn-sm py-0 px-2 rounded-xl btn-primary mx-2 px-2"></button>
+                        <button type="button" id="btnDateNext_chart3" class="btn btn-sm py-0 px-2 rounded-xl btn-primary">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <div id="chart3"></div>
                     </div>
                 </div>
             </div>
@@ -137,7 +155,7 @@
 
 @section('js')
     <script>
-        let config = {
+        let chart1config = {
             type: {
                 d: 'day',
                 m: 'month',
@@ -145,31 +163,275 @@
                 curr: 'd'
             },
             date: {
-                prev: "2021-11-14",
-                curr: "2021-11-15",
-                next: "2021-11-16",
-                now: "2021-11-15"
+                d: {
+                    prev: moment().subtract(1, 'd').format('DD MMM YYYY'),
+                    curr: moment().format('DD MMM YYYY'),
+                    next: moment().add(1, 'd').format('DD MMM YYYY'),
+                },
+                M: {
+                    prev: moment().subtract(1, 'M').format('MMM YYYY'),
+                    curr: moment().format('MMM YYYY'),
+                    next: moment().add(1, 'M').format('MMM YYYY'),
+                },
+                y: {
+                    prev: moment().subtract(1, 'y').format('YYYY'),
+                    curr: moment().format('YYYY'),
+                    next: moment().add(1, 'y').format('YYYY'),
+                }
             },
             format: {
-                d: 'dd MM YYYY',
-                m: 'MM YYYY',
+                d: 'DD MMM YYYY',
+                M: 'MMM YYYY',
                 y: 'YYYY'
             }
         };
 
-        $('.btn-type-date').on('click', function () {
-            $('.btn-type-date').addClass('btn-outline-primary');
-            $('.btn-type-date').removeClass('btn-primary');
+        let chart2config = {
+            type: {
+                d: 'day',
+                m: 'month',
+                y: 'year',
+                curr: 'd'
+            },
+            date: {
+                d: {
+                    prev: moment().subtract(1, 'd').format('DD MMM YYYY'),
+                    curr: moment().format('DD MMM YYYY'),
+                    next: moment().add(1, 'd').format('DD MMM YYYY'),
+                },
+                M: {
+                    prev: moment().subtract(1, 'M').format('MMM YYYY'),
+                    curr: moment().format('MMM YYYY'),
+                    next: moment().add(1, 'M').format('MMM YYYY'),
+                },
+                y: {
+                    prev: moment().subtract(1, 'y').format('YYYY'),
+                    curr: moment().format('YYYY'),
+                    next: moment().add(1, 'y').format('YYYY'),
+                }
+            },
+            format: {
+                d: 'DD MMM YYYY',
+                M: 'MMM YYYY',
+                y: 'YYYY'
+            }
+        };
+
+        let chart3config = {
+            type: {
+                d: 'day',
+                m: 'month',
+                y: 'year',
+                curr: 'd'
+            },
+            date: {
+                d: {
+                    prev: moment().subtract(1, 'd').format('DD MMM YYYY'),
+                    curr: moment().format('DD MMM YYYY'),
+                    next: moment().add(1, 'd').format('DD MMM YYYY'),
+                },
+                M: {
+                    prev: moment().subtract(1, 'M').format('MMM YYYY'),
+                    curr: moment().format('MMM YYYY'),
+                    next: moment().add(1, 'M').format('MMM YYYY'),
+                },
+                y: {
+                    prev: moment().subtract(1, 'y').format('YYYY'),
+                    curr: moment().format('YYYY'),
+                    next: moment().add(1, 'y').format('YYYY'),
+                }
+            },
+            format: {
+                d: 'DD MMM YYYY',
+                M: 'MMM YYYY',
+                y: 'YYYY'
+            }
+        };
+
+        function loadEventChart1() {
+            $('.btn-type-date-chart1').on('click', function () {
+            $('.btn-type-date-chart1').addClass('btn-outline-primary');
+            $('.btn-type-date-chart1').removeClass('btn-primary');
 
             $(this).removeClass('btn-outline-primary');
             $(this).addClass('btn-primary');
 
-            config.type.curr = $(this).data('code');
-        });
+            chart1config.type.curr = $(this).data('code');
+                loadConfigChart1();
+            });
 
-        function reloadChart() {
+            $('#btnDateNext_chart1').on('click', function () {
+                chart1config.date[chart1config.type.curr].prev = chart1config.date[chart1config.type.curr].curr;
+                chart1config.date[chart1config.type.curr].curr = chart1config.date[chart1config.type.curr].next;
+                chart1config.date[chart1config.type.curr].next = moment(chart1config.date[chart1config.type.curr].next, chart1config.format[chart1config.type.curr])
+                                                        .add(1, chart1config.type.curr)
+                                                        .format(chart1config.format[chart1config.type.curr]);
+                loadConfigChart1();
+            });
 
+            $('#btnDatePrev_chart1').on('click', function () {
+                chart1config.date[chart1config.type.curr].next = chart1config.date[chart1config.type.curr].curr;
+                chart1config.date[chart1config.type.curr].curr = chart1config.date[chart1config.type.curr].prev;
+                chart1config.date[chart1config.type.curr].prev = moment(chart1config.date[chart1config.type.curr].prev, chart1config.format[chart1config.type.curr])
+                                                        .subtract(1, chart1config.type.curr)
+                                                        .format(chart1config.format[chart1config.type.curr]);
+                loadConfigChart1();
+            });
+
+            $('#btnDateLabel_chart1').on('click', function () {
+                chart1config.date[chart1config.type.curr].next = moment().add(1, chart1config.type.curr).format(chart1config.format[chart1config.type.curr]);
+                chart1config.date[chart1config.type.curr].curr = moment().format(chart1config.format[chart1config.type.curr]);
+                chart1config.date[chart1config.type.curr].prev = moment().subtract(1, chart1config.type.curr).format(chart1config.format[chart1config.type.curr]);
+                loadConfigChart1();
+            });
         }
+
+        function loadEventChart2() {
+            $('.btn-type-date-chart2').on('click', function () {
+            $('.btn-type-date-chart2').addClass('btn-outline-primary');
+            $('.btn-type-date-chart2').removeClass('btn-primary');
+
+            $(this).removeClass('btn-outline-primary');
+            $(this).addClass('btn-primary');
+
+            chart2config.type.curr = $(this).data('code');
+                loadConfigChart2();
+            });
+
+            $('#btnDateNext_chart2').on('click', function () {
+                chart2config.date[chart2config.type.curr].prev = chart2config.date[chart2config.type.curr].curr;
+                chart2config.date[chart2config.type.curr].curr = chart2config.date[chart2config.type.curr].next;
+                chart2config.date[chart2config.type.curr].next = moment(chart2config.date[chart2config.type.curr].next, chart2config.format[chart2config.type.curr])
+                                                        .add(1, chart2config.type.curr)
+                                                        .format(chart2config.format[chart2config.type.curr]);
+                loadConfigChart2();
+            });
+
+            $('#btnDatePrev_chart2').on('click', function () {
+                chart2config.date[chart2config.type.curr].next = chart2config.date[chart2config.type.curr].curr;
+                chart2config.date[chart2config.type.curr].curr = chart2config.date[chart2config.type.curr].prev;
+                chart2config.date[chart2config.type.curr].prev = moment(chart2config.date[chart2config.type.curr].prev, chart2config.format[chart2config.type.curr])
+                                                        .subtract(1, chart2config.type.curr)
+                                                        .format(chart2config.format[chart2config.type.curr]);
+                loadConfigChart2();
+            });
+
+            $('#btnDateLabel_chart2').on('click', function () {
+                chart2config.date[chart2config.type.curr].next = moment().add(1, chart2config.type.curr).format(chart2config.format[chart2config.type.curr]);
+                chart2config.date[chart2config.type.curr].curr = moment().format(chart2config.format[chart2config.type.curr]);
+                chart2config.date[chart2config.type.curr].prev = moment().subtract(1, chart2config.type.curr).format(chart2config.format[chart2config.type.curr]);
+                loadConfigChart2();
+            });
+        }
+
+        function loadEventChart3() {
+            $('.btn-type-date-chart3').on('click', function () {
+            $('.btn-type-date-chart3').addClass('btn-outline-primary');
+            $('.btn-type-date-chart3').removeClass('btn-primary');
+
+            $(this).removeClass('btn-outline-primary');
+            $(this).addClass('btn-primary');
+
+            chart3config.type.curr = $(this).data('code');
+                loadConfigChart3();
+            });
+
+            $('#btnDateNext_chart3').on('click', function () {
+                chart3config.date[chart3config.type.curr].prev = chart3config.date[chart3config.type.curr].curr;
+                chart3config.date[chart3config.type.curr].curr = chart3config.date[chart3config.type.curr].next;
+                chart3config.date[chart3config.type.curr].next = moment(chart3config.date[chart3config.type.curr].next, chart3config.format[chart3config.type.curr])
+                                                        .add(1, chart3config.type.curr)
+                                                        .format(chart3config.format[chart3config.type.curr]);
+                loadConfigChart3();
+            });
+
+            $('#btnDatePrev_chart3').on('click', function () {
+                chart3config.date[chart3config.type.curr].next = chart3config.date[chart3config.type.curr].curr;
+                chart3config.date[chart3config.type.curr].curr = chart3config.date[chart3config.type.curr].prev;
+                chart3config.date[chart3config.type.curr].prev = moment(chart3config.date[chart3config.type.curr].prev, chart3config.format[chart3config.type.curr])
+                                                        .subtract(1, chart3config.type.curr)
+                                                        .format(chart3config.format[chart3config.type.curr]);
+                loadConfigChart3();
+            });
+
+            $('#btnDateLabel_chart3').on('click', function () {
+                chart3config.date[chart3config.type.curr].next = moment().add(1, chart3config.type.curr).format(chart3config.format[chart3config.type.curr]);
+                chart3config.date[chart3config.type.curr].curr = moment().format(chart3config.format[chart3config.type.curr]);
+                chart3config.date[chart3config.type.curr].prev = moment().subtract(1, chart3config.type.curr).format(chart3config.format[chart3config.type.curr]);
+                loadConfigChart3();
+            });
+        }
+
+        function loadConfigChart1() {
+            $('#btnDateLabel_chart1').html(chart1config.date[chart1config.type.curr].curr);
+            if ( chart1config.date[chart1config.type.curr].curr === moment().format(chart1config.format[chart1config.type.curr]) ) {
+                $('#btnDateLabel_chart1').addClass('btn-primary');
+                $('#btnDateLabel_chart1').removeClass('btn-outline-primary');
+            } else {
+                $('#btnDateLabel_chart1').removeClass('btn-primary');
+                $('#btnDateLabel_chart1').addClass('btn-outline-primary');
+            }
+            $('#btnDateNext_chart1').prop('disabled',
+                chart1config.date[chart1config.type.curr].next === moment().add(1, chart1config.type.curr).format(chart1config.format[chart1config.type.curr])
+            );
+        }
+
+        function loadConfigChart2() {
+            $('#btnDateLabel_chart2').html(chart2config.date[chart2config.type.curr].curr);
+            if ( chart2config.date[chart2config.type.curr].curr === moment().format(chart2config.format[chart2config.type.curr]) ) {
+                $('#btnDateLabel_chart2').addClass('btn-primary');
+                $('#btnDateLabel_chart2').removeClass('btn-outline-primary');
+            } else {
+                $('#btnDateLabel_chart2').removeClass('btn-primary');
+                $('#btnDateLabel_chart2').addClass('btn-outline-primary');
+            }
+            $('#btnDateNext_chart2').prop('disabled',
+                chart2config.date[chart2config.type.curr].next === moment().add(1, chart2config.type.curr).format(chart2config.format[chart2config.type.curr])
+            );
+        }
+
+        function loadConfigChart3() {
+            $('#btnDateLabel_chart3').html(chart3config.date[chart3config.type.curr].curr);
+            if ( chart3config.date[chart3config.type.curr].curr === moment().format(chart3config.format[chart3config.type.curr]) ) {
+                $('#btnDateLabel_chart3').addClass('btn-primary');
+                $('#btnDateLabel_chart3').removeClass('btn-outline-primary');
+            } else {
+                $('#btnDateLabel_chart3').removeClass('btn-primary');
+                $('#btnDateLabel_chart3').addClass('btn-outline-primary');
+            }
+            $('#btnDateNext_chart3').prop('disabled',
+                chart3config.date[chart3config.type.curr].next === moment().add(1, chart3config.type.curr).format(chart3config.format[chart3config.type.curr])
+            );
+        }
+
+        function requestParamBuilder(chartNum) {
+            let config = null;
+            if (chartNum == 1) {
+                config = chart1config;
+            }
+            else if (chartNum == 2) {
+                config = chart2config;
+            }
+            else if (chartNum == 3) {
+                config = chart3config;
+            }
+
+            let params = [
+                `t=${config.type.curr}`,
+                `d=${moment(config.date[config.type.curr].curr, config.format[config.type.curr]).format('YYYY-MM-DD')}`
+            ];
+
+            return `?${params.join('&')}`;
+        }
+
+        $(document).ready(() => {
+            loadConfigChart1();
+            loadEventChart1();
+            loadConfigChart2();
+            loadEventChart2();
+            loadConfigChart3();
+            loadEventChart3();
+        });
 
         const complaintsData = [{
                 complaint: 'Sunday',
@@ -218,7 +480,7 @@
                 height: 250
             },
             palette: 'Harmony Light',
-            dataSource,
+            dataSource: `{{ route('dashboard.chart1') }}${requestParamBuilder(1)}`,
             argumentAxis: {
                 label: {
                     overlappingBehavior: 'stagger',
@@ -227,42 +489,35 @@
             tooltip: {
                 enabled: true,
             },
-            valueAxis: [{
-                    name: 'frequency',
-                    position: 'left',
-                    tickInterval: 300,
-                },
-                {
-                    enabled: false,
-                    name: 'percentage',
-                    position: 'right',
-                    showZero: true,
-                    label: {
-                        customizeText(info) {
-                            // return `${info.valueText}%`;
-                            return ``;
-                        },
-                    },
-                    tickInterval: 20,
-                    valueMarginsEnabled: false,
-                }
-            ],
+            // valueAxis: [{
+            //         name: 'frequency',
+            //         position: 'left',
+            //         tickInterval: 300,
+            //     },
+            //     {
+            //         enabled: false,
+            //         name: 'percentage',
+            //         position: 'right',
+            //         showZero: true,
+            //         label: {
+            //             customizeText(info) {
+            //                 // return `${info.valueText}%`;
+            //                 return ``;
+            //             },
+            //         },
+            //         tickInterval: 20,
+            //         valueMarginsEnabled: false,
+            //     }
+            // ],
             commonSeriesSettings: {
-                argumentField: 'complaint',
+                argumentField: 'date',
             },
             series: [
-                // {
-                //     type: 'bar',
-                //     valueField: 'count',
-                //     axis: 'frequency',
-                //     name: 'Complaint frequency',
-                //     color: '#fac29a',
-                // },
                 {
                     type: 'line',
-                    valueField: 'cumulativePercentage',
-                    axis: 'percentage',
-                    name: 'Cumulative percentage',
+                    valueField: 'value',
+                    // axis: 'percentage',
+                    // name: 'Cumulative percentage',
                     color: '#4db2c4',
                 }
             ],
@@ -276,7 +531,7 @@
         $(() => {
             $('#chart2').dxChart({
                 size: {
-                    height: 300
+                    height: 340
                 },
                 series: {
                     argumentField: 'day',
