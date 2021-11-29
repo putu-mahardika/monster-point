@@ -28,7 +28,12 @@ Route::view('/', 'landing');
 
 // AFTER LOGIN ROUTES
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::view('/dashboard', 'pages.dashboard.index')->name('dashboard.index');
+    Route::prefix('dashboard')->name('dashboard.')->group(function () {
+        Route::get('/', [Web\DashboardController::class, 'index'])->name('index');
+        Route::get('chart1', [Web\DashboardController::class, 'chart1'])->name('chart1');
+        Route::get('chart2', [Web\DashboardController::class, 'chart2'])->name('chart2');
+        Route::get('chart3', [Web\DashboardController::class, 'chart3'])->name('chart3');
+    });
 
     Route::resource('profile', Web\UserControler::class);
     Route::resource('merchants', Web\MerchantController::class);
