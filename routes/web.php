@@ -75,6 +75,11 @@ Route::get('/coba', function () {
     }
 });
 
+// invoice
+Route::get('/invoice', function(){
+    return view('/pages/billing/invoice');
+});
+
 //riset swagger
 // Route::get('/greet', [GreetingController::class, 'greets']);
 
