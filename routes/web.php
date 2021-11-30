@@ -80,6 +80,11 @@ Route::get('/invoice', function(){
     return view('/pages/billing/invoice');
 });
 
+//receipt
+Route::get('/receipt', function () {
+    return view('pages/billing/receipt');
+});
+
 //riset swagger
 // Route::get('/greet', [GreetingController::class, 'greets']);
 
