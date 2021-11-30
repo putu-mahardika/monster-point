@@ -7,20 +7,19 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
+    protected $guarded = [
+        'id', 'created_at', 'updated_at', 'remember_token', 'two_factor_recovery_codes', 'two_factor_secret'
     ];
 
     /**
@@ -42,7 +41,39 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * The relationships that should always be loaded.
+     *
+     * @var array
+     */
+    protected $with = ['roles'];
+
     public function socialAccounts(){
         return $this->hasMany(SocialAccount::class);
+    }
+
+    /**
+     * Get the merchant associated with the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function merchant()
+    {
+        return $this->hasOne(Merchant::class, 'email', 'email');
+    }
+
+    /**
+     * Get all of the emailChangeTokens for the User
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function emailChangeTokens()
+    {
+        return $this->hasMany(EmailChangeVerification::class, 'user_id', 'id');
+    }
+
+    public function getIsAdminAttribute()
+    {
+        return $this->hasRole('super admin');
     }
 }

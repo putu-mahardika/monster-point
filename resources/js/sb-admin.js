@@ -5,7 +5,6 @@
     */
 
 const { isArguments } = require("lodash");
-
     //
 // Scripts
 //
@@ -25,11 +24,14 @@ window.addEventListener('DOMContentLoaded', event => {
             localStorage.setItem('sb|sidebar-toggle', document.body.classList.contains('sb-sidenav-toggled'));
         });
     }
+
     showRedStarRequired();
+    setLabelTextDivider();
+    autoResizeMoreCard();
 });
 
 window.showRedStarRequired = () => {
-    let formControlElements = $('.form-control');
+    let formControlElements = $('.form-control, .form-select');
     jQuery.each(formControlElements, (index, element) => {
         if ($(element).prop('required')) {
             let label = $(`label[for='${element.id}']`);
@@ -61,5 +63,63 @@ window.activateTooltip = () => {
     let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
     let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+}
+
+window.setLabelTextDivider = () => {
+    let labelTextDiv = document.querySelectorAll('.text-divider label');
+    labelTextDiv.forEach(label => {
+        halfWidth = $(label).width() / 2;
+        $(label).css({left: `calc(50% - ${halfWidth}px)`});
+    });
+}
+
+window.copyToClipboard = (elem) => {
+    // create hidden text element, if it doesn't already exist
+    var targetId = "_hiddenCopyText_";
+    var isInput = elem.tagName === "INPUT" || elem.tagName === "TEXTAREA";
+    var origSelectionStart, origSelectionEnd;
+    if (isInput) {
+        // can just use the original source element for the selection and copy
+        target = elem;
+        origSelectionStart = elem.selectionStart;
+        origSelectionEnd = elem.selectionEnd;
+    } else {
+        // must use a temporary form element for the selection and copy
+        target = document.getElementById(targetId);
+        if (!target) {
+            var target = document.createElement("textarea");
+            target.style.position = "absolute";
+            target.style.left = "-9999px";
+            target.style.top = "0";
+            target.id = targetId;
+            document.body.appendChild(target);
+        }
+        target.textContent = elem.textContent;
+    }
+    // select the content
+    var currentFocus = document.activeElement;
+    target.focus();
+    target.setSelectionRange(0, target.value.length);
+
+    // copy the selection
+    var succeed;
+    try {
+        succeed = document.execCommand("copy");
+    } catch (e) {
+        succeed = false;
+    }
+    return succeed;
+}
+
+window.autoResizeMoreCard = () => {
+    let cards = document.querySelectorAll('.card-auto-resize');
+    let heights = [];
+    cards.forEach(card => {
+        heights.push($(card).height());
+    });
+    let maxHeight = Math.max(...heights);
+    cards.forEach(card => {
+        $(card).css({height: `${maxHeight}px`});
     });
 }
