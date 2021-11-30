@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::prefix('v1')->name('api.v1.')->group(function () {
     Route::post('{token}/{event}/{id}/{value}', [V1\LogApiController::class, 'transaction'])->name('transaction');
+    Route::get('{token}/{id}', [V1\LogApiController::class, 'getMemberHistoryPoint'])->name('getMemberHistoryPoint');
     Route::resource('members', V1\MemberController::class);
 });
 

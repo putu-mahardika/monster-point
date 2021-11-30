@@ -13,6 +13,9 @@ class LogApiController extends Controller
     // }
     public function transaction(Request $request, $token, $event, $id, $value){
         return LogHelper::indexLogApi($request, $token, $event, $id, $value);
+    }
 
+    public function getMemberHistoryPoint(Request $request, $token, $id){
+        return LogHelper::memberHistoryPoint($request, $token, $id);
     }
 }
