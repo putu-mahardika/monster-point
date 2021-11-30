@@ -146,7 +146,7 @@ class UpdateProcedureGenerateBilling extends Migration
                             UPDATE Billing SET InvoiceNumber = @noInvoice WHERE InvoiceNumber = @noInvoice
 
                         END
-                    /*ELSE
+                    ELSE
                         BEGIN
                             INSERT INTO dbo.Billing
                                 (
@@ -172,7 +172,7 @@ class UpdateProcedureGenerateBilling extends Migration
                                     0,							-- Terbayar
                                     @sisa						-- sisa
                                 )
-                        END*/
+                        END
 
                     /* show output prosedur yang sudah diinsert ke tabel billing */
                     SELECT
