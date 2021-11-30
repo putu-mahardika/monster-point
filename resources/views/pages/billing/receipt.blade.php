@@ -7,7 +7,7 @@
 
 @endsection
 
-@section('title', 'Billings')
+@section('title', 'Receipt')
 
 
 @section('content')
@@ -59,6 +59,10 @@
                                         <td>Status</td>
                                         <td><h3><i>PAID</i></h3></td>
                                     </tr>
+                                    <tr>
+                                        <td>Date Paid :</td>
+                                        <td>30 November 2021</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -85,7 +89,6 @@
                                         <hr>
                                     </div>
                                 </div>
-
                                 <table  class="table table-borderless">
                                     <tr width="100">
                                         <td>Total Hit</td>
@@ -103,8 +106,8 @@
                                         <td>Tarif Per 1000 Hit</td>
                                         <td class="text-end">100.000</td>
                                     </tr>
-                                     <tr>
-                                        <td> <img src="{{ url('/img/lunas.png')}}" style="opacity: 0.5; transform: rotate(-45deg); z-index:-1;"></td>
+                                    <tr>
+                                        <td> <img src="{{ url('/img/lunas.png')}}" style="opacity: 0.5; transform: rotate(-27deg); z-index:-1;"></td>
                                     </tr>
                                 </table>
                                 <hr>
@@ -123,11 +126,16 @@
                             </div>
                         </div>
 
-                            <div class="row">
-                                <div class="col">
-                                       <p>Metode Pembayaran : Go - Pay </p>
-                                </div>
-                            </div>
+                        <div class="row">
+                           <div class="col">
+                                <a href="">Info cara pembayaran</a>
+                           </div>
+                        </div>
+                        <div class="row">
+                           <div class="col">
+                                <a href="">Kembali ke Admin</a>
+                           </div>
+                        </div>
                     </div>
 
                 </div>

@@ -57,7 +57,7 @@
                                     </tr>
                                     <tr>
                                         <td>Status</td>
-                                        <td><h3><i>PAID</i></h3></td>
+                                        <td><h3><i>BILLED</i></h3></td>
                                     </tr>
                                 </table>
                             </div>
