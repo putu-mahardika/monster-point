@@ -3,6 +3,7 @@
 use App\Helpers\EmailChangeHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\Web;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -63,9 +64,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('/help', function () {
-    return view('/pages/help/index');
-});
+// Route::get('/help', function () {
+//     return view('/pages/help/index');
+// });
 
 Route::get('/coba', function () {
     try {
@@ -86,6 +87,6 @@ Route::get('/receipt', function () {
 });
 
 //riset swagger
-// Route::get('/greet', [GreetingController::class, 'greets']);
+Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
 
 
