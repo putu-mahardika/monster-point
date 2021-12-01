@@ -1,13 +1,18 @@
 @component('mail::message')
 
 @component('mail::table')
-|                               |               |         <span style="color: red"> INVOICE</span>  |
+|                               |               |         <span style="color:rgb(5, 5, 158);"> RECEIPT</span>  |
 | ------------------------------|:-------------:| ---------------------: |
-| No       :  001               |               | Periode : Desember 2021|
-| Date     : 1 Dec 2021         |               | [ BILLED ]             |
-| Merchant : Nama PT            |               |                        |
+| No       :  001               |               | Periode : December 2021|
+| Date     : 1 Dec 2021         |               | #[ PAID ]               |
+| Merchant : Nama PT            |               | Paid Date :  1 December 2021                |
+|         |               |                |
 |1. Hit Bulan Desember            |           |10.775     |
 |2. Sisa Hit Bulan November       |           |10.775     |
+@endcomponent
+@component('mail::table')
+|                               |               |                        |
+| ------------------------------|:-------------:| ---------------------: |
 |   Total hit                     |           | 12.250    |
 |   Ditagihkan                    |           | 12.250    |
 |   Akumulasi bulan depan         |           | 12.000    |
@@ -25,10 +30,11 @@
     </tr>
 </table> --}}
 
-@component('mail::button', ['url' => ''])
-Metode Pembayaran
-@endcomponent
 
 Thanks,<br>
 {{ config('app.name') }}
 @endcomponent
+
+{{-- @component('mail::button', ['url' => ''])
+Metode Pembayaran
+@endcomponent --}}
