@@ -3,6 +3,7 @@
 use App\Helpers\EmailChangeHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Coba;
 use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\Web;
 use App\Models\User;
@@ -89,4 +90,7 @@ Route::get('/receipt', function () {
 //riset swagger
 Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
 
+
+// email view invoice & receipt
+Route::get('/send-receipt', [Coba::class, 'index' ]);
 
