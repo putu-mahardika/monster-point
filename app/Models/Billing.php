@@ -27,4 +27,9 @@ class Billing extends Model
     {
         return $this->belongsTo(Merchant::class, 'IdMerchant', 'Id');
     }
+
+    public function invoice()
+    {
+        return $this->belongsTo(Invoice::class, 'billing_id', 'Id');
+    }
 }

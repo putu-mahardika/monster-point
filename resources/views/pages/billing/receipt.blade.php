@@ -15,7 +15,8 @@
     <div class="col">
         <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
                 <div class="card-body">
-                    <div style="; width:210mm; height:297mm; padding:1cm;" id="invoice-print">
+                    <div class="position-relative" style="overflow: hidden; font-size: 11pt !important; width:210mm; height:297mm; padding:1cm;" id="invoice-print">
+                        <img class="position-absolute" src="{{ asset('/img/lunas.png')}}" style="top:20rem; left:10rem; opacity: 0.5; transform: rotate(-27deg);">
                         <div class="row">
                             <div class="col">
                                 <table class="table table-borderless">
@@ -107,7 +108,7 @@
                                         <td class="text-end">100.000</td>
                                     </tr>
                                     <tr>
-                                        <td> <img src="{{ url('/img/lunas.png')}}" style="opacity: 0.5; transform: rotate(-27deg); z-index:-1;"></td>
+                                        <td> </td>
                                     </tr>
                                 </table>
                                 <hr>
@@ -148,7 +149,9 @@
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        var element = document.getElementById('invoice-print');
-        html2pdf(element).output();
+        $(document).ready(() => {
+            var element = document.getElementById('invoice-print');
+            html2pdf(element).output();
+        });
     </script>
 @endsection

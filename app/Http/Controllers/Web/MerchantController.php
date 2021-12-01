@@ -92,6 +92,7 @@ class MerchantController extends Controller
      */
     public function edit(Merchant $merchant)
     {
+        // dd($merchant);
         return view('pages.merchant.editor', compact('merchant'));
     }
 

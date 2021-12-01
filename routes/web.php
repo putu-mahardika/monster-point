@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Coba;
 use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\Web;
+use App\Models\GlobalSetting;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -45,6 +46,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('events', Web\EventController::class);
     Route::post('event-test/{event}', [Web\EventController::class, 'eventTest'])->name('event-test');
 
+    Route::get('settings/getSettings', [Web\GlobalSettingController::class, 'getSettings'])->name('settings.getSettings');
+    Route::resource('settings', Web\GlobalSettingController::class);
+
     Route::resource('billings', Web\BillingController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
@@ -56,6 +60,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return EmailChangeHelper::validateToken($request->token);
     })->name('verify-email-change');
 
+
     Route::prefix('dx')->name('dx.')->group(function () {
         Route::get('merchants', [Web\MerchantController::class, 'dx'])->name('merchants');
         Route::get('members/{merchant_id?}', [Web\MemberController::class, 'dx'])->name('members');
@@ -63,11 +68,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('billings/{merchant_id}', [Web\BillingController::class, 'dx'])->name('billings');
     });
 
+
 });
 
-// Route::get('/help', function () {
-//     return view('/pages/help/index');
-// });
+Route::get('kirim-email', [Web\MailController::class, 'index'])->name('sendMail');
+
+Route::get('/help', function () {
+    return view('/pages/help/index');
+});
 
 Route::get('/coba', function () {
     try {
