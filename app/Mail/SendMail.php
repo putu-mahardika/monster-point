@@ -29,8 +29,8 @@ class SendMail extends Mailable
     public function build()
     {
         //return $this->view('view.name');
-        return $this->subject('Mail from websitepercobaan.com')
-                    ->markdown('mail.send-mail')
+        return $this->subject('INVOICE : POINT SERVICE')
+                    ->markdown('mail.send-receipt')
                     ->with('details', $this->details);
     }
 }

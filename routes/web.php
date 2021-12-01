@@ -68,10 +68,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('billings/{merchant_id}', [Web\BillingController::class, 'dx'])->name('billings');
     });
 
-
 });
 
-Route::get('kirim-email', [Web\MailController::class, 'index'])->name('sendMail');
+Route::get('/kirim-email', [Web\MailController::class, 'index'])->name('sendMail');
 
 Route::get('/help', function () {
     return view('/pages/help/index');
