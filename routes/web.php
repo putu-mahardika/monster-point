@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/getSettings', [Web\GlobalSettingController::class, 'getSettings'])->name('settings.getSettings');
     Route::resource('settings', Web\GlobalSettingController::class);
 
+    Route::get('createBilling', [Web\BillingController::class, 'createBilling'])->name('billing.createBilling');
     Route::resource('billings', Web\BillingController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
@@ -66,6 +67,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('billings/{merchant_id}', [Web\BillingController::class, 'dx'])->name('billings');
     });
 
+    Route::get('/invoice', function(){
+        return view('/pages/billing/invoice');
+    });
+
+    //receipt
+    Route::get('/receipt', function () {
+        return view('pages/billing/receipt');
+    });
 
 });
 
