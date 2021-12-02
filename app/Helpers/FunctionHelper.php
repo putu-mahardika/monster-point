@@ -1,6 +1,7 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\GlobalSetting;
 use Illuminate\Support\Str;
 
 class FunctionHelper {
@@ -38,6 +39,12 @@ class FunctionHelper {
     public static function getBlacklistFormulaKeywords()
     {
         return explode(' ', static::$blacklistFormulaKeyword);
+    }
+
+    public static function getDateCutBilling()
+    {
+        $date_exec = GlobalSetting::where('Kode', 'Cut')->pluck('Value')->first();
+        return $date_exec;
     }
 
 }
