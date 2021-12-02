@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendMail extends Mailable
+class CobaEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,9 +16,9 @@ class SendMail extends Mailable
      *
      * @return void
      */
-    public function __construct($details)
+    public function __construct()
     {
-        $this->details = $details;
+        //
     }
 
     /**
@@ -28,9 +28,12 @@ class SendMail extends Mailable
      */
     public function build()
     {
-        //return $this->view('view.name');
-        return $this->subject('INVOICE : POINT SERVICE')
-                    ->markdown('mail.send-receipt')
-                    ->with('details', $this->details);
+        return $this->from('pengirim@malasngoding.com')
+                   ->view('email-test')
+                   ->with(
+                    [
+                        'nama' => 'Diki Alfarabi Hadi',
+                        'website' => 'www.malasngoding.com',
+                    ]);
     }
 }

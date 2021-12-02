@@ -30,7 +30,7 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
                     Billings
                 </a>
-                <a class="nav-link menu-halfround" href="{{ url('/help')}}">
+                <a class="nav-link menu-halfround" href="http://127.0.0.1:8000/api/documentation">
                     <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
                     Helps
                 </a>

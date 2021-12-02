@@ -3,6 +3,8 @@
 use App\Helpers\EmailChangeHelper;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SocialiteController;
+use App\Http\Controllers\Coba;
+use App\Http\Controllers\GreetingController;
 use App\Http\Controllers\Web;
 use App\Models\GlobalSetting;
 use App\Models\User;
@@ -78,7 +80,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('kirim-email', [Web\MailController::class, 'index'])->name('sendMail');
+Route::get('/kirim-email', [Web\MailController::class, 'index'])->name('sendMail');
 
 Route::get('/help', function () {
     return view('/pages/help/index');
@@ -103,6 +105,9 @@ Route::get('/receipt', function () {
 });
 
 //riset swagger
-// Route::get('/greet', [GreetingController::class, 'greets']);
+Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
 
+
+// email view invoice & receipt
+Route::get('/send-receipt', [Coba::class, 'index' ]);
 
