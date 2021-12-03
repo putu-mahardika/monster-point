@@ -132,12 +132,12 @@ class BillingController extends Controller
         foreach($billings as $billing)
         {
             $jatuhTempo = Carbon::create($billing->JatuhTempo);
-            // if(now() == $jatuhTempo || now() == $jatuhTempo->subDays($dateCut) || now() == $jatuhTempo->subDay())
-            // {
+            if(now() == $jatuhTempo || now() == $jatuhTempo->subDays($dateCut) || now() == $jatuhTempo->subDay())
+            {
                 $data = FunctionHelper::getInvoiceDetails($billing->merchant);
                 // dd($data);
                 \Mail::to($billing->merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
-            // }
+            }
         }
     }
 }
