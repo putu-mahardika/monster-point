@@ -33,7 +33,11 @@
                 <label for="value">Value</label>
             </div>
             <div class="col-md-7">
-                <input type="number" min="0" name="value" id="value" class="form-control rounded-xl" autocomplete="off" required value="{{ old('value', $setting->Value ?? '') }}">
+                @if ($setting->Kode == 'Cut')
+                    <input type="number" min="2" name="value" id="value" class="form-control rounded-xl" autocomplete="off" required value="{{ old('value', $setting->Value ?? '') }}">
+                @else
+                    <input type="number" min="0" name="value" id="value" class="form-control rounded-xl" autocomplete="off" required value="{{ old('value', $setting->Value ?? '') }}">
+                @endif
                 <x-error-message-field for="value" class="d-none"></x-error-message-field>
             </div>
         </div>
