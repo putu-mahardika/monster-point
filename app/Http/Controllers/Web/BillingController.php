@@ -98,44 +98,46 @@ class BillingController extends Controller
 
     public function createBilling()
     {
-        $merchants = Merchant::select('Id', 'Nama')->where('Akif', 1)->get();
-
+        $merchants = Merchant::select('Id', 'Nama', 'Email')->where('Akif', 1)->get();
+        // $merchants = Merchant::select('Id', 'Nama', 'Email')->where('Id', 1)->get();
+        // dd($merchants);
         foreach($merchants as $merchant)
         {
-
-            $exec = DB::select('SET NOCOUNT ON; EXEC dbo.sp_GenerateBilling @IdMerchant = ?', [
-                $merchant->Id
-            ]);
-
-            if(!is_null($exec))
+            try {
+                DB::select('SET NOCOUNT ON; EXEC dbo.sp_GenerateBilling @IdMerchant = ?', [
+                    $merchant->Id
+                ]);
+                $exec = true;
+            } catch (\Exception $e) {
+                $exec = false;
+            }
+            // dd($exec);
+            if($exec)
             {
-                $tglInvoice = Carbon::today()->format('d F Y');
-                $bulanIni = Carbon::today()->format('F Y');
-                $bulanLalu = Carbon::today()->subMonth()->format('F Y');
-                $billing = Billing::with('invoice')->where('IdMerchant', $merchant->Id)->orderBy('CreateDate', 'desc')->first();
-                $sisaHitBulanLalu = Billing::where('IdMerchant', $merchant->Id)->where('Id', '<', $billing->Id)->orderBy('Id', 'desc')->pluck('sisa')->first();
-                $limitHit = GlobalSetting::where('Kode', 'Total Hit')->pluck('Value')->first();
-                $tarif = GlobalSetting::where('Kode', 'Price')->pluck('Value')->first();
-
-
-                $details = [
-                    'noInvoice' => $billing->invoice->no_invoice,
-                    'tglInvoice' => $tglInvoice,
-                    'namaMerchant' => $merchant->Nama,
-                    'bulanIni' => $bulanIni,
-                    'bulanLalu' => $bulanLalu,
-                    'totalHitBulanIni' => $billing->TotalHit,
-                    'sisaHitBulanIni' => $billing->sisa,
-                    'sisaHitBulanLalu' => !is_null($sisaHitBulanLalu) ? (int)$sisaHitBulanLalu : 0,
-                    'hitDitagihkan' => (int)(($billing->TotalSukses + $sisaHitBulanLalu) - $billing->sisa),
-                    'limitHit' => $limitHit,
-                    'Tarif' => $tarif,
-                    'Biaya' => $billing->TotalBiaya,
-                ];
-
-                \Mail::to($merchant->Email)->send(new SendMail($details));
+                $data = FunctionHelper::getInvoiceDetails($merchant);
+                \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
             }
         }
+    }
 
+    public function resendInvoice()
+    {
+        $dateCut = (int)floor(GlobalSetting::where('Kode', 'Expired')->pluck('Value')->first()/2);
+        $billings = Billing::with('merchant')
+                    ->whereHas('merchant', function($q){
+                        $q->where('Akif', '=', 1);
+                    })
+                    ->where('Terbayar', '=', '0')
+                    ->get();
+        foreach($billings as $billing)
+        {
+            $jatuhTempo = Carbon::create($billing->JatuhTempo);
+            // if(now() == $jatuhTempo || now() == $jatuhTempo->subDays($dateCut) || now() == $jatuhTempo->subDay())
+            // {
+                $data = FunctionHelper::getInvoiceDetails($billing->merchant);
+                // dd($data);
+                \Mail::to($billing->merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
+            // }
+        }
     }
 }

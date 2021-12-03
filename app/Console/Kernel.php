@@ -27,7 +27,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $date_exec = FunctionHelper::getDateCutBilling();
-        $schedule->call([Web\MailController::class, 'index'])->monthlyOn($date_exec, '00:00');
+        $schedule->call([Web\BillingController::class, 'createBilling'])->monthlyOn($date_exec, '00:00');
+        $schedule->call([Web\BillingController::class, 'resendInvoice'])->daily();
     }
 
     /**

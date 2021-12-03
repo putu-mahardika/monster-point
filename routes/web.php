@@ -49,6 +49,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/getSettings', [Web\GlobalSettingController::class, 'getSettings'])->name('settings.getSettings');
     Route::resource('settings', Web\GlobalSettingController::class);
 
+    Route::get('resendInvoice', [Web\BillingController::class, 'resendInvoice'])->name('billing.resendInvoice');
     Route::get('createBilling', [Web\BillingController::class, 'createBilling'])->name('billing.createBilling');
     Route::resource('billings', Web\BillingController::class);
 
