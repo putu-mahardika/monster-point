@@ -40,7 +40,7 @@
                                         <td class="text-start"> : 001</td>
                                     </tr>
                                     <tr>
-                                        <td>Tgl</td>
+                                        <td>Date</td>
                                         <td class="text-start">: 29 November 2021</td>
                                     </tr>
                                     <tr>
@@ -59,6 +59,10 @@
                                         <td>Status</td>
                                         <td><h3><i>BILLED</i></h3></td>
                                     </tr>
+                                    <tr>
+                                        <td>Due date</td>
+                                        <td>: 30 November 2021</td>
+                                    </tr>
                                 </table>
                             </div>
                         </div>
@@ -70,12 +74,12 @@
                                     <tbody>
                                         <tr width="100">
                                             <td>1</td>
-                                            <td>Hit Bulan November 2021</td>
+                                            <td>Hits in November 2021</td>
                                             <td class="text-end">10.735</td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td>Sisa Hit Oktober 2021</td>
+                                            <td>October Hits Remaining 2021</td>
                                             <td class="text-end">1.515</td>
                                         </tr>
                                     </tbody>
@@ -87,19 +91,19 @@
                                 </div>
                                 <table  class="table table-borderless">
                                     <tr width="100">
-                                        <td>Total Hit</td>
+                                        <td>Total Hits</td>
                                         <td class="text-end">12.250</td>
                                     </tr>
                                     <tr>
-                                        <td>Ditagihkan</td>
+                                        <td>Billed</td>
                                         <td class="text-end">12.000</td>
                                     </tr>
                                     <tr>
-                                        <td>Akumulasi bulan depan</td>
+                                        <td>Accumulate next month</td>
                                         <td class="text-end">250</td>
                                     </tr>
                                     <tr>
-                                        <td>Tarif Per 1000 Hit</td>
+                                        <td>Rates Per 1000 Hits</td>
                                         <td class="text-end">100.000</td>
                                     </tr>
                                 </table>
@@ -112,7 +116,7 @@
                             <div class="col">
                                 <table class="table">
                                     <tr width="100" >
-                                        <td>Total Biaya (1000 x 12)</td>
+                                        <td>Total Cost (1000 x 12)</td>
                                         <td class="text-end fs-4">Rp 1.200.000,-</td>
                                     </tr>
                                 </table>
@@ -121,12 +125,12 @@
 
                         <div class="row">
                            <div class="col">
-                                <a href="">Info cara pembayaran</a>
+                                <a href="">Payment method</a>
                            </div>
                         </div>
                         <div class="row">
                            <div class="col">
-                                <a href="">Kembali ke Admin</a>
+                                <a href="">Back to Admin</a>
                            </div>
                         </div>
                     </div>
@@ -136,7 +140,6 @@
     </div>
 
 </div>
-
 @endsection
 @section('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
