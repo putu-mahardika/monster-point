@@ -11,13 +11,13 @@ Here is an invoice that needs to be paid immediately.
 | Date     : 1 Dec 2021         |               | #[ BILLED ]               |
 | Merchant : Nama PT            |               | Due Date :  1 December 2021                |
 |         |               |                |
-|1.            |           |10.775     |
-|2. Sisa Hit Bulan November       |           |1.515     |
+|1.  November Hits          |           |10.775     |
+|2.  Remaining Hits of November      |           |1.515     |
 @endcomponent
 @component('mail::table')
 |                               |               |                        |
 | ------------------------------|:-------------:| ---------------------: |
-|   Hit Totals                    |           | 12.250    |
+|   Hit Totals                  |           | 12.250    |
 |   Billed                    |           | 12.000    |
 |   Accumulate next month         |           | 250    |
 |   Rate per 1000 hits            |           | 100.000   |
