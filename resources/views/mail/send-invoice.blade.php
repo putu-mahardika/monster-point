@@ -1,5 +1,5 @@
 @component('mail::message')
-Dear Sir/Madam -User Name-
+Dear {{$details['namaMerchant']}}
 
 Thank you for choosing Monster Point Service!
 Here is an invoice that needs to be paid immediately.
@@ -7,22 +7,21 @@ Here is an invoice that needs to be paid immediately.
 @component('mail::table')
 |                               |               |         <span style="color:rgb(5, 5, 158);">INVOICE</span>  |
 | ------------------------------|:-------------:| ---------------------: |
-| No       :  001               |               | Periode : December 2021|
-| Date     : 1 Dec 2021         |               | #[ BILLED ]               |
-| Merchant : Nama PT            |               | Due Date :  1 December 2021                |
+| No       :  {{$details['noInvoice']}}               |               |Period : {{$details['bulanLalu']}}|
+| Date     : {{$details['tglInvoice']}}         |               | #[ BILLED ]               |
+| Merchant : {{$details['namaMerchant']}}            |               | Due Date :  {{$details['jatuhTempo']}}                |
 |         |               |                |
-|1.  November Hits          |           |10.775     |
-|2.  Remaining Hits of November      |           |1.515     |
+|1.  {{$details['bulanIni']}} Hits          |           |{{$details['totalHitBulanIni']}}     |
+|2.  Remaining Hits of {{$details['bulanLalu']}}      |           |{{$details['sisaHitBulanLalu']}}     |
 @endcomponent
 @component('mail::table')
 |                               |               |                        |
 | ------------------------------|:-------------:| ---------------------: |
-|   Hit Totals                  |           | 12.250    |
-|   Billed                    |           | 12.000    |
-|   Accumulate next month         |           | 250    |
-|   Rate per 1000 hits            |           | 100.000   |
-|   23 / 5000
-|   Total cost (1000 x 12)        |           | 1.200.000   |
+|   Hit Totals                  |           | {{$details['totalHit']}}    |
+|   Billed                    |           | {{$details['hitDitagihkan']}}    |
+|   Accumulate next month         |           | {{$details['sisaHitBulanIni']}}    |
+|   Rate per {{$details['limitHit']}} hits            |           | {{$details['Tarif']}}   |
+|   Total cost ({{$details['Tarif']}} x {{$details['floorHit']}})        |           | {{$details['Biaya']}}   |
 
 
 <b><u> Payment Method </u></b>
@@ -52,7 +51,7 @@ Silahkan klik link di atas untuk melakukan pembayaran:
 
 <i><u>LATE PAYMENT</u></i>
 
-This bill is due : 14-10-2021
+This bill is due : {{$details['jatuhTempo']}}
 
 Please make payment now.
 Late payments will cause your account to be suspended and your website will be down, until payment is received.

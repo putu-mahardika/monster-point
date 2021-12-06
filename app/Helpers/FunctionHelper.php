@@ -81,19 +81,17 @@ class FunctionHelper {
 
         $details = [
             'noInvoice' => $billing->InvoiceNumber,
-            // 'tglInvoice' => $tglInvoice,
-            // 'tglInvoice' => Carbon::createFromFormat('d F Y',$billing->CreateDate)->toDateTimeString(),
             'tglInvoice' => $billing->CreateDate->format('d F Y'),
             'namaMerchant' => $merchant->Nama,
             'bulanIni' => $bulanIni,
             'bulanLalu' => $bulanLalu,
             'jatuhTempo' => date('d F Y', strtotime($billing->JatuhTempo)),
-            // 'jatuhTempo' => $billing->JatuhTempo->format('d F Y'),
             'totalHitBulanIni' => (int)$billing->TotalSukses,
             'sisaHitBulanIni' => (int)$billing->sisa,
             'sisaHitBulanLalu' => !is_null($sisaHitBulanLalu) ? (int)$sisaHitBulanLalu : 0,
-            'totalHit' => (int)$billing->TotalSukses + $sisaHitBulanLalu,
+            'totalHit' => (int)($billing->TotalSukses + $sisaHitBulanLalu),
             'hitDitagihkan' => (int)(($billing->TotalSukses + $sisaHitBulanLalu) - $billing->sisa),
+            'floorHit' => (int)((($billing->TotalSukses + $sisaHitBulanLalu) - $billing->sisa)/$limitHit),
             'limitHit' => (int)$limitHit,
             'Tarif' => (int)$tarif,
             'Biaya' => (int)$billing->TotalBiaya,
@@ -101,7 +99,6 @@ class FunctionHelper {
         $data['subject'] = $subject;
         $data['details'] = $details;
         $data['view'] = $view;
-        // dd($data);
         return $data;
     }
 
