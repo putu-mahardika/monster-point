@@ -1,34 +1,19 @@
 @component('mail::message')
+<h1> <b>Monster Point Service</b></h1>
 
-@component('mail::table')
-|                               |               |         <span style="color:rgb(5, 5, 158);"> RECEIPT</span>  |
-| ------------------------------|:-------------:| ---------------------: |
-| No       :  001               |               | Periode : December 2021|
-| Date     : 1 Dec 2021         |               | #[ PAID ]               |
-| Merchant : Nama PT            |               | Paid Date :  1 December 2021                |
-|         |               |                |
-|1. Hit Bulan Desember            |           |10.775     |
-|2. Sisa Hit Bulan November       |           |10.775     |
-@endcomponent
-@component('mail::table')
-|                               |               |                        |
-| ------------------------------|:-------------:| ---------------------: |
-|   Total hit                     |           | 12.250    |
-|   Ditagihkan                    |           | 12.250    |
-|   Akumulasi bulan depan         |           | 12.000    |
-|   Tarif per hit                 |           | 100.000   |
-|   Total biaya (1000 x 12)       |           | 100.000   |
-|Metode Pembayaran : Go-Pay       |           |           |
-@endcomponent
+<h3>IDR 159.500</h3>
+<hr>
+<b>GO-PAY</b>
 
-{{-- <h1>{{ $details['title'] }}</h1>
-<p>{{ $details['body'] }}</p>
-<table style="border: 1px solid black">
+<table>
     <tr>
-        <td>foo</td>
-        <td>bar</td>
+        <td>17 Desember 2020 - 19:51:20</td>
+        <td>ORDER ID: 338268</td>
     </tr>
-</table> --}}
+    <tr style="color: green">
+        <td>Transaction has been Successful</td>
+    </tr>
+</table>
 
 
 

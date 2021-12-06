@@ -1,14 +1,13 @@
 @component('mail::message')
 Dear Sir/Madam -User Name-
 
-Thank you for choosing Monster Point Service!
-Here is an invoice that needs to be paid immediately.
+Your payment is being processed by our system. You will receive a payment receipt reply if it is successful.
 
 @component('mail::table')
-|                               |               |         <span style="color:rgb(5, 5, 158);">INVOICE</span>  |
+|                               |               |   <span style="color:rgb(5, 5, 158);">PAYMENT ON PROCESS</span>  |
 | ------------------------------|:-------------:| ---------------------: |
 | No       :  001               |               | Periode : December 2021|
-| Date     : 1 Dec 2021         |               | #[ BILLED ]               |
+| Date     : 1 Dec 2021         |               | #[ PAYMENT ON PROCESS ]               |
 | Merchant : Nama PT            |               | Due Date :  1 December 2021                |
 |         |               |                |
 |1.  November Hits          |           |10.775     |

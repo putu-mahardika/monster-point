@@ -1,14 +1,13 @@
 @component('mail::message')
 Dear Sir/Madam -User Name-
 
-Thank you for choosing Monster Point Service!
-Here is an invoice that needs to be paid immediately.
+We reject your payment because the proof of payment you sent is invalid.
 
 @component('mail::table')
-|                               |               |         <span style="color:rgb(5, 5, 158);">INVOICE</span>  |
+|                               |               |   <span style="color:rgb(5, 5, 158);">PAYMENT REJECTED</span>  |
 | ------------------------------|:-------------:| ---------------------: |
 | No       :  001               |               | Periode : December 2021|
-| Date     : 1 Dec 2021         |               | #[ BILLED ]               |
+| Date     : 1 Dec 2021         |               | #[ PAYMENT REJECTED ]               |
 | Merchant : Nama PT            |               | Due Date :  1 December 2021                |
 |         |               |                |
 |1.  November Hits          |           |10.775     |
