@@ -25,4 +25,14 @@ class Member extends Model
     {
         return $this->belongsTo(Merchant::class, 'IdMerhant', 'Id');
     }
+
+    /**
+     * Get all of the logs for the Member
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function logs()
+    {
+        return $this->hasMany(Log::class, 'IdMerchant', 'Id');
+    }
 }

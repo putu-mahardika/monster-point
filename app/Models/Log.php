@@ -18,4 +18,14 @@ class Log extends Model
 
     protected $guarded = ['Id', 'Guid', 'CreateDate'];
     protected $hidden = ['Times'];
+
+    /**
+     * Get the member that owns the Log
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function member()
+    {
+        return $this->belongsTo(Member::class, 'IdMember', 'Id');
+    }
 }

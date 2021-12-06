@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [Web\DashboardController::class, 'index'])->name('index');
         Route::get('chart1', [Web\DashboardController::class, 'chart1'])->name('chart1');
+        Route::get('chart1/stat', [Web\DashboardController::class, 'chart1Stat'])->name('chart1.stat');
         Route::get('chart2', [Web\DashboardController::class, 'chart2'])->name('chart2');
         Route::get('chart3', [Web\DashboardController::class, 'chart3'])->name('chart3');
     });
