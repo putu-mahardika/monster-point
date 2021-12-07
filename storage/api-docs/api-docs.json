@@ -3,6 +3,9 @@
     "info": {
         "title": "Monster Point Service API Documentation",
         "description": "This is a direction for using all the APIs that we have created for our Monster Point Service users.",
+        "contact": {
+            "email": "superadmin@monsterpoint.com"
+        },
         "version": "1.0.0"
     },
     "paths": {
@@ -14,6 +17,61 @@
                 "summary": "Get list of members",
                 "description": "Returns list of members",
                 "operationId": "getMemberList",
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Create members",
+                "description": "Store a new member data",
+                "operationId": "createMember",
+                "requestBody": {
+                    "description": "Input member_key & member_name",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "member_key",
+                                    "member_name"
+                                ],
+                                "properties": {
+                                    "member_key": {
+                                        "type": "string",
+                                        "example": "ANN1"
+                                    },
+                                    "member_name": {
+                                        "type": "string",
+                                        "example": "Budi"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Success",

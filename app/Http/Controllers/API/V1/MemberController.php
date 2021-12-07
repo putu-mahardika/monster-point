@@ -60,24 +60,51 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
+       /**
+     * @OA\Post(
+     *      path="/api/v1/members",
+     *      operationId="createMember",
+     *      tags={"Members"},
+     *      summary="Create members",
+     *      description="Store a new member data",
+     *
+     *      @OA\RequestBody(
+     *      required=true,
+     *      description="Input member_key & member_name",
+     *
+     *       @OA\JsonContent(
+     *       required={"member_key","member_name"},
+     *       @OA\Property(property="member_key", type="string", example="ANN1"),
+     *       @OA\Property(property="member_name", type="string", example="Budi"),
+     *    )
+     * ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *     )
+     */
 
     public function store(Request $request)
     {
         // return MemberHelper::storeMember($request);
         $validator = Validator::make($request->all(), [
             'member_key' => ['required'],
-            'member_name' => ['required', 'string', 'max:250'],
-            'member_note' => ['string', 'max:250'],
+            'member_name' => ['required', 'string', 'max:150'],
+            'member_note' => ['string', 'max:150'],
         ]);
 
         if ($validator->fails()) {
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
             Member::create([
-                'IdMerhant' => 1,
-                'MerchentMemberKey' => 2,
-                'Point' => $request->member_key,
+                'IdMerhant' => '1',
+                'MerchentMemberKey' => $request->member_key,
                 'Nama' => $request->member_name,
                 'Keterangan' => $request->member_note,
                 'Aktif' => 1,

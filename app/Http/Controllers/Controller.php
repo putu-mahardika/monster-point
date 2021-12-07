@@ -12,7 +12,10 @@ use Illuminate\Routing\Controller as BaseController;
  *    title="Monster Point Service API Documentation",
  *    version="1.0.0",
  *    description = "This is a direction for using all the APIs that we have created for our Monster Point Service users.",
- * )
+ *    @OA\Contact(
+ *         email="superadmin@monsterpoint.com"
+ *      )
+ *  )
  */
 class Controller extends BaseController
 {
