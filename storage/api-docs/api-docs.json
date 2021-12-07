@@ -9,6 +9,92 @@
         "version": "1.0.0"
     },
     "paths": {
+        "api/v1/{token}/{event}/{id}/{value}": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get All Transaction",
+                "description": "Returns Transaction Data",
+                "operationId": "getTransactionData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Transaction id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/v1/{token}/history/{id}": {
+            "get": {
+                "tags": [
+                    "Transaction"
+                ],
+                "summary": "Get Member History Transaction Information",
+                "description": "Returns Member Transaction Data",
+                "operationId": "getMemberHistoryPoint",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "History id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/api/v1/members": {
             "get": {
                 "tags": [
