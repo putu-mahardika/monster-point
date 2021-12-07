@@ -16,6 +16,25 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+     /**
+     * @OA\Get(
+     *      path="/api/v1/members",
+     *      operationId="getMemberList",
+     *      tags={"Members"},
+     *      summary="Get list of members",
+     *      description="Returns list of members",
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *     )
+     */
     public function index()
     {
         $member = Member::all();
@@ -41,6 +60,8 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+
     public function store(Request $request)
     {
         // return MemberHelper::storeMember($request);

@@ -6,10 +6,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
-/**
+
+ /**
  * @OA\Info(
- *    title="Your super  ApplicationAPI",
+ *    title="Monster Point Service API Documentation",
  *    version="1.0.0",
+ *    description = "This is a direction for using all the APIs that we have created for our Monster Point Service users.",
  * )
  */
 class Controller extends BaseController

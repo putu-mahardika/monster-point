@@ -1,100 +1,39 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your super  ApplicationAPI",
+        "title": "Monster Point Service API Documentation",
+        "description": "This is a direction for using all the APIs that we have created for our Monster Point Service users.",
         "version": "1.0.0"
     },
     "paths": {
-        "/login": {
-            "post": {
+        "/api/v1/members": {
+            "get": {
                 "tags": [
-                    "auth"
+                    "Members"
                 ],
-                "summary": "Sign in",
-                "description": "Login by email, password",
-                "operationId": "authLogin",
-                "requestBody": {
-                    "description": "Pass user credentials",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user1@mail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
-                                    },
-                                    "persistent": {
-                                        "type": "boolean",
-                                        "example": "true"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
+                "summary": "Get list of members",
+                "description": "Returns list of members",
+                "operationId": "getMemberList",
                 "responses": {
-                    "422": {
-                        "description": "Wrong credentials response",
+                    "200": {
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
+                                        "status": {
                                             "type": "string",
-                                            "example": "Sorry, wrong email address or password. Please try again"
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
                                         }
                                     },
                                     "type": "object"
                                 }
                             }
                         }
-                    }
-                }
-            }
-        },
-        "/greet": {
-            "get": {
-                "tags": [
-                    "greeting"
-                ],
-                "summary": "Returns a Sample API response",
-                "description": "A sample greeting to test out the API",
-                "operationId": "greet",
-                "parameters": [
-                    {
-                        "name": "firstname",
-                        "in": "query",
-                        "description": "nama depan",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "lastname",
-                        "in": "query",
-                        "description": "nama belakang",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    }
-                ],
-                "responses": {
-                    "default": {
-                        "description": "successful operation"
                     }
                 }
             }
