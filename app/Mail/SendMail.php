@@ -30,7 +30,7 @@ class SendMail extends Mailable
     {
         //return $this->view('view.name');
         return $this->subject('INVOICE : POINT SERVICE')
-                    ->markdown('mail.send-receipt')
+                    ->markdown('mail.payment-prosess')
                     ->with('details', $this->details);
     }
 }

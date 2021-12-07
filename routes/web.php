@@ -94,6 +94,11 @@ Route::get('/receipt', function () {
     return view('pages/billing/receipt');
 });
 
+//test
+Route::get('/test', function () {
+    return view('pages/billing/test');
+});
+
 //riset swagger
 Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
 
