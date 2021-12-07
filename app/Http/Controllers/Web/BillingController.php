@@ -99,8 +99,6 @@ class BillingController extends Controller
     public function createBilling()
     {
         $merchants = Merchant::select('Id', 'Nama', 'Email')->where('Akif', 1)->get();
-        // $merchants = Merchant::select('Id', 'Nama', 'Email')->where('Id', 1)->get();
-        // dd($merchants);
         foreach($merchants as $merchant)
         {
             try {
@@ -115,6 +113,7 @@ class BillingController extends Controller
             if($exec)
             {
                 $data = FunctionHelper::getInvoiceDetails($merchant);
+                // dd($data);
                 \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
             }
         }
@@ -138,6 +137,16 @@ class BillingController extends Controller
                 // dd($data);
                 \Mail::to($billing->merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
             }
+        }
+    }
+
+    public function sendInvoice(Request $request)
+    {
+        $merchant = Merchant::select('Id', 'Nama', 'Email')->where('Id', $request->id)->get();
+        if(!is_null($merchant))
+        {
+            $data = FunctionHelper::getInvoiceDetails($merchant);
+            \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
         }
     }
 }
