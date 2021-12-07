@@ -60,11 +60,11 @@
                                 "properties": {
                                     "member_key": {
                                         "type": "string",
-                                        "example": "ANN1"
+                                        "example": "8"
                                     },
                                     "member_name": {
                                         "type": "string",
-                                        "example": "Budi"
+                                        "example": "ekky"
                                     }
                                 },
                                 "type": "object"
@@ -72,6 +72,92 @@
                         }
                     }
                 },
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/v1/members/{member}": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get Member information",
+                "description": "Returns Member data",
+                "operationId": "getMemberById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/v1/members/{member} ": {
+            "put": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Update existing member",
+                "description": "Returns updated member data",
+                "operationId": "updateMember",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "Success",

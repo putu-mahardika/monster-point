@@ -60,7 +60,8 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-       /**
+
+     /**
      * @OA\Post(
      *      path="/api/v1/members",
      *      operationId="createMember",
@@ -74,8 +75,8 @@ class MemberController extends Controller
      *
      *       @OA\JsonContent(
      *       required={"member_key","member_name"},
-     *       @OA\Property(property="member_key", type="string", example="ANN1"),
-     *       @OA\Property(property="member_name", type="string", example="Budi"),
+     *       @OA\Property(property="member_key", type="string", example="8"),
+     *       @OA\Property(property="member_name", type="string", example="ekky"),
      *    )
      * ),
      *
@@ -124,6 +125,34 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    /**
+     * @OA\Get(
+     *      path="api/v1/members/{member}",
+     *      operationId="getMemberById",
+     *      tags={"Members"},
+     *      summary="Get Member information",
+     *      description="Returns Member data",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Member id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *
+     * )
+     */
     public function show(Member $member)
     {
         $member = Member::where('id', $member->Id)->first();
@@ -150,6 +179,35 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
+     */
+
+     /** @OA\Put(
+     *      path="api/v1/members/{member} ",
+     *      operationId="updateMember",
+     *      tags={"Members"},
+     *      summary="Update existing member",
+     *      description="Returns updated member data",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Member id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *
+     * )
      */
     public function update(Request $request, $id)
     {
