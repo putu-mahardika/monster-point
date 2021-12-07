@@ -1,3 +1,6 @@
+@php
+    $merchantSelect2 = App\Models\Merchant::all(['Id', 'Nama']);
+@endphp
 @extends('layouts.main')
 
 @section('meta')
@@ -49,22 +52,18 @@
                                             <span class="small text-muted d-block">
                                                 Success
                                             </span>
-                                            <span class="fs-4 d-block">
-                                                1.5K
-                                            </span>
+                                            <span id="chart1Success" class="fs-4 d-block"></span>
                                             <span style="font-size: .7rem;" class="text-success d-block">
-                                                <i class="fas fa-arrow-up"></i> 4.5%
+                                                <i class="fas fa-arrow-up"></i> <span id="chart1SuccessStat"></span>
                                             </span>
                                         </div>
                                         <div class="col">
                                             <span class="small text-muted d-block">
                                                 Failed
                                             </span>
-                                            <span class="fs-4 d-block">
-                                                1.5K
-                                            </span>
+                                            <span id="chart1Failed" class="fs-4 d-block"></span>
                                             <span style="font-size: .7rem;" class="text-danger d-block">
-                                                <i class="fas fa-arrow-down"></i> 4.5%
+                                                <i class="fas fa-arrow-down"></i> <span id="chart1FailedStat"></span>
                                             </span>
                                         </div>
                                     </div>
@@ -80,6 +79,35 @@
                                     <div id="chart1"></div>
                                 </div>
                             </div>
+
+                            @if (auth()->user()->is_admin)
+                                <div class="accordion rounded-xxl" id="chart1Setting">
+                                    <div class="accordion-item rounded-xxl">
+                                        <h2 class="accordion-header" id="headingOne">
+                                            <button class="accordion-button collapsed rounded-xxl" type="button" data-bs-toggle="collapse"
+                                                data-bs-target="#chart1SettingBody" aria-expanded="false"
+                                                aria-controls="chart1SettingBody">
+                                                <i class="fas fa-cogs me-1"></i> Settings
+                                            </button>
+                                        </h2>
+                                        <div id="chart1SettingBody" class="accordion-collapse collapse"
+                                            aria-labelledby="headingOne" data-bs-parent="#chart1Setting">
+                                            <div class="accordion-body">
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <select name="chart1FilterMerchant" id="chart1FilterMerchant" class="select2" style="width: 100%;">
+                                                            <option></option>
+                                                            @foreach ($merchantSelect2 as $merchant)
+                                                                <option value="{{ $merchant->Id }}">{{ $merchant->Nama }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -106,9 +134,66 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="row">
+                            <div class="row mb-3">
                                 <div class="col">
                                     <div id="chart2"></div>
+                                </div>
+                            </div>
+                            <div class="accordion rounded-xxl" id="accordionExample">
+                                <div class="accordion-item rounded-xxl">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed rounded-xxl" type="button" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="false"
+                                            aria-controls="collapseOne">
+                                            <i class="fas fa-cogs me-1"></i> Settings
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse"
+                                        aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+                                        <div class="accordion-body">
+                                            @if (auth()->user()->is_admin)
+                                                <div class="row mb-3">
+                                                    <div class="col">
+                                                        <select name="chart2FilterMerchant" id="chart2FilterMerchant" class="select2" style="width: 100%;">
+                                                            <option></option>
+                                                            @foreach ($merchantSelect2 as $merchant)
+                                                                <option value="{{ $merchant->Id }}">{{ $merchant->Nama }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            @endif
+                                            <div class="row mb-3">
+                                                <div class="col">
+                                                    <select name="chart2OrderField1" id="chart2OrderField1" class="form-select rounded-xl" style="width: 100%;">
+                                                        <option value="Hit" selected>Hit</option>
+                                                        <option value="Point">Point</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <select name="chart2OrderType1" id="chart2OrderType1" class="form-select rounded-xl" style="width: 100%;">
+                                                        <option value="asc">asc</option>
+                                                        <option value="desc" selected>desc</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col">
+                                                    <select name="chart2OrderField2" id="chart2OrderField2" class="form-select rounded-xl" style="width: 100%;">
+                                                        <option value="">None</option>
+                                                        <option value="Hit">Hit</option>
+                                                        <option value="Point">Point</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-auto">
+                                                    <select name="chart2OrderType2" id="chart2OrderType2" class="form-select  rounded-xl" style="width: 100%;">
+                                                        <option value="asc">asc</option>
+                                                        <option value="desc">desc</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -139,11 +224,40 @@
                         </button>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-3">
                     <div class="col">
                         <div id="chart3"></div>
                     </div>
                 </div>
+
+                @if (auth()->user()->is_admin)
+                    <div class="accordion rounded-xxl" id="chart3Setting">
+                        <div class="accordion-item rounded-xxl">
+                            <h2 class="accordion-header" id="headingOne">
+                                <button class="accordion-button collapsed rounded-xxl" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#chart3SettingBody" aria-expanded="false"
+                                    aria-controls="chart3SettingBody">
+                                    <i class="fas fa-cogs me-1"></i> Settings
+                                </button>
+                            </h2>
+                            <div id="chart3SettingBody" class="accordion-collapse collapse"
+                                aria-labelledby="headingOne" data-bs-parent="#chart3Setting">
+                                <div class="accordion-body">
+                                    <div class="row mb-3">
+                                        <div class="col">
+                                            <select name="chart3FilterMerchant" id="chart3FilterMerchant" class="select2" style="width: 100%;">
+                                                <option></option>
+                                                @foreach ($merchantSelect2 as $merchant)
+                                                    <option value="{{ $merchant->Id }}">{{ $merchant->Nama }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     @endcan
@@ -155,6 +269,10 @@
 
 @section('js')
     <script>
+        let chart1 = null,
+            chart2 = null,
+            chart3 = null;
+
         let chart1config = {
             type: {
                 d: 'day',
@@ -250,14 +368,15 @@
 
         function loadEventChart1() {
             $('.btn-type-date-chart1').on('click', function () {
-            $('.btn-type-date-chart1').addClass('btn-outline-primary');
-            $('.btn-type-date-chart1').removeClass('btn-primary');
+                $('.btn-type-date-chart1').addClass('btn-outline-primary');
+                $('.btn-type-date-chart1').removeClass('btn-primary');
 
-            $(this).removeClass('btn-outline-primary');
-            $(this).addClass('btn-primary');
+                $(this).removeClass('btn-outline-primary');
+                $(this).addClass('btn-primary');
 
-            chart1config.type.curr = $(this).data('code');
+                chart1config.type.curr = $(this).data('code');
                 loadConfigChart1();
+                loadChart1(true);
             });
 
             $('#btnDateNext_chart1').on('click', function () {
@@ -267,6 +386,7 @@
                                                         .add(1, chart1config.type.curr)
                                                         .format(chart1config.format[chart1config.type.curr]);
                 loadConfigChart1();
+                loadChart1(true);
             });
 
             $('#btnDatePrev_chart1').on('click', function () {
@@ -276,6 +396,7 @@
                                                         .subtract(1, chart1config.type.curr)
                                                         .format(chart1config.format[chart1config.type.curr]);
                 loadConfigChart1();
+                loadChart1(true);
             });
 
             $('#btnDateLabel_chart1').on('click', function () {
@@ -283,19 +404,26 @@
                 chart1config.date[chart1config.type.curr].curr = moment().format(chart1config.format[chart1config.type.curr]);
                 chart1config.date[chart1config.type.curr].prev = moment().subtract(1, chart1config.type.curr).format(chart1config.format[chart1config.type.curr]);
                 loadConfigChart1();
+                loadChart1(true);
+            });
+
+            $('#chart1FilterMerchant').on('change', function (e) {
+                loadConfigChart1();
+                loadChart1(true);
             });
         }
 
         function loadEventChart2() {
             $('.btn-type-date-chart2').on('click', function () {
-            $('.btn-type-date-chart2').addClass('btn-outline-primary');
-            $('.btn-type-date-chart2').removeClass('btn-primary');
+                $('.btn-type-date-chart2').addClass('btn-outline-primary');
+                $('.btn-type-date-chart2').removeClass('btn-primary');
 
-            $(this).removeClass('btn-outline-primary');
-            $(this).addClass('btn-primary');
+                $(this).removeClass('btn-outline-primary');
+                $(this).addClass('btn-primary');
 
-            chart2config.type.curr = $(this).data('code');
+                chart2config.type.curr = $(this).data('code');
                 loadConfigChart2();
+                loadChart2(true);
             });
 
             $('#btnDateNext_chart2').on('click', function () {
@@ -305,6 +433,7 @@
                                                         .add(1, chart2config.type.curr)
                                                         .format(chart2config.format[chart2config.type.curr]);
                 loadConfigChart2();
+                loadChart2(true);
             });
 
             $('#btnDatePrev_chart2').on('click', function () {
@@ -314,6 +443,7 @@
                                                         .subtract(1, chart2config.type.curr)
                                                         .format(chart2config.format[chart2config.type.curr]);
                 loadConfigChart2();
+                loadChart2(true);
             });
 
             $('#btnDateLabel_chart2').on('click', function () {
@@ -321,19 +451,52 @@
                 chart2config.date[chart2config.type.curr].curr = moment().format(chart2config.format[chart2config.type.curr]);
                 chart2config.date[chart2config.type.curr].prev = moment().subtract(1, chart2config.type.curr).format(chart2config.format[chart2config.type.curr]);
                 loadConfigChart2();
+                loadChart2(true);
+            });
+
+            $('#chart2FilterMerchant').on('change', function (e) {
+                loadConfigChart2();
+                loadChart2(true);
+            });
+
+            $('#chart2OrderField1').on('change', function (e) {
+                let opt = $('#chart2OrderField2 option');
+                opt.each((index, el) => {
+                    $(el).prop('disabled', false);
+                });
+                $("#chart2OrderField2 option[value=" + $(this).val() + "]").prop('disabled', true);
+
+                loadConfigChart2();
+                loadChart2(true);
+            });
+
+            $('#chart2OrderType1').on('change', function (e) {
+                loadConfigChart2();
+                loadChart2(true);
+            });
+
+            $('#chart2OrderField2').on('change', function (e) {
+                loadConfigChart2();
+                loadChart2(true);
+            });
+
+            $('#chart2OrderType2').on('change', function (e) {
+                loadConfigChart2();
+                loadChart2(true);
             });
         }
 
         function loadEventChart3() {
             $('.btn-type-date-chart3').on('click', function () {
-            $('.btn-type-date-chart3').addClass('btn-outline-primary');
-            $('.btn-type-date-chart3').removeClass('btn-primary');
+                $('.btn-type-date-chart3').addClass('btn-outline-primary');
+                $('.btn-type-date-chart3').removeClass('btn-primary');
 
-            $(this).removeClass('btn-outline-primary');
-            $(this).addClass('btn-primary');
+                $(this).removeClass('btn-outline-primary');
+                $(this).addClass('btn-primary');
 
-            chart3config.type.curr = $(this).data('code');
+                chart3config.type.curr = $(this).data('code');
                 loadConfigChart3();
+                loadChart3();
             });
 
             $('#btnDateNext_chart3').on('click', function () {
@@ -343,6 +506,7 @@
                                                         .add(1, chart3config.type.curr)
                                                         .format(chart3config.format[chart3config.type.curr]);
                 loadConfigChart3();
+                loadChart3();
             });
 
             $('#btnDatePrev_chart3').on('click', function () {
@@ -352,6 +516,7 @@
                                                         .subtract(1, chart3config.type.curr)
                                                         .format(chart3config.format[chart3config.type.curr]);
                 loadConfigChart3();
+                loadChart3();
             });
 
             $('#btnDateLabel_chart3').on('click', function () {
@@ -359,6 +524,12 @@
                 chart3config.date[chart3config.type.curr].curr = moment().format(chart3config.format[chart3config.type.curr]);
                 chart3config.date[chart3config.type.curr].prev = moment().subtract(1, chart3config.type.curr).format(chart3config.format[chart3config.type.curr]);
                 loadConfigChart3();
+                loadChart3();
+            });
+
+            $('#chart3FilterMerchant').on('change', function (e) {
+                loadConfigChart3();
+                loadChart3(true);
             });
         }
 
@@ -404,16 +575,198 @@
             );
         }
 
+        function loadChart1(isReload = false) {
+            if (isReload) {
+                chart1.option('dataSource', `{{ route('dashboard.chart1') }}${requestParamBuilder(1)}`);
+                chart1.refresh();
+            } else {
+                chart1 = $('#chart1').dxChart({
+                    palette: 'Cyan',
+                    dataSource: `{{ route('dashboard.chart1') }}${requestParamBuilder(1)}`,
+                    commonSeriesSettings: {
+                        argumentField: 'date',
+                        type: 'line',
+                    },
+                    margin: {
+                        bottom: 10,
+                    },
+                    argumentAxis: {
+                        valueMarginsEnabled: false,
+                        discreteAxisDivisionMode: 'crossLabels',
+                        grid: {
+                            visible: true,
+                        },
+                    },
+                    series: [{
+                            valueField: 'inLogs',
+                            name: 'In'
+                        },
+                        {
+                            valueField: 'outLogs',
+                            name: 'Out'
+                        }
+                    ],
+                    tooltip: {
+                        enabled: true,
+                    },
+                    size: {
+                        height: 266,
+                    },
+                    legend: {
+                        visible: true,
+                        verticalAlignment: 'bottom',
+                        horizontalAlignment: 'center',
+                        hoverMode: 'excludePoints',
+                    }
+                })
+                .dxChart('instance')
+                .on('legendClick', (e) => {
+                    var series = e.target;
+                    if (series.isVisible()) {
+                        series.hide();
+                    } else {
+                        series.show();
+                    }
+                });
+            }
+
+            $.get(`{{ route('dashboard.chart1.stat') }}${requestParamBuilder(1)}`, function (response) {
+                $('#chart1Success').text(response.success);
+                $('#chart1SuccessStat').text(response.successPercent);
+                $('#chart1Failed').text(response.failed);
+                $('#chart1FailedStat').text(response.failedPercent);
+            });
+
+            $("#chart1FilterMerchant").select2({
+                placeholder: "Select a merchant"
+            });
+        }
+
+        function loadChart2(isReload = false) {
+            if (isReload) {
+                chart2.option('dataSource', `{{ route('dashboard.chart2') }}${requestParamBuilder(2)}`);
+                chart2.refresh();
+            }
+            else {
+                chart2 = $('#chart2').dxChart({
+                    dataSource: `{{ route('dashboard.chart2') }}${requestParamBuilder(2)}`,
+                    size: {
+                        height: 340
+                    },
+                    series: [{
+                        argumentField: 'Nama',
+                        valueField: 'Point',
+                        name: 'Point',
+                        type: 'bar',
+                        color: '#ffaa66',
+                    },
+                    {
+                        argumentField: 'Nama',
+                        valueField: 'Hit',
+                        name: 'Hit',
+                        type: 'bar',
+                        color: '#7732a8',
+                    }],
+                    tooltip: {
+                        visible: true,
+                    },
+                    customizeLabel() {
+                        return {visible: true};
+                    },
+                    legend: {
+                        visible: true,
+                    },
+                    rotated: true
+                }).dxChart('instance')
+                .on('legendClick', (e) => {
+                    var series = e.target;
+                    if (series.isVisible()) {
+                        series.hide();
+                    } else {
+                        series.show();
+                    }
+                });
+
+                $("#chart2FilterMerchant").select2({
+                    placeholder: "Select a merchant"
+                });
+
+                $("#chart2OrderField2 option[value=" + $('#chart2OrderField1').val() + "]").prop('disabled', true);
+            }
+        }
+
+        function loadChart3(isReload = false) {
+            if (isReload) {
+                chart3.option('dataSource', `{{ route('dashboard.chart3') }}${requestParamBuilder(3)}`);
+                chart3.refresh();
+            }
+            else {
+                chart3 = $('#chart3').dxChart({
+                    dataSource: `{{ route('dashboard.chart3') }}${requestParamBuilder(3)}`,
+                    size: {
+                        height: 250
+                    },
+                    valueAxis: [
+                        {
+                            enabled: true,
+                            position: 'left',
+                        },
+                        {
+                            enabled: true,
+                            position: 'right',
+                        }
+                    ],
+                    series: [
+                        {
+                            argumentField: 'date',
+                            valueField: 'success',
+                            name: 'Success',
+                            type: 'bar',
+                            color: 'cyan',
+                        },
+                        {
+                            argumentField: 'date',
+                            valueField: 'failed',
+                            name: 'Failed',
+                            type: 'bar',
+                            color: 'violet',
+                        }
+                    ],
+                    legend: {
+                        visible: true,
+                    },
+                    customizeLabel(barInfo) {
+                        if (barInfo.value > 0) {
+                            return {
+                                visible: true,
+                            };
+                        }
+                    }
+                }).dxChart('instance');
+
+                $("#chart3FilterMerchant").select2({
+                    placeholder: "Select a merchant"
+                });
+            }
+        }
+
         function requestParamBuilder(chartNum) {
             let config = null;
+            let extraParams = "";
             if (chartNum == 1) {
                 config = chart1config;
+                extraParams += `&mrc=${$('#chart1FilterMerchant').val()}`;
             }
             else if (chartNum == 2) {
                 config = chart2config;
+                extraParams += `&mrc=${$('#chart2FilterMerchant').val()}&of1=${$('#chart2OrderField1').val()}&ot1=${$('#chart2OrderType1').val()}`;
+                if ($('#chart2OrderField2').val() != "") {
+                    extraParams += `&of2=${$('#chart2OrderField2').val()}&ot2=${$('#chart2OrderType2').val()}`;
+                }
             }
             else if (chartNum == 3) {
                 config = chart3config;
+                extraParams += `&mrc=${$('#chart3FilterMerchant').val()}`;
             }
 
             let params = [
@@ -421,160 +774,19 @@
                 `d=${moment(config.date[config.type.curr].curr, config.format[config.type.curr]).format('YYYY-MM-DD')}`
             ];
 
-            return `?${params.join('&')}`;
+            return `?${params.join('&') + extraParams}`;
         }
 
         $(document).ready(() => {
             loadConfigChart1();
-            loadEventChart1();
             loadConfigChart2();
-            loadEventChart2();
             loadConfigChart3();
+            loadChart1();
+            loadChart2();
+            loadChart3();
+            loadEventChart1();
+            loadEventChart2();
             loadEventChart3();
         });
-
-        const complaintsData = [{
-                complaint: 'Sunday',
-                count: 780
-            },
-            {
-                complaint: 'Monday',
-                count: 120
-            },
-            {
-                complaint: 'Tuesdey',
-                count: 52
-            },
-            {
-                complaint: 'Wednesday',
-                count: 1123
-            },
-            {
-                complaint: 'Thursday',
-                count: 321
-            },
-            {
-                complaint: 'Friday',
-                count: 89
-            },
-            {
-                complaint: 'Saturday',
-                count: 222
-            },
-        ];
-
-        const data = complaintsData;
-        const totalCount = data.reduce((prevValue, item) => prevValue + item.count, 0);
-        let cumulativeCount = 0;
-        const dataSource = data.map((item) => {
-            cumulativeCount += item.count;
-            return {
-                complaint: item.complaint,
-                count: item.count,
-                cumulativePercentage: Math.round((cumulativeCount * 100) / totalCount),
-            };
-        });
-
-        $('#chart1').dxChart({
-            size: {
-                height: 250
-            },
-            palette: 'Harmony Light',
-            dataSource: `{{ route('dashboard.chart1') }}${requestParamBuilder(1)}`,
-            argumentAxis: {
-                label: {
-                    overlappingBehavior: 'stagger',
-                },
-            },
-            tooltip: {
-                enabled: true,
-            },
-            // valueAxis: [{
-            //         name: 'frequency',
-            //         position: 'left',
-            //         tickInterval: 300,
-            //     },
-            //     {
-            //         enabled: false,
-            //         name: 'percentage',
-            //         position: 'right',
-            //         showZero: true,
-            //         label: {
-            //             customizeText(info) {
-            //                 // return `${info.valueText}%`;
-            //                 return ``;
-            //             },
-            //         },
-            //         tickInterval: 20,
-            //         valueMarginsEnabled: false,
-            //     }
-            // ],
-            commonSeriesSettings: {
-                argumentField: 'date',
-            },
-            series: [
-                {
-                    type: 'line',
-                    valueField: 'value',
-                    // axis: 'percentage',
-                    // name: 'Cumulative percentage',
-                    color: '#4db2c4',
-                }
-            ],
-            legend: {
-                visible: false,
-                verticalAlignment: 'top',
-                horizontalAlignment: 'center',
-            },
-        });
-
-        $(() => {
-            $('#chart2').dxChart({
-                size: {
-                    height: 340
-                },
-                series: {
-                    argumentField: 'day',
-                    valueField: 'oranges',
-                    name: 'My oranges',
-                    type: 'bar',
-                    color: '#ffaa66',
-                },
-                legend: {
-                    visible: false,
-                },
-                rotated: true
-            });
-        });
-
-        $(() => {
-            $('#chart3').dxChart({
-                size: {
-                    height: 250
-                },
-                valueAxis: [
-                    {
-                        enabled: true,
-                        position: 'left',
-                    },
-                    {
-                        enabled: true,
-                        position: 'right',
-                    }
-                ],
-                series: {
-                    argumentField: 'day',
-                    valueField: 'oranges',
-                    name: 'My oranges',
-                    type: 'bar',
-                    color: '#ffaa66',
-                },
-                legend: {
-                    visible: false,
-                },
-                rotated: false
-            });
-        });
-
     </script>
 @endsection

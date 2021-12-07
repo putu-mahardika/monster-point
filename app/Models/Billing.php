@@ -30,6 +30,6 @@ class Billing extends Model
 
     public function invoice()
     {
-        return $this->belongsTo(Invoice::class, 'billing_id', 'Id');
+        return $this->hasOne(Invoice::class, 'billing_id', 'Id');
     }
 }

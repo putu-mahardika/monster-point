@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helpers\FunctionHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\SendMail;
 use App\Models\Billing;
+use App\Models\GlobalSetting;
+use App\Models\Merchant;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BillingController extends Controller
 {
@@ -88,5 +94,59 @@ class BillingController extends Controller
     {
         $billings = Billing::where('IdMerchant', $merchant_id)->get();
         return response()->json($billings);
+    }
+
+    public function createBilling()
+    {
+        $merchants = Merchant::select('Id', 'Nama', 'Email')->where('Akif', 1)->get();
+        foreach($merchants as $merchant)
+        {
+            try {
+                DB::select('SET NOCOUNT ON; EXEC dbo.sp_GenerateBilling @IdMerchant = ?', [
+                    $merchant->Id
+                ]);
+                $exec = true;
+            } catch (\Exception $e) {
+                $exec = false;
+            }
+            // dd($exec);
+            if($exec)
+            {
+                $data = FunctionHelper::getInvoiceDetails($merchant);
+                // dd($data);
+                \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
+            }
+        }
+    }
+
+    public function resendInvoice()
+    {
+        $dateCut = (int)floor(GlobalSetting::where('Kode', 'Expired')->pluck('Value')->first()/2);
+        $billings = Billing::with('merchant')
+                    ->whereHas('merchant', function($q){
+                        $q->where('Akif', '=', 1);
+                    })
+                    ->where('Terbayar', '=', '0')
+                    ->get();
+        foreach($billings as $billing)
+        {
+            $jatuhTempo = Carbon::create($billing->JatuhTempo);
+            if(now() == $jatuhTempo || now() == $jatuhTempo->subDays($dateCut) || now() == $jatuhTempo->subDay())
+            {
+                $data = FunctionHelper::getInvoiceDetails($billing->merchant);
+                // dd($data);
+                \Mail::to($billing->merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
+            }
+        }
+    }
+
+    public function sendInvoice(Request $request)
+    {
+        $merchant = Merchant::select('Id', 'Nama', 'Email')->where('Id', $request->id)->get();
+        if(!is_null($merchant))
+        {
+            $data = FunctionHelper::getInvoiceDetails($merchant);
+            \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
+        }
     }
 }

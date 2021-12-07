@@ -33,6 +33,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::prefix('dashboard')->name('dashboard.')->group(function () {
         Route::get('/', [Web\DashboardController::class, 'index'])->name('index');
         Route::get('chart1', [Web\DashboardController::class, 'chart1'])->name('chart1');
+        Route::get('chart1/stat', [Web\DashboardController::class, 'chart1Stat'])->name('chart1.stat');
         Route::get('chart2', [Web\DashboardController::class, 'chart2'])->name('chart2');
         Route::get('chart3', [Web\DashboardController::class, 'chart3'])->name('chart3');
     });
@@ -49,6 +50,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('settings/getSettings', [Web\GlobalSettingController::class, 'getSettings'])->name('settings.getSettings');
     Route::resource('settings', Web\GlobalSettingController::class);
 
+    Route::get('resendInvoice', [Web\BillingController::class, 'resendInvoice'])->name('billing.resendInvoice');
+    Route::get('createBilling', [Web\BillingController::class, 'createBilling'])->name('billing.createBilling');
     Route::resource('billings', Web\BillingController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
@@ -66,6 +69,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('members/{merchant_id?}', [Web\MemberController::class, 'dx'])->name('members');
         Route::get('events/{merchant_id}', [Web\EventController::class, 'dx'])->name('events');
         Route::get('billings/{merchant_id}', [Web\BillingController::class, 'dx'])->name('billings');
+    });
+
+    Route::get('/invoice', function(){
+        return view('/pages/billing/invoice');
+    });
+
+    //receipt
+    Route::get('/receipt', function () {
+        return view('pages/billing/receipt');
     });
 
 });
