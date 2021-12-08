@@ -20,11 +20,21 @@ class MemberController extends Controller
 
      /**
      * @OA\Get(
-     *      path="/api/v1/members",
+     *      path="/api/v1/{token}/members",
      *      operationId="getMemberList",
      *      tags={"Members"},
      *      summary="Get list of members",
      *      description="Returns list of members",
+     *
+     *        @OA\Parameter(
+     *          name="token",
+     *          description="token",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *
      *      @OA\Response(
      *          response=200,
@@ -64,37 +74,54 @@ class MemberController extends Controller
 
      /**
      * @OA\Post(
-     *      path="/api/v1/members",
+     *      path="/api/v1/{token}/members",
      *      operationId="createMember",
      *      tags={"Members"},
      *      summary="Create members",
      *      description="Store a new member data",
      *
-     *      @OA\RequestBody(
-     *      required=true,
-     *      description="Input member_key & member_name",
-     *
-     *       @OA\JsonContent(
-     *       required={"member_key","member_name"},
-     *       @OA\Property(property="member_key", type="string", example="8"),
-     *       @OA\Property(property="member_name", type="string", example="ekky"),
-     *    )
-     * ),
-     *
+     *       @OA\Parameter(
+     *          name="token",
+     *          description="token",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *       @OA\Parameter(
+     *          name="member_key",
+     *          description="member_key",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *       @OA\Parameter(
+     *          name="member_name",
+     *          description="member_name",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
      *      @OA\Response(
      *          response=200,
      *          description="Success",
      *          @OA\JsonContent(
      *              @OA\Property(property="status", type="string", readOnly="true"),
      *              @OA\Property(property="data", type="object", readOnly="true")
-     *          )
-     *      ),
-     *     )
+     *         )
+     *       ),
+     * )
+     *
      */
 
-    public function store(Request $request)
+    public function store($merchantToken, Request $request)
     {
-        // return MemberHelper::storeMember($request);
+        $merchant= Merchant::where("Token", $merchantToken)->first();
         $validator = Validator::make($request->all(), [
             'member_key' => ['required'],
             'member_name' => ['required', 'string', 'max:150'],
@@ -105,7 +132,7 @@ class MemberController extends Controller
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
             Member::create([
-                'IdMerhant' => '1',
+                'IdMerhant' => $merchant->Id,
                 'MerchentMemberKey' => $request->member_key,
                 'Nama' => $request->member_name,
                 'Keterangan' => $request->member_note,
@@ -132,7 +159,7 @@ class MemberController extends Controller
      *      operationId="getMemberById",
      *      tags={"Members"},
      *      summary="Get Member information",
-     *      description="Returns Member data",
+     *      description="Returns Member data by id",
      *      @OA\Parameter(
      *          name="id",
      *          description="Member id",
@@ -154,14 +181,6 @@ class MemberController extends Controller
      *
      * )
      */
-    // public function show(Member $member)
-    // {
-    //     $member = Member::where('id', $member->Id)->first();
-    //     return response()->json([
-    //         'status' => 'success',
-    //         'data' => $member
-    //     ]);
-    // }
     public function show($merchantToken, $member)
     {
         $member = Merchant::where("Token", $merchantToken )->first()->members()->find($member);
@@ -218,8 +237,12 @@ class MemberController extends Controller
      *
      * )
      */
-    public function update(Request $request, $id)
+    public function update($merchantToken, Request $request, $id)
     {
+
+        $merchant = Merchant::where("Token", $merchantToken)->first()->members; //ambill all data member yang tokennya = ini
+
+
         $member = Member::where('id', $id)->first();
         if ( Member::where('id', $member->Id)->doesntExist() ) {
             return response()->json([
