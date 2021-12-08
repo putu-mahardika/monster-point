@@ -90,7 +90,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <div class="row">
                             <div class="col-xl-2 col-lg-3">
                                 <label for="rate_limiter">Rate Limiter</label>
@@ -105,7 +105,7 @@
                                 <x-error-message-field for="rate_limiter" class="d-none"></x-error-message-field>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="row mb-3">

@@ -58,7 +58,7 @@ class EventController extends Controller
             'note' => ['nullable', 'string', 'max:250'],
             'formula' => ['required', 'string', 'max:500'],
             'action' => ['required'],
-            'rate_limiter' => ['required', 'min:0', 'numeric']
+            // 'rate_limiter' => ['required', 'min:0', 'numeric']
         ]);
         // dd('stop');
 
@@ -74,7 +74,7 @@ class EventController extends Controller
             'Formula' => FunctionHelper::formatFormula($request->formula),
             'Daily' => $request->action == 'daily' ? true : null,
             'OnceTime' => $request->action == 'oncetime' ? true : null,
-            'LockDelay' => $request->rate_limiter
+            // 'LockDelay' => $request->rate_limiter
         ]);
 
         return response([
@@ -136,7 +136,7 @@ class EventController extends Controller
             'Formula' => FunctionHelper::formatFormula($request->formula),
             'Daily' => $request->action == 'daily' ? true : null,
             'OnceTime' => $request->action == 'oncetime' ? true : null,
-            'LockDelay' => $request->rate_limiter
+            // 'LockDelay' => $request->rate_limiter
         ]);
         $event->refresh();
 
