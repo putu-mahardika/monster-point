@@ -74,6 +74,7 @@ class EventController extends Controller
             'Formula' => FunctionHelper::formatFormula($request->formula),
             'Daily' => $request->action == 'daily' ? true : null,
             'OnceTime' => $request->action == 'oncetime' ? true : null,
+            'Aktif' => true,
             // 'LockDelay' => $request->rate_limiter
         ]);
 
@@ -121,7 +122,7 @@ class EventController extends Controller
         $validator = Validator::make($request->all(),[
             'code' => ['required', new UniqueInGroup('events', 'Kode', 'IdMerchant', $event->merchant->Id, $request->code), 'string', 'max:10'],
             'name' => ['required', 'string', 'max:250'],
-            'note' => ['string', 'max:250'],
+            'note' => ['nullable', 'string', 'max:250'],
             'formula' => ['required', 'string', 'max:500'],
         ]);
 
@@ -136,6 +137,7 @@ class EventController extends Controller
             'Formula' => FunctionHelper::formatFormula($request->formula),
             'Daily' => $request->action == 'daily' ? true : null,
             'OnceTime' => $request->action == 'oncetime' ? true : null,
+            'Aktif' => $request->has('switchAktif'),
             // 'LockDelay' => $request->rate_limiter
         ]);
         $event->refresh();

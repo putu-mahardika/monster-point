@@ -90,22 +90,21 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="col-md-6">
-                        <div class="row">
-                            <div class="col-xl-2 col-lg-3">
-                                <label for="rate_limiter">Rate Limiter</label>
-                            </div>
-                            <div class="col-xl-10 col-lg-9 mb-3">
-                                <div class="input-group">
-                                    <input type="number" class="form-control rounded-xl-start" value="{{ old('rate_limiter', $event->LockDelay ?? 15) }}" min="0" name="rate_limiter" id="rate_limiter" required>
-                                    <button type="button" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" data-bs-toggle="modal" data-bs-target="#modalRateLimiterFieldInfo">
-                                        <i class="fas fa-info-circle"></i>
-                                    </button>
+
+                    @if (request()->route()->getName() == 'events.edit')
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-xl-2 col-lg-3">
+                                    <label for="switchAktif">Active</label>
                                 </div>
-                                <x-error-message-field for="rate_limiter" class="d-none"></x-error-message-field>
+                                <div class="col-xl-10 col-lg-9 mb-3">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" id="switchAktif" name="switchAktif" {{ old('switchAktif', $event->Aktif ? 'checked' : '') }} style="height: 1.5rem; width: 3rem;">
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div> --}}
+                    @endif
                 </div>
 
                 <div class="row mb-3">
