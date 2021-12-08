@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Str;
 
 class DashboardController extends Controller
@@ -21,7 +22,9 @@ class DashboardController extends Controller
 
     public function chart1(Request $request)
     {
-        // if (!Cache::has("chart1.t=$request->t.d=$request->d")) {
+        $key = "chart1.t=$request->t.d=$request->d";
+        $ttl = now()->addMinutes(30);
+        $result = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl) {
             $date = Carbon::createFromFormat('Y-m-d', $request->d);
             $data = Log::when($request->t === 'd', function ($query) use ($request, $date) {
                            return $query->whereDate('CreateDate', $date->toDateString());
@@ -72,16 +75,20 @@ class DashboardController extends Controller
                                 }
                             });
             $this->formatChartData($request->t, $request->d, $outLogs);
-            $merged = $this->mergeDataChart(compact('inLogs', 'outLogs'));
-            Cache::put("chart1.t=$request->t.d=$request->d", $merged, now()->addMinutes(30));
-        // }
-        $merged = Cache::get("chart1.t=$request->t.d=$request->d");
-        return response()->json($merged);
+            Cache::tags('chart')->remember($key . ".lastUpdate", $ttl, function () {
+                return now();
+            });
+            return $this->mergeDataChart(compact('inLogs', 'outLogs'));
+        });
+
+        return response()->json($result);
     }
 
     public function chart1Stat(Request $request)
     {
-        // if (!Cache::has("chart1stat.t=$request->t.d=$request->d") || $request->has('isDebug')) {
+        $key = "chart1stat.t=$request->t.d=$request->d";
+        $ttl = now()->addMinutes(30);
+        $result = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl) {
             $date = Carbon::createFromFormat('Y-m-d', $request->d);
 
             if ($request->t === 'd') {
@@ -118,7 +125,6 @@ class DashboardController extends Controller
                              return $query->where('IdMerchant', auth()->user()->merchant->Id);
                          })
                          ->get();
-            // dd($data->toSql(), $data->getBindings());
 
             if ($request->t === 'd') {
                 $success = $data->filter(function ($item, $key) use ($request) {
@@ -235,69 +241,97 @@ class DashboardController extends Controller
                 $failed = FunctionHelper::thousandsCurrencyFormat($failed);
             }
 
-            Cache::put("chart1stat.t=$request->t.d=$request->d", compact('success', 'successOld', 'successPercent', 'failed', 'failedOld', 'failedPercent'), now()->addMinutes(30));
-        // }
-        $result = Cache::get("chart1stat.t=$request->t.d=$request->d");
+            Cache::tags('chart')->remember($key . ".lastUpdate", $ttl, function () {
+                return now();
+            });
+
+            return compact('success', 'successOld', 'successPercent', 'failed', 'failedOld', 'failedPercent');
+        });
+
         return response()->json($result);
     }
 
     public function chart2(Request $request)
     {
-        // dd($request->mrc);
-        $date = Carbon::createFromFormat('Y-m-d', $request->d);
-        $data = Log::when($request->t === 'd', function ($query) use ($request, $date) {
-                        return $query->whereDate('Log.CreateDate', $date->toDateString());
-                   })
-                   ->when($request->t === 'M', function ($query) use ($request, $date) {
-                        return $query->whereMonth('Log.CreateDate', $date->month)
-                                       ->whereYear('Log.CreateDate', $date->year);
-                   })
-                   ->when($request->t === 'y', function ($query) use ($request, $date) {
-                        return $query->whereYear('Log.CreateDate', $date->year);
-                   })
-                   ->when(!empty($request->mrc), function ($query) use ($request) {
-                       return auth()->user()->is_admin ?
-                           $query->where('IdMerchant', $request->mrc) :
-                           $query;
-                   })
-                   ->when(!auth()->user()->is_admin, function ($query) use ($request) {
-                       return $query->where('IdMerchant', auth()->user()->merchant->Id);
-                   })
-                   ->select(DB::raw("Log.IdMember, Member.Nama, COUNT(Log.Id) as 'Hit', SUM(Log.Point) as 'Point'"))
-                   ->join('Member', 'Log.IdMember', '=', 'Member.Id')
-                   ->groupBy(['Log.IdMember', 'Member.Nama'])
-                   ->orderBy($request->of1, $request->ot1)
-                   ->when($request->has('of2'), function ($query) use ($request) {
-                       return $query->orderBy($request->of2, $request->ot2);
-                   })
-                   ->limit(10)
-                   ->get();
-        return response()->json($data);
+        $key = "chart2.t=$request->t.d=$request->d";
+        $ttl = now()->addMinutes(30);
+        $result = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->d);
+            $data = Log::when($request->t === 'd', function ($query) use ($request, $date) {
+                            return $query->whereDate('Log.CreateDate', $date->toDateString());
+                    })
+                    ->when($request->t === 'M', function ($query) use ($request, $date) {
+                            return $query->whereMonth('Log.CreateDate', $date->month)
+                                        ->whereYear('Log.CreateDate', $date->year);
+                    })
+                    ->when($request->t === 'y', function ($query) use ($request, $date) {
+                            return $query->whereYear('Log.CreateDate', $date->year);
+                    })
+                    ->when(!empty($request->mrc), function ($query) use ($request) {
+                        return auth()->user()->is_admin ?
+                            $query->where('IdMerchant', $request->mrc) :
+                            $query;
+                    })
+                    ->when(!auth()->user()->is_admin, function ($query) use ($request) {
+                        return $query->where('IdMerchant', auth()->user()->merchant->Id);
+                    })
+                    ->select(DB::raw("Log.IdMember, Member.Nama, COUNT(Log.Id) as 'Hit', SUM(Log.Point) as 'Point'"))
+                    ->join('Member', 'Log.IdMember', '=', 'Member.Id')
+                    ->groupBy(['Log.IdMember', 'Member.Nama'])
+                    ->orderBy($request->of1, $request->ot1)
+                    ->when($request->has('of2'), function ($query) use ($request) {
+                        return $query->orderBy($request->of2, $request->ot2);
+                    })
+                    ->limit(10)
+                    ->get();
+            Cache::tags('chart')->remember($key . ".lastUpdate", $ttl, function () {
+                return now();
+            });
+            return $data;
+        });
+
+        return response()->json($result);
     }
 
     public function chart3(Request $request)
     {
-        $date = Carbon::createFromFormat('Y-m-d', $request->d);
-        $data = Log::when($request->t === 'd', function ($query) use ($request, $date) {
-                       return $query->whereDate('CreateDate', $date->toDateString());
-                   })
-                   ->when($request->t === 'M', function ($query) use ($request, $date) {
-                       return $query->whereMonth('CreateDate', $date->month)
-                                   ->whereYear('CreateDate', $date->year);
-                   })
-                   ->when($request->t === 'y', function ($query) use ($request, $date) {
-                       return $query->whereYear('CreateDate', $date->year);
-                   })
-                   ->when(!empty($request->mrc), function ($query) use ($request) {
-                       return auth()->user()->is_admin ?
-                           $query->where('IdMerchant', $request->mrc) :
-                           $query;
-                   })
-                   ->when(!auth()->user()->is_admin, function ($query) use ($request) {
-                       return $query->where('IdMerchant', auth()->user()->merchant->Id);
-                   })
-                   ->get();
-        $success = $data->where('Status', 200)
+        $key = "chart3.t=$request->t.d=$request->d";
+        $ttl = now()->addMinutes(30);
+        $result = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl) {
+            $date = Carbon::createFromFormat('Y-m-d', $request->d);
+            $data = Log::when($request->t === 'd', function ($query) use ($request, $date) {
+                        return $query->whereDate('CreateDate', $date->toDateString());
+                    })
+                    ->when($request->t === 'M', function ($query) use ($request, $date) {
+                        return $query->whereMonth('CreateDate', $date->month)
+                                    ->whereYear('CreateDate', $date->year);
+                    })
+                    ->when($request->t === 'y', function ($query) use ($request, $date) {
+                        return $query->whereYear('CreateDate', $date->year);
+                    })
+                    ->when(!empty($request->mrc), function ($query) use ($request) {
+                        return auth()->user()->is_admin ?
+                            $query->where('IdMerchant', $request->mrc) :
+                            $query;
+                    })
+                    ->when(!auth()->user()->is_admin, function ($query) use ($request) {
+                        return $query->where('IdMerchant', auth()->user()->merchant->Id);
+                    })
+                    ->get();
+            $success = $data->where('Status', 200)
+                            ->groupBy(function ($query) use ($request) {
+                                if ($request->t === 'd') {
+                                    return $query->CreateDate->format('H:00');
+                                }
+                                elseif ($request->t === 'M') {
+                                    return $query->CreateDate->format('d-m-Y');
+                                }
+                                elseif ($request->t === 'y') {
+                                    return $query->CreateDate->monthName;
+                                }
+                            });
+
+            $failed = $data->where('Status', '!=', 200)
                         ->groupBy(function ($query) use ($request) {
                             if ($request->t === 'd') {
                                 return $query->CreateDate->format('H:00');
@@ -310,23 +344,26 @@ class DashboardController extends Controller
                             }
                         });
 
-        $failed = $data->where('Status', '!=', 200)
-                       ->groupBy(function ($query) use ($request) {
-                           if ($request->t === 'd') {
-                               return $query->CreateDate->format('H:00');
-                           }
-                           elseif ($request->t === 'M') {
-                               return $query->CreateDate->format('d-m-Y');
-                           }
-                           elseif ($request->t === 'y') {
-                               return $query->CreateDate->monthName;
-                           }
-                       });
+            $this->formatChartData($request->t, $request->d, $success, false);
+            $this->formatChartData($request->t, $request->d, $failed, false);
+            $merged = $this->mergeDataChart(compact('success', 'failed'));
 
-        $this->formatChartData($request->t, $request->d, $success, false);
-        $this->formatChartData($request->t, $request->d, $failed, false);
-        $merged = $this->mergeDataChart(compact('success', 'failed'));
-        return response()->json($merged);
+            Cache::tags('chart')->remember($key . ".lastUpdate", $ttl, function () {
+                return now();
+            });
+            return $merged;
+        });
+        return response()->json($result);
+    }
+
+    public function chartTime(Request $request)
+    {
+        return Cache::tags('chart')->get("$request->ch.t=$request->t.d=$request->d.lastUpdate", "Invalid Key!");
+    }
+
+    public function clearChartCache(Request $request)
+    {
+        Cache::tags('chart')->flush();
     }
 
     private function formatChartData($t, $d, &$collection, $isSum = true)

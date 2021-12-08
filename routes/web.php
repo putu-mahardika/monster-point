@@ -36,6 +36,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('chart1/stat', [Web\DashboardController::class, 'chart1Stat'])->name('chart1.stat');
         Route::get('chart2', [Web\DashboardController::class, 'chart2'])->name('chart2');
         Route::get('chart3', [Web\DashboardController::class, 'chart3'])->name('chart3');
+        Route::get('chart-time', [Web\DashboardController::class, 'chartTime'])->name('chartTime');
+        Route::post('clear-chart-cache', [Web\DashboardController::class, 'clearChartCache'])->name('clearChartCache');
     });
 
     Route::resource('profile', Web\UserControler::class);
@@ -112,4 +114,3 @@ Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
 
 // email view invoice & receipt
 Route::get('/send-receipt', [Coba::class, 'index' ]);
-
