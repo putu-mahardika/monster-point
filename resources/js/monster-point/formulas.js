@@ -18,33 +18,18 @@ window.getFormulaColumn = (columnName, textTransform = '') => {
 
 window.formulas = [
     {
-        name: "SUM",
-        expression: "SUM()",
-        example: "SUM([1, 2, 3, 4, 5])",
+        name: "@value",
+        expression: "@value",
+        example: `-- Digunakan untuk memanggil value yang di hasilkan oleh user/member \n @value / 30`,
     },
     {
-        name: "AVG",
-        expression: "AVG()",
-        example: "AVG([1, 2, 3, 4, 5])",
+        name: "Case",
+        expression: `case\n\twhen condition\n\tthen\n\t\tstatement\n\telse\n\t\tstatement\nend`,
+        example: `-- Digunakan untuk menerapkan kondisi dalam formula \nCASE\n\tWHEN (@value/30 ) > 1000\n\tTHEN\n\t\t1000\n\tELSE\n\t\t200\nEND`,
     },
     {
-        name: "SUBSTRACT",
-        expression: "SUBSTRACT()",
-        example: "SUBSTRACT([1, 2, 3, 4, 5])",
+        name: "Get Date",
+        expression: `getdate()`,
+        example: `-- Digunakan untuk mendapatkan tanggal dan jam saat ini \ngetdate()`
     },
-    {
-        name: "COUNT",
-        expression: "COUNT()",
-        example: "COUNT([1, 2, 3, 4, 5])",
-    },
-    {
-        name: "MAX",
-        expression: "MAX()",
-        example: "MAX([1, 2, 3, 4, 5])",
-    },
-    {
-        name: "MIN",
-        expression: "MIN()",
-        example: "MIN([1, 2, 3, 4, 5])",
-    }
 ];
