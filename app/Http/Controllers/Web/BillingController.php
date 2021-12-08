@@ -120,8 +120,6 @@ class BillingController extends Controller
                     $data = FunctionHelper::getInvoiceDetails($merchant);
                     // dd($data);
                     \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
-                } else {
-                    dd('aaa');
                 }
 
             }
@@ -131,7 +129,7 @@ class BillingController extends Controller
     public function resendInvoice()
     {
         $dateCut = (int)floor(GlobalSettingHelper::getValueExpired()/2);
-        dd($dateCut);
+        // dd($dateCut);
         $billings = Billing::with('merchant')
                     ->whereHas('merchant', function($q){
                         $q->where('Akif', '=', 1);
