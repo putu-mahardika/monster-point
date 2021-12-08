@@ -29,4 +29,15 @@ class Merchant extends Model
     {
         return $this->hasMany(Billing::class, 'IdMerchant', 'Id');
     }
+
+    /**
+     * Get all of the members for the Merchant
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function members()
+    {
+        return $this->hasMany(Member::class, 'IdMerhant', 'Id');
+    }
+
 }

@@ -108,7 +108,7 @@ Route::get('/receipt', function () {
 
 //test
 Route::get('/test', function () {
-    return view('pages/billing/test');
+    return view('/test');
 });
 
 //riset swagger

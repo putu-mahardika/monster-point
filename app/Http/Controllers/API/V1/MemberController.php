@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Helpers\MemberHelper;
+use App\Models\Merchant;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 
@@ -35,12 +36,12 @@ class MemberController extends Controller
      *      ),
      *     )
      */
-    public function index()
+    public function index($merchantToken)
     {
-        $member = Member::all();
+       $members = Merchant::where("Token", $merchantToken)->first()->members;
         return response()->json([
             'status' => 'success',
-            'data' => $member
+            'data' => $members
         ]);
     }
 
@@ -153,9 +154,17 @@ class MemberController extends Controller
      *
      * )
      */
-    public function show(Member $member)
+    // public function show(Member $member)
+    // {
+    //     $member = Member::where('id', $member->Id)->first();
+    //     return response()->json([
+    //         'status' => 'success',
+    //         'data' => $member
+    //     ]);
+    // }
+    public function show($merchantToken, $member)
     {
-        $member = Member::where('id', $member->Id)->first();
+        $member = Merchant::where("Token", $merchantToken )->first()->members()->find($member);
         return response()->json([
             'status' => 'success',
             'data' => $member

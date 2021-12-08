@@ -1,4 +1,21 @@
- <!DOCTYPE html>
+@php
+use App\Models\Member;
+use App\Models\Merchant;
+
+$memberMerchant = Merchant::where("Token", "=", "HJEX")->first()->members;
+dd($memberMerchant);
+@endphp
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
