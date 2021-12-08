@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Helpers\GlobalSettingHelper;
+use App\Models\GlobalSetting;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -58,7 +60,8 @@ class RouteServiceProvider extends ServiceProvider
     protected function configureRateLimiting()
     {
         RateLimiter::for('api', function (Request $request) {
-            return Limit::perMinute(60)->by(optional($request->user())->id ?: $request->ip());
+            $hitLimit = (int)floor(GlobalSettingHelper::getValueHitLimit()*60);
+            return Limit::perMinute($hitLimit);
         });
     }
 }

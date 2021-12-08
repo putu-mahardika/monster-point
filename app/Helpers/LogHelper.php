@@ -4,6 +4,7 @@ namespace App\Helpers;
 use App\Models\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\RateLimiter;
 
 class LogHelper {
     public static function indexLogApi(Request $request, $token, $event, $id, $value){
@@ -22,6 +23,7 @@ class LogHelper {
     }
 
     public static function memberHistoryPoint(Request $request, $token, $id){
+
         try {
             $exec = DB::table('Log')
                         ->join('Member', 'Log.IdMember', '=', 'Member.Id')
@@ -34,6 +36,7 @@ class LogHelper {
         } catch (\Exception $e) {
             return response()->json(['message' => 'Something went wrong!'], 400);
         }
+
         return response()->json($exec);
     }
 
