@@ -60,12 +60,6 @@ class FunctionHelper {
         return $num;
     }
 
-    public static function getDateCutBilling()
-    {
-        $date_exec = GlobalSetting::where('Kode', 'Cut')->pluck('Value')->first();
-        return $date_exec;
-    }
-
     public static function getInvoiceDetails($merchant)
     {
         // $data = array();
@@ -73,10 +67,10 @@ class FunctionHelper {
         $bulanLalu = Carbon::today()->subMonth()->format('F Y');
         $billing = Billing::where('IdMerchant', $merchant->Id)->orderBy('CreateDate', 'desc')->first();
         $sisaHitBulanLalu = Billing::where('IdMerchant', $merchant->Id)->where('Id', '<', $billing->Id)->orderBy('Id', 'desc')->pluck('sisa')->first();
-        $limitHit = GlobalSetting::where('Kode', 'Total Hit')->pluck('Value')->first();
-        $tarif = GlobalSetting::where('Kode', 'Price')->pluck('Value')->first();
+        $limitHit = GlobalSettingHelper::getValueTotalHit();
+        $tarif = GlobalSettingHelper::getValuePrice();
 
-        $subject = '[INVOICE] '.$billing->InvoiceNumber;
+        $subject = 'Monster Point [INVOICE] '.$billing->InvoiceNumber;
         $view = 'mail.send-invoice';
 
         $details = [
