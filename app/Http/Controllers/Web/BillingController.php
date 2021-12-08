@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Web;
 
 use App\Helpers\FunctionHelper;
+use App\Helpers\GlobalSettingHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use App\Models\Billing;
@@ -99,6 +100,7 @@ class BillingController extends Controller
     public function createBilling()
     {
         $merchants = Merchant::select('Id', 'Nama', 'Email')->where('Akif', 1)->get();
+        // dd($merchants);
         foreach($merchants as $merchant)
         {
             try {
@@ -112,16 +114,24 @@ class BillingController extends Controller
             // dd($exec);
             if($exec)
             {
-                $data = FunctionHelper::getInvoiceDetails($merchant);
-                // dd($data);
-                \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
+                $noInvoice = Billing::where('IdMerchant', $merchant->Id)->orderBy('Id', 'desc')->pluck('InvoiceNumber')->first();
+                if(!is_null($noInvoice))
+                {
+                    $data = FunctionHelper::getInvoiceDetails($merchant);
+                    // dd($data);
+                    \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
+                } else {
+                    dd('aaa');
+                }
+
             }
         }
     }
 
     public function resendInvoice()
     {
-        $dateCut = (int)floor(GlobalSetting::where('Kode', 'Expired')->pluck('Value')->first()/2);
+        $dateCut = (int)floor(GlobalSettingHelper::getValueExpired()/2);
+        dd($dateCut);
         $billings = Billing::with('merchant')
                     ->whereHas('merchant', function($q){
                         $q->where('Akif', '=', 1);
