@@ -34,5 +34,10 @@ class GlobalSettingSeeder extends Seeder
             'Value' => '7',
             'Keterangan' => 'Masa tenggang pembayaran billing (hari)'
         ]);
+        GlobalSetting::create([
+            'Kode' => 'Hit Limit',
+            'Value' => '100',
+            'Keterangan' => 'Limit hit user per detik'
+        ]);
     }
 }
