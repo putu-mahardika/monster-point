@@ -206,7 +206,7 @@
                 }
             }
         },
-        "api/v1/{token}/members/{member}": {
+        "/api/v1/{token}/members/{member}": {
             "get": {
                 "tags": [
                     "Members"
@@ -225,7 +225,7 @@
                         }
                     },
                     {
-                        "name": "member_id",
+                        "name": "member",
                         "in": "path",
                         "description": "member_id",
                         "required": true,
@@ -258,7 +258,7 @@
                 }
             }
         },
-        "api/v1/{token}/members/{member} ": {
+        "/api/v1/{token}/members/{member} ": {
             "put": {
                 "tags": [
                     "Members"
@@ -268,9 +268,18 @@
                 "operationId": "updateMember",
                 "parameters": [
                     {
-                        "name": "id",
-                        "in": "query",
-                        "description": "Member id",
+                        "name": "token",
+                        "in": "path",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "member_id",
+                        "in": "path",
+                        "description": "member_id",
                         "required": true,
                         "schema": {
                             "type": "integer"

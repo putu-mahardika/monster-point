@@ -164,7 +164,7 @@ class MemberController extends Controller
      */
     /**
      * @OA\Get(
-     *      path="api/v1/{token}/members/{member}",
+     *      path="/api/v1/{token}/members/{member}",
      *      operationId="getMemberById",
      *      tags={"Members"},
      *      summary="Get Member detail information",
@@ -180,7 +180,7 @@ class MemberController extends Controller
      *          )
      *      ),
      *      @OA\Parameter(
-     *          name="member_id",
+     *          name="member",
      *          description="member_id",
      *          required=true,
      *          in="path",
@@ -233,17 +233,27 @@ class MemberController extends Controller
      */
 
      /** @OA\Put(
-     *      path="api/v1/{token}/members/{member} ",
+     *      path="/api/v1/{token}/members/{member} ",
      *      operationId="updateMember",
      *      tags={"Members"},
      *      summary="Update existing member",
      *      description="Returns updated member data",
      *
-     *      @OA\Parameter(
-     *          name="id",
-     *          description="Member id",
+     *     @OA\Parameter(
+     *          name="token",
+     *          description="token",
      *          required=true,
-     *          in="query",
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *
+     *      @OA\Parameter(
+     *          name="member",
+     *          description="member_id",
+     *          required=true,
+     *          in="path",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -260,32 +270,34 @@ class MemberController extends Controller
      *
      * )
      */
-    public function update($merchantToken, Request $request, $id)
+    public function update($merchantToken, $id)
     {
+        // return response()->json([
+        //     $merchantToken,
+        //     $id
+        // ]);
 
-        $memberMerchant = Merchant::where("Token", $merchantToken)->first()->members; //ambill all data member yang tokennya = ini
-
-        return response()->json([
-            $merchantToken,
-            $id,
-            $memberMerchant
-        ]);
-
-        // $member = Member::where('id', $id)->first();
-        // if ( Member::where('id', $member->Id)->doesntExist() ) {
+        // $member = Merchant::where("Token", $merchantToken)->first()->members()->find($id); //ambill all data member yang tokennya = ini
         //     return response()->json([
-        //         'status' => 'error',
-        //         'message' => 'Member tidak ditemukan'
-        //     ]);
-        // } else {
-        //     Member::where('id', $member->Id)->update([
-        //         'Aktif' => 0
-        //     ]);
-        //     return response()->json([
-        //         'status' => 'success',
-        //         'message' => 'data berhasil di update'
-        //     ]);
-        // }
+        //     'status' => 'success',
+        //     'data' => $member
+        // ]);
+
+        $member = Merchant::where("Token", $merchantToken)->first()->members()->find($id);
+        if ( $member->doesntExist() ) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Member tidak ditemukan'
+            ]);
+        } else {
+            $member->update([
+                'Aktif' => 0
+            ]);
+            return response()->json([
+                'status' => 'success',
+                'message' => 'data berhasil di update'
+            ]);
+        }
     }
 
     /**
