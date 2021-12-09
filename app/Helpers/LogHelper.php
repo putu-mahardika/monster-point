@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 
 class LogHelper {
-    public static function indexLogApi(Request $request, $token, $event, $id, $value){
+    public static function indexLogApi($token, $event, $id, $value){
         try {
             $exec = DB::select('SET NOCOUNT ON; EXEC dbo.sp_ExecEvent @token = ?, @idmember = ?, @event = ?, @value = ?', [
                 $token,

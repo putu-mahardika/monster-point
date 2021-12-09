@@ -5,6 +5,9 @@ namespace App\Http\Controllers\API\V1;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\LogHelper;
+use App\Jobs\Transactions;
+use Log;
+
 class LogApiController extends Controller
 {
      /**
@@ -36,8 +39,13 @@ class LogApiController extends Controller
      * )
      */
 
-    public function transaction(Request $request, $token, $event, $id, $value){
-        return LogHelper::indexLogApi($request, $token, $event, $id, $value);
+    public function transaction($token, $event, $id, $value){
+        // return LogHelper::indexLogApi($request, $token, $event, $id, $value);
+        Transactions::dispatch($token, $event, $id, $value);
+        Log::info("Dispatched Transaction");
+        return response()->json([
+            'message' => "Dispatched Transaction"
+        ]);
     }
 
     /**
