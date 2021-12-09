@@ -156,7 +156,7 @@
                     },
                     {
                         "name": "member_key",
-                        "in": "path",
+                        "in": "query",
                         "description": "member_key",
                         "required": true,
                         "schema": {
@@ -165,9 +165,18 @@
                     },
                     {
                         "name": "member_name",
-                        "in": "path",
+                        "in": "query",
                         "description": "member_name",
                         "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_note",
+                        "in": "query",
+                        "description": "member_note",
+                        "required": false,
                         "schema": {
                             "type": "string"
                         }
@@ -197,19 +206,28 @@
                 }
             }
         },
-        "api/v1/members/{member}": {
+        "api/v1/{token}/members/{member}": {
             "get": {
                 "tags": [
                     "Members"
                 ],
-                "summary": "Get Member information",
+                "summary": "Get Member detail information",
                 "description": "Returns Member data by id",
                 "operationId": "getMemberById",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "token",
                         "in": "path",
-                        "description": "Member id",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_id",
+                        "in": "query",
+                        "description": "member_id",
                         "required": true,
                         "schema": {
                             "type": "integer"
@@ -240,7 +258,7 @@
                 }
             }
         },
-        "api/v1/members/{member} ": {
+        "api/v1/{token}/members/{member} ": {
             "put": {
                 "tags": [
                     "Members"
@@ -251,7 +269,7 @@
                 "parameters": [
                     {
                         "name": "id",
-                        "in": "path",
+                        "in": "query",
                         "description": "Member id",
                         "required": true,
                         "schema": {

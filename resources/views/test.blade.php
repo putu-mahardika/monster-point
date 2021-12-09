@@ -2,8 +2,14 @@
 use App\Models\Member;
 use App\Models\Merchant;
 
-$memberMerchant = Merchant::where("Token", "=", "HJEX")->first()->members;
-dd($memberMerchant);
+$member = Merchant::where("Token","=", "HJEX")->first()->members()->find(10018);
+dd($member);
+
+// $memberMerchant = Merchant::where("Token", "=", "HJEX")->first()->members;
+// dd($memberMerchant);
+
+// $member = Merchant::where("Token", "=", "HJEX")->first()->members;
+// {{ $member->Id }}
 @endphp
 
 

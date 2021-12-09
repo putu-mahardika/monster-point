@@ -93,7 +93,7 @@ class MemberController extends Controller
      *          name="member_key",
      *          description="member_key",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *          )
@@ -102,7 +102,16 @@ class MemberController extends Controller
      *          name="member_name",
      *          description="member_name",
      *          required=true,
-     *          in="path",
+     *          in="query",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *       @OA\Parameter(
+     *          name="member_note",
+     *          description="member_note",
+     *          required=false,
+     *          in="query",
      *          @OA\Schema(
      *              type="string"
      *          )
@@ -155,16 +164,26 @@ class MemberController extends Controller
      */
     /**
      * @OA\Get(
-     *      path="api/v1/members/{member}",
+     *      path="api/v1/{token}/members/{member}",
      *      operationId="getMemberById",
      *      tags={"Members"},
-     *      summary="Get Member information",
+     *      summary="Get Member detail information",
      *      description="Returns Member data by id",
+     *
      *      @OA\Parameter(
-     *          name="id",
-     *          description="Member id",
+     *          name="token",
+     *          description="token",
      *          required=true,
      *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="member_id",
+     *          description="member_id",
+     *          required=true,
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -181,12 +200,17 @@ class MemberController extends Controller
      *
      * )
      */
-    public function show($merchantToken, $member)
+    public function show($merchantToken, $id)
     {
-        $member = Merchant::where("Token", $merchantToken )->first()->members()->find($member);
+
+        // $member = Merchant::where("Token","=", $merchantToken)->first()->members()->find($id);
+        // return response()->json([
+        //     'status' => 'success',
+        //     'data' => $member
+        // ]);
         return response()->json([
-            'status' => 'success',
-            'data' => $member
+            $merchantToken,
+            $id
         ]);
     }
 
@@ -210,7 +234,7 @@ class MemberController extends Controller
      */
 
      /** @OA\Put(
-     *      path="api/v1/members/{member} ",
+     *      path="api/v1/{token}/members/{member} ",
      *      operationId="updateMember",
      *      tags={"Members"},
      *      summary="Update existing member",
@@ -220,7 +244,7 @@ class MemberController extends Controller
      *          name="id",
      *          description="Member id",
      *          required=true,
-     *          in="path",
+     *          in="query",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -240,24 +264,29 @@ class MemberController extends Controller
     public function update($merchantToken, Request $request, $id)
     {
 
-        $merchant = Merchant::where("Token", $merchantToken)->first()->members; //ambill all data member yang tokennya = ini
+        $memberMerchant = Merchant::where("Token", $merchantToken)->first()->members; //ambill all data member yang tokennya = ini
 
+        return response()->json([
+            $merchantToken,
+            $id,
+            $memberMerchant
+        ]);
 
-        $member = Member::where('id', $id)->first();
-        if ( Member::where('id', $member->Id)->doesntExist() ) {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Member tidak ditemukan'
-            ]);
-        } else {
-            Member::where('id', $member->Id)->update([
-                'Aktif' => 0
-            ]);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'data berhasil di update'
-            ]);
-        }
+        // $member = Member::where('id', $id)->first();
+        // if ( Member::where('id', $member->Id)->doesntExist() ) {
+        //     return response()->json([
+        //         'status' => 'error',
+        //         'message' => 'Member tidak ditemukan'
+        //     ]);
+        // } else {
+        //     Member::where('id', $member->Id)->update([
+        //         'Aktif' => 0
+        //     ]);
+        //     return response()->json([
+        //         'status' => 'success',
+        //         'message' => 'data berhasil di update'
+        //     ]);
+        // }
     }
 
     /**
