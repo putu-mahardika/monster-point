@@ -82,9 +82,8 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 d-flex flex-column justify-content-center">
-                    <h1 data-aos="fade-up">Service yang melayani kebutuhan point dari berbagai aplikasi</h1>
-                    <h2 data-aos="fade-up" data-aos-delay="400">Service ini dibuat untuk melayani point dari perusahaan
-                        yang membutukan point pada saat transaksi.</h2>
+                    <h1 data-aos="fade-up">A service for the needs of various application points</h1>
+                    <h2 data-aos="fade-up" data-aos-delay="400">This service is designed to serve companies that need points to support transactions</h2>
                     <div data-aos="fade-up" data-aos-delay="600">
                         <div class="text-center text-lg-start">
                             <a href="#"

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Helpers\MemberHelper;
+use App\Models\Merchant;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 
@@ -16,12 +17,41 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+     /**
+     * @OA\Get(
+     *      path="/api/v1/{token}/members",
+     *      operationId="getMemberList",
+     *      tags={"Members"},
+     *      summary="Get list of members",
+     *      description="Returns list of members",
+     *
+     *        @OA\Parameter(
+     *          name="token",
+     *          description="token",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *     )
+     */
+    public function index($merchantToken)
     {
-        $member = Member::all();
+       $members = Merchant::where("Token", $merchantToken)->first()->members;
         return response()->json([
             'status' => 'success',
-            'data' => $member
+            'data' => $members
         ]);
     }
 
@@ -41,22 +71,69 @@ class MemberController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+
+     /**
+     * @OA\Post(
+     *      path="/api/v1/{token}/members",
+     *      operationId="createMember",
+     *      tags={"Members"},
+     *      summary="Create members",
+     *      description="Store a new member data",
+     *
+     *       @OA\Parameter(
+     *          name="token",
+     *          description="token",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *       @OA\Parameter(
+     *          name="member_key",
+     *          description="member_key",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *       @OA\Parameter(
+     *          name="member_name",
+     *          description="member_name",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *         )
+     *       ),
+     * )
+     *
+     */
+
+    public function store($merchantToken, Request $request)
     {
-        // return MemberHelper::storeMember($request);
+        $merchant= Merchant::where("Token", $merchantToken)->first();
         $validator = Validator::make($request->all(), [
             'member_key' => ['required'],
-            'member_name' => ['required', 'string', 'max:250'],
-            'member_note' => ['string', 'max:250'],
+            'member_name' => ['required', 'string', 'max:150'],
+            'member_note' => ['string', 'max:150'],
         ]);
 
         if ($validator->fails()) {
             return response($validator->errors(), Response::HTTP_BAD_REQUEST);
         } else {
             Member::create([
-                'IdMerhant' => 1,
-                'MerchentMemberKey' => 2,
-                'Point' => $request->member_key,
+                'IdMerhant' => $merchant->Id,
+                'MerchentMemberKey' => $request->member_key,
                 'Nama' => $request->member_name,
                 'Keterangan' => $request->member_note,
                 'Aktif' => 1,
@@ -76,9 +153,37 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Member $member)
+    /**
+     * @OA\Get(
+     *      path="api/v1/members/{member}",
+     *      operationId="getMemberById",
+     *      tags={"Members"},
+     *      summary="Get Member information",
+     *      description="Returns Member data by id",
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Member id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *
+     * )
+     */
+    public function show($merchantToken, $member)
     {
-        $member = Member::where('id', $member->Id)->first();
+        $member = Merchant::where("Token", $merchantToken )->first()->members()->find($member);
         return response()->json([
             'status' => 'success',
             'data' => $member
@@ -103,8 +208,41 @@ class MemberController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+
+     /** @OA\Put(
+     *      path="api/v1/members/{member} ",
+     *      operationId="updateMember",
+     *      tags={"Members"},
+     *      summary="Update existing member",
+     *      description="Returns updated member data",
+     *
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Member id",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="integer"
+     *          )
+     *      ),
+     *
+     *      @OA\Response(
+     *          response=200,
+     *          description="Success",
+     *          @OA\JsonContent(
+     *              @OA\Property(property="status", type="string", readOnly="true"),
+     *              @OA\Property(property="data", type="object", readOnly="true")
+     *          )
+     *      ),
+     *
+     * )
+     */
+    public function update($merchantToken, Request $request, $id)
     {
+
+        $merchant = Merchant::where("Token", $merchantToken)->first()->members; //ambill all data member yang tokennya = ini
+
+
         $member = Member::where('id', $id)->first();
         if ( Member::where('id', $member->Id)->doesntExist() ) {
             return response()->json([

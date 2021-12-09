@@ -1,59 +1,47 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your super  ApplicationAPI",
+        "title": "Monster Point Service API Documentation",
+        "description": "This is a direction for using all the APIs that we have created for our Monster Point Service users.",
+        "contact": {
+            "email": "superadmin@monsterpoint.com"
+        },
         "version": "1.0.0"
     },
     "paths": {
-        "/login": {
-            "post": {
+        "api/v1/{token}/{event}/{id}/{value}": {
+            "get": {
                 "tags": [
-                    "auth"
+                    "Transaction"
                 ],
-                "summary": "Sign in",
-                "description": "Login by email, password",
-                "operationId": "authLogin",
-                "requestBody": {
-                    "description": "Pass user credentials",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user1@mail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
-                                    },
-                                    "persistent": {
-                                        "type": "boolean",
-                                        "example": "true"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "summary": "Get All Transaction",
+                "description": "Returns Transaction Data",
+                "operationId": "getTransactionData",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Transaction id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
-                },
+                ],
                 "responses": {
-                    "422": {
-                        "description": "Wrong credentials response",
+                    "200": {
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
+                                        "status": {
                                             "type": "string",
-                                            "example": "Sorry, wrong email address or password. Please try again"
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
                                         }
                                     },
                                     "type": "object"
@@ -64,28 +52,62 @@
                 }
             }
         },
-        "/greet": {
+        "api/v1/{token}/history/{id}": {
             "get": {
                 "tags": [
-                    "greeting"
+                    "Transaction"
                 ],
-                "summary": "Returns a Sample API response",
-                "description": "A sample greeting to test out the API",
-                "operationId": "greet",
+                "summary": "Get Member History Transaction Information",
+                "description": "Returns Member Transaction Data",
+                "operationId": "getMemberHistoryPoint",
                 "parameters": [
                     {
-                        "name": "firstname",
-                        "in": "query",
-                        "description": "nama depan",
+                        "name": "id",
+                        "in": "path",
+                        "description": "History id",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
-                    },
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{token}/members": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get list of members",
+                "description": "Returns list of members",
+                "operationId": "getMemberList",
+                "parameters": [
                     {
-                        "name": "lastname",
-                        "in": "query",
-                        "description": "nama belakang",
+                        "name": "token",
+                        "in": "path",
+                        "description": "token",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -93,8 +115,170 @@
                     }
                 ],
                 "responses": {
-                    "default": {
-                        "description": "successful operation"
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Create members",
+                "description": "Store a new member data",
+                "operationId": "createMember",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_key",
+                        "in": "path",
+                        "description": "member_key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_name",
+                        "in": "path",
+                        "description": "member_name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/v1/members/{member}": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get Member information",
+                "description": "Returns Member data by id",
+                "operationId": "getMemberById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "api/v1/members/{member} ": {
+            "put": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Update existing member",
+                "description": "Returns updated member data",
+                "operationId": "updateMember",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member id",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }
