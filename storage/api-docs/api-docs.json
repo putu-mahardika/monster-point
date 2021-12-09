@@ -226,7 +226,7 @@
                     },
                     {
                         "name": "member_id",
-                        "in": "query",
+                        "in": "path",
                         "description": "member_id",
                         "required": true,
                         "schema": {

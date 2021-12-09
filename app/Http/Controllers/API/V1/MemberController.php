@@ -183,7 +183,7 @@ class MemberController extends Controller
      *          name="member_id",
      *          description="member_id",
      *          required=true,
-     *          in="query",
+     *          in="path",
      *          @OA\Schema(
      *              type="integer"
      *          )
@@ -202,16 +202,15 @@ class MemberController extends Controller
      */
     public function show($merchantToken, $id)
     {
-
-        // $member = Merchant::where("Token","=", $merchantToken)->first()->members()->find($id);
-        // return response()->json([
-        //     'status' => 'success',
-        //     'data' => $member
-        // ]);
+        $member = Merchant::where("Token","=", $merchantToken)->first()->members()->find($id);
         return response()->json([
-            $merchantToken,
-            $id
+            'status' => 'success',
+            'data' => $member
         ]);
+        // return response()->json([
+        //     $merchantToken,
+        //     $id
+        // ]);
     }
 
     /**

@@ -2,7 +2,7 @@
 use App\Models\Member;
 use App\Models\Merchant;
 
-$member = Merchant::where("Token","=", "HJEX")->first()->members()->find(10018);
+$member = Merchant::where("Token","=", "HJEX")->first()->members()->find(10020);
 dd($member);
 
 // $memberMerchant = Merchant::where("Token", "=", "HJEX")->first()->members;
