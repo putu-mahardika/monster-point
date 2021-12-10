@@ -32,6 +32,13 @@
                         @yield('message')
                     </div>
                 </div>
+                <div class="ml-4 mt-4 text-sm text-gray-500 capitalized tracking-wider">
+                    @if(auth()->check())
+                        <a href="{{ url()->previous() }}"><i class="far fa-arrow-alt-circle-left"></i> Kembali</a>
+                    @else
+                        <a href="/login"><i class="far fa-arrow-alt-circle-left"></i> Kembali</a>
+                    @endif
+                </div>
             </div>
         </div>
     </body>

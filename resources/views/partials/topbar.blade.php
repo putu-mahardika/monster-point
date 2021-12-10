@@ -18,6 +18,18 @@
 
     {{-- Navbar --}}
     <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4 py-5">
+
+        @if (request()->route()->getName() == 'dashboard.index')
+            <li class="nav-item mt-2 pt-1 me-3">
+                <form id="formClearCache" action="{{ route('dashboard.clearChartCache') }}" method="post">
+                    @csrf
+                    <button type="submit" class="btn btn-sm btn-outline-secondary rounded-xxl">
+                        <i class="fas fa-broom"></i> Clear Cache
+                    </button>
+                </form>
+            </li>
+        @endif
+
         @if ($settings['help'] ?? true)
             <li class="nav-item mt-2">
                 <a class="nav-link" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

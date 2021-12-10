@@ -109,6 +109,9 @@
                                 </div>
                             @endif
                         </div>
+                        <div class="card-footer small">
+                            Updated At: <span id="chart1time"></span>
+                        </div>
                     </div>
                 </div>
             @endcan
@@ -197,6 +200,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="card-footer small">
+                            Updated At: <span id="chart2time"></span>
+                        </div>
                     </div>
                 </div>
             @endcan
@@ -258,6 +264,9 @@
                         </div>
                     </div>
                 @endif
+            </div>
+            <div class="card-footer small">
+                Updated At: <span id="chart3time"></span>
             </div>
         </div>
     @endcan
@@ -637,6 +646,12 @@
                 $('#chart1FailedStat').text(response.failedPercent);
             });
 
+            $.get(`{{ route('dashboard.chartTime') }}${requestParamBuilder(1)}&ch=chart1`, function (response) {
+                $('#chart1time').text(
+                    moment(response).format('YYYY-MM-DD HH:mm:ss')
+                );
+            });
+
             $("#chart1FilterMerchant").select2({
                 placeholder: "Select a merchant"
             });
@@ -693,6 +708,12 @@
 
                 $("#chart2OrderField2 option[value=" + $('#chart2OrderField1').val() + "]").prop('disabled', true);
             }
+
+            $.get(`{{ route('dashboard.chartTime') }}${requestParamBuilder(2)}&ch=chart2`, function (response) {
+                $('#chart2time').text(
+                    moment(response).format('YYYY-MM-DD HH:mm:ss')
+                );
+            });
         }
 
         function loadChart3(isReload = false) {
@@ -748,6 +769,12 @@
                     placeholder: "Select a merchant"
                 });
             }
+
+            $.get(`{{ route('dashboard.chartTime') }}${requestParamBuilder(3)}&ch=chart3`, function (response) {
+                $('#chart3time').text(
+                    moment(response).format('YYYY-MM-DD HH:mm:ss')
+                );
+            });
         }
 
         function requestParamBuilder(chartNum) {
@@ -787,6 +814,31 @@
             loadEventChart1();
             loadEventChart2();
             loadEventChart3();
+
+            @if (request()->route()->getName())
+
+                $('#formClearCache').on('submit', function (e) {
+                    e.preventDefault();
+
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        type: $(this).attr('method'),
+                        data: {},
+                        success: (res) => {
+                            Toast.fire({
+                                icon: 'success',
+                                text: 'Cache has been cleared'
+                            });
+                            loadChart1(true);
+                            loadChart2(true);
+                            loadChart3(true);
+                        },
+                        error: (error) => {
+
+                        }
+                    });
+                });
+            @endif
         });
     </script>
 @endsection

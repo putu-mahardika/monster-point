@@ -19,9 +19,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix('v1/{token}')->name('api.v1.')->group(function () {
-    Route::post('{event}/{id}/{value}', [V1\LogApiController::class, 'transaction'])->name('transaction');
-    Route::get('history/{id}', [V1\LogApiController::class, 'getMemberHistoryPoint'])->name('getMemberHistoryPoint');
-    Route::resource('members', V1\MemberController::class);
+Route::middleware('unpaid.merchant')->group(function () {
+
+    Route::middleware('throttle:api')->prefix('v1')->name('api.v1.')->group(function () {
+        Route::post('{token}/{event}/{id}/{value}', [V1\LogApiController::class, 'transaction'])->name('transaction');
+        Route::get('{token}/history/{id}', [V1\LogApiController::class, 'getMemberHistoryPoint'])->name('getMemberHistoryPoint');
+        Route::resource('members', V1\MemberController::class);
+    });
+
 });
 

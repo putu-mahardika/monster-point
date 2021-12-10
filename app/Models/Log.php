@@ -16,7 +16,7 @@ class Log extends Model
     const CREATED_AT = 'CreateDate';
     const UPDATED_AT = null; //and updated by default null set
 
-    protected $guarded = ['Id', 'Guid', 'CreateDate'];
+    protected $guarded = ['Id', 'CreateDate'];
     protected $hidden = ['Times'];
 
     /**
