@@ -14,15 +14,42 @@ use Log;
 class LogApiController extends Controller
 {
      /**
-     * @OA\Get(
-     *      path="api/v1/{token}/{event}/{id}/{value}",
+     * @OA\POST(
+     *      path="/api/v1/{token}/{event}/{id}/{value}",
      *      operationId="getTransactionData",
      *      tags={"Transaction"},
      *      summary="Get All Transaction",
      *      description="Returns Transaction Data",
      *      @OA\Parameter(
+     *          name="token",
+     *          description="Your Token",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="event",
+     *          description="The event name you created",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
      *          name="id",
-     *          description="Transaction id",
+     *          description="Member Key",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="value",
+     *          description="Value obtained by user, e.g : game score",
      *          required=true,
      *          in="path",
      *          @OA\Schema(

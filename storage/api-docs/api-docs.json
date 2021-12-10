@@ -9,8 +9,8 @@
         "version": "1.0.0"
     },
     "paths": {
-        "api/v1/{token}/{event}/{id}/{value}": {
-            "get": {
+        "/api/v1/{token}/{event}/{id}/{value}": {
+            "post": {
                 "tags": [
                     "Transaction"
                 ],
@@ -19,9 +19,36 @@
                 "operationId": "getTransactionData",
                 "parameters": [
                     {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "The event name you created",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "id",
                         "in": "path",
-                        "description": "Transaction id",
+                        "description": "Member Key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "path",
+                        "description": "Value obtained by user, e.g : game score",
                         "required": true,
                         "schema": {
                             "type": "integer"
