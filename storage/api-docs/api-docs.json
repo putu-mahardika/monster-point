@@ -273,11 +273,11 @@
                         "description": "token",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
-                        "name": "member_id",
+                        "name": "member",
                         "in": "path",
                         "description": "member_id",
                         "required": true,

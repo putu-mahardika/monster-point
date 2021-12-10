@@ -245,7 +245,7 @@ class MemberController extends Controller
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *          )
      *      ),
      *
@@ -272,32 +272,66 @@ class MemberController extends Controller
      */
     public function update($merchantToken, $id)
     {
+
+        try {
+            $success = Member::find(10020)->update([
+                'LastUpdate' => now()
+            ]);
+
+            $member = Member::find(10020);
+            dd($success->LastUpdate);
+            return response()->json(compact('success', 'member'));
+            //code...
+        } catch (\Exception $e) {
+            return response()->json(
+                $e->getMessage(), $e->getCode()
+            );
+        }
+
+        return response()->json('lolos');
+
         // return response()->json([
         //     $merchantToken,
         //     $id
         // ]);
 
-        // $member = Merchant::where("Token", $merchantToken)->first()->members()->find($id); //ambill all data member yang tokennya = ini
+        // $member = Merchant::where("Token", $merchantToken)->first()->members()->find($id); //ambil all data member yang tokennya = ini
         //     return response()->json([
-        //     'status' => 'success',
-        //     'data' => $member
+        //     'data' => $member->Id
         // ]);
 
-        $member = Merchant::where("Token", $merchantToken)->first()->members()->find($id);
+        $merchant = Merchant::where("Token", $merchantToken)->first();
+        $member = Member::where('IdMerhant', $merchant->Id)->where("MerchentMemberKey", $id)->first();
+
+// test update
+        // $member->update([
+        //         'Aktif' => 0
+        // ]);
+        //     return response()->json([
+        //         'data' => $member
+        // ]);
+
+
+
         if ( $member->doesntExist() ) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Member tidak ditemukan'
             ]);
-        } else {
-            $member->update([
-                'Aktif' => 0
-            ]);
-            return response()->json([
-                'status' => 'success',
-                'message' => 'data berhasil di update'
-            ]);
         }
+
+        $success = $member->update([
+            'Aktif' => 1
+        ]);
+        $member = Member::where('IdMerhant', $merchant->Id)->where("MerchentMemberKey", $id)->first();
+
+        return response()->json(compact('success', 'member'));
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'data berhasil di update',
+            'data' => $member
+        ]);
     }
 
     /**
