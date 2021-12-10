@@ -272,61 +272,16 @@ class MemberController extends Controller
      */
     public function update($merchantToken, $id)
     {
-
-        try {
-            $success = Member::find(10020)->update([
-                'LastUpdate' => now()
-            ]);
-
-            $member = Member::find(10020);
-            dd($success->LastUpdate);
-            return response()->json(compact('success', 'member'));
-            //code...
-        } catch (\Exception $e) {
-            return response()->json(
-                $e->getMessage(), $e->getCode()
-            );
-        }
-
-        return response()->json('lolos');
-
-        // return response()->json([
-        //     $merchantToken,
-        //     $id
-        // ]);
-
-        // $member = Merchant::where("Token", $merchantToken)->first()->members()->find($id); //ambil all data member yang tokennya = ini
-        //     return response()->json([
-        //     'data' => $member->Id
-        // ]);
-
-        $merchant = Merchant::where("Token", $merchantToken)->first();
-        $member = Member::where('IdMerhant', $merchant->Id)->where("MerchentMemberKey", $id)->first();
-
-// test update
-        // $member->update([
-        //         'Aktif' => 0
-        // ]);
-        //     return response()->json([
-        //         'data' => $member
-        // ]);
-
-
-
+        $member = Merchant::where('Token', $merchantToken)->first()->members()->where("MerchentMemberKey", $id)->first();
         if ( $member->doesntExist() ) {
             return response()->json([
                 'status' => 'error',
                 'message' => 'Member tidak ditemukan'
             ]);
         }
-
         $success = $member->update([
-            'Aktif' => 1
+            'Aktif' => 0
         ]);
-        $member = Member::where('IdMerhant', $merchant->Id)->where("MerchentMemberKey", $id)->first();
-
-        return response()->json(compact('success', 'member'));
-
         return response()->json([
             'status' => 'success',
             'message' => 'data berhasil di update',
