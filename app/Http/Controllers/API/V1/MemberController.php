@@ -21,14 +21,13 @@ class MemberController extends Controller
      /**
      * @OA\Get(
      *      path="/api/v1/{token}/members",
-     *      operationId="getMemberList",
      *      tags={"Members"},
-     *      summary="Get list of members",
-     *      description="Returns list of members",
+     *      summary="Get all your member data.",
+     *      description="Get all your member data. With the token parameter you have.",
      *
      *        @OA\Parameter(
      *          name="token",
-     *          description="token",
+     *          description="Your Token",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -77,12 +76,12 @@ class MemberController extends Controller
      *      path="/api/v1/{token}/members",
      *      operationId="createMember",
      *      tags={"Members"},
-     *      summary="Create members",
-     *      description="Store a new member data",
+     *      summary="Create a new members",
+     *      description="Create a new member by entering your token, member key, member name, and member note.",
      *
      *       @OA\Parameter(
      *          name="token",
-     *          description="token",
+     *          description="Your Token",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -91,7 +90,7 @@ class MemberController extends Controller
      *      ),
      *       @OA\Parameter(
      *          name="member_key",
-     *          description="member_key",
+     *          description="Member Key",
      *          required=true,
      *          in="query",
      *          @OA\Schema(
@@ -100,7 +99,7 @@ class MemberController extends Controller
      *      ),
      *       @OA\Parameter(
      *          name="member_name",
-     *          description="member_name",
+     *          description="Member Name",
      *          required=true,
      *          in="query",
      *          @OA\Schema(
@@ -109,7 +108,7 @@ class MemberController extends Controller
      *      ),
      *       @OA\Parameter(
      *          name="member_note",
-     *          description="member_note",
+     *          description="Note for your member",
      *          required=false,
      *          in="query",
      *          @OA\Schema(
@@ -165,14 +164,13 @@ class MemberController extends Controller
     /**
      * @OA\Get(
      *      path="/api/v1/{token}/members/{member}",
-     *      operationId="getMemberById",
      *      tags={"Members"},
-     *      summary="Get Member detail information",
-     *      description="Returns Member data by id",
+     *      summary="Get Member data by member_key",
+     *      description="Get specific data member by the member_key.",
      *
      *      @OA\Parameter(
      *          name="token",
-     *          description="token",
+     *          description="Your Token",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -181,11 +179,11 @@ class MemberController extends Controller
      *      ),
      *      @OA\Parameter(
      *          name="member",
-     *          description="member_id",
+     *          description="Member Key",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *          )
      *      ),
      *
@@ -202,7 +200,7 @@ class MemberController extends Controller
      */
     public function show($merchantToken, $id)
     {
-        $member = Merchant::where("Token","=", $merchantToken)->first()->members()->find($id);
+        $member = Merchant::where("Token","=", $merchantToken)->first()->members()->where("MerchentMemberKey", "=", $id)->first();
         return response()->json([
             'status' => 'success',
             'data' => $member
@@ -234,14 +232,13 @@ class MemberController extends Controller
 
      /** @OA\Put(
      *      path="/api/v1/{token}/members/{member} ",
-     *      operationId="updateMember",
      *      tags={"Members"},
      *      summary="Update existing member",
-     *      description="Returns updated member data",
+     *      description="Updating data members from Active to Inactive",
      *
      *     @OA\Parameter(
      *          name="token",
-     *          description="token",
+     *          description="Your Token",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
@@ -251,7 +248,7 @@ class MemberController extends Controller
      *
      *      @OA\Parameter(
      *          name="member",
-     *          description="member_key",
+     *          description="Member key",
      *          required=true,
      *          in="path",
      *          @OA\Schema(

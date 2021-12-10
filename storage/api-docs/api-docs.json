@@ -14,9 +14,9 @@
                 "tags": [
                     "Transaction"
                 ],
-                "summary": "Get All Transaction",
-                "description": "Returns Transaction Data",
-                "operationId": "postTransactionData",
+                "summary": "Make poin by user activity",
+                "description": "Make points based on the value obtained by the user from the results of activities in the application. For example: the value of playing games, the minimum number of transactions a user achieves when shopping online, and so on.",
+                "operationId": "cf112f735f2e27b345f3bb78b785895d",
                 "parameters": [
                     {
                         "name": "token",
@@ -84,9 +84,9 @@
                 "tags": [
                     "Transaction"
                 ],
-                "summary": "Get Member History Transaction Information",
-                "description": "Returns Member Transaction Data",
-                "operationId": "getMemberHistoryPoint",
+                "summary": "Show member point history",
+                "description": "Displays the entire history of member points based on the member_key entered.",
+                "operationId": "d6ef65c0bac5aab2ff7d14c185a788ff",
                 "parameters": [
                     {
                         "name": "token",
@@ -136,14 +136,14 @@
                 "tags": [
                     "Members"
                 ],
-                "summary": "Get list of members",
-                "description": "Returns list of members",
-                "operationId": "getMemberList",
+                "summary": "Get all your member data.",
+                "description": "Get all your member data. With the token parameter you have.",
+                "operationId": "d5b5074568944f11c8385b27bc5af4c3",
                 "parameters": [
                     {
                         "name": "token",
                         "in": "path",
-                        "description": "token",
+                        "description": "Your Token",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -177,14 +177,14 @@
                 "tags": [
                     "Members"
                 ],
-                "summary": "Create members",
-                "description": "Store a new member data",
+                "summary": "Create a new members",
+                "description": "Create a new member by entering your token, member key, member name, and member note.",
                 "operationId": "createMember",
                 "parameters": [
                     {
                         "name": "token",
                         "in": "path",
-                        "description": "token",
+                        "description": "Your Token",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -193,7 +193,7 @@
                     {
                         "name": "member_key",
                         "in": "query",
-                        "description": "member_key",
+                        "description": "Member Key",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -202,7 +202,7 @@
                     {
                         "name": "member_name",
                         "in": "query",
-                        "description": "member_name",
+                        "description": "Member Name",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -211,7 +211,7 @@
                     {
                         "name": "member_note",
                         "in": "query",
-                        "description": "member_note",
+                        "description": "Note for your member",
                         "required": false,
                         "schema": {
                             "type": "string"
@@ -247,14 +247,14 @@
                 "tags": [
                     "Members"
                 ],
-                "summary": "Get Member detail information",
-                "description": "Returns Member data by id",
-                "operationId": "getMemberById",
+                "summary": "Get Member data by member_key",
+                "description": "Get specific data member by the member_key.",
+                "operationId": "86d3c216fa7f5792998b287528c2efc2",
                 "parameters": [
                     {
                         "name": "token",
                         "in": "path",
-                        "description": "token",
+                        "description": "Your Token",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -263,10 +263,10 @@
                     {
                         "name": "member",
                         "in": "path",
-                        "description": "member_id",
+                        "description": "Member Key",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
@@ -300,13 +300,13 @@
                     "Members"
                 ],
                 "summary": "Update existing member",
-                "description": "Returns updated member data",
-                "operationId": "updateMember",
+                "description": "Updating data members from Active to Inactive",
+                "operationId": "4bc520b223d718bcab2c07d9506c74d5",
                 "parameters": [
                     {
                         "name": "token",
                         "in": "path",
-                        "description": "token",
+                        "description": "Your Token",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -315,7 +315,7 @@
                     {
                         "name": "member",
                         "in": "path",
-                        "description": "member_key",
+                        "description": "Member key",
                         "required": true,
                         "schema": {
                             "type": "string"

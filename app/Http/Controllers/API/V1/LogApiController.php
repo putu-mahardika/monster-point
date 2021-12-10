@@ -16,10 +16,9 @@ class LogApiController extends Controller
      /**
      * @OA\POST(
      *      path="/api/v1/{token}/{event}/{id}/{value}",
-     *      operationId="postTransactionData",
      *      tags={"Transaction"},
-     *      summary="Get All Transaction",
-     *      description="Returns Transaction Data",
+     *      summary="Make poin by user activity",
+     *      description="Make points based on the value obtained by the user from the results of activities in the application. For example: the value of playing games, the minimum number of transactions a user achieves when shopping online, and so on.",
      *      @OA\Parameter(
      *          name="token",
      *          description="Your Token",
@@ -85,10 +84,9 @@ class LogApiController extends Controller
     /**
      * @OA\Get(
      *      path="/api/v1/{token}/history/{id}",
-     *      operationId="getMemberHistoryPoint",
      *      tags={"Transaction"},
-     *      summary="Get Member History Transaction Information",
-     *      description="Returns Member Transaction Data",
+     *      summary="Show member point history",
+     *      description="Displays the entire history of member points based on the member_key entered.",
      *      @OA\Parameter(
      *          name="token",
      *          description="Your Token",
