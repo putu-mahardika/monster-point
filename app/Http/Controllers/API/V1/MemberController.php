@@ -251,11 +251,11 @@ class MemberController extends Controller
      *
      *      @OA\Parameter(
      *          name="member",
-     *          description="member_id",
+     *          description="member_key",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
      *          )
      *      ),
      *
@@ -272,20 +272,24 @@ class MemberController extends Controller
      */
     public function update($merchantToken, $id)
     {
-        $member = Merchant::where('Token', $merchantToken)->first()->members()->where("MerchentMemberKey", $id)->first();
-        if ( $member->doesntExist() ) {
+        $merchant = Merchant::where('Token', $merchantToken)->first();
+        // ->members()->where("MerchentMemberKey", $id)->first();
+
+        if ( $merchant->doesntExist() ) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Member tidak ditemukan'
+                'message' => 'Member tidak ditemukan',
+                'Id Merchant' => $merchant
             ]);
         }
-        $success = $member->update([
+
+        $member = Member::where("MerchentMemberKey", $id);
+        $member->update([
             'Aktif' => 0
         ]);
         return response()->json([
             'status' => 'success',
             'message' => 'data berhasil di update',
-            'data' => $member
         ]);
     }
 

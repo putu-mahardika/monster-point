@@ -279,10 +279,10 @@
                     {
                         "name": "member",
                         "in": "path",
-                        "description": "member_id",
+                        "description": "member_key",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     }
                 ],
