@@ -96,4 +96,10 @@ class FunctionHelper {
         return $data;
     }
 
+    public static function getMqttBaseTopic($merchantToken)
+    {
+        return Str::slug(
+            config('app.name') . ' ' . $merchantToken
+        );
+    }
 }

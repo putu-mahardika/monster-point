@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\LogHelper;
 use App\Jobs\Transactions;
+use App\Models\Member;
+use App\Models\Merchant;
+use Illuminate\Database\Eloquent\Builder;
 use Log;
 
 class LogApiController extends Controller
@@ -40,11 +43,15 @@ class LogApiController extends Controller
      */
 
     public function transaction($token, $event, $id, $value){
-        // return LogHelper::indexLogApi($request, $token, $event, $id, $value);
-        Transactions::dispatch($token, $event, $id, $value);
-        Log::info("Dispatched Transaction");
+        $member = Member::whereHas('Merchant', function (Builder $query) use ($token) {
+            $query->where('Token', $token);
+        })->where('MerchentMemberKey', $id)->pluck('id')->first();
+
+        dispatch(new Transactions($token, $event, $member, $value));
+
+        Log::info('Dispached Transaction');
         return response()->json([
-            'message' => "Dispatched Transaction"
+            'message' => 'Dispached Transaction'
         ]);
     }
 

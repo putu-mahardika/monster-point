@@ -181,15 +181,23 @@ return [
             'supervisor-1' => [
                 'connection' => 'redis',
                 'maxProcesses' => 10,
+                'tries' => 5,
                 'balanceMaxShift' => 1,
                 'balanceCooldown' => 3,
+                'timeout' => 180,
+                'queue' => ['default'],
+                'balance' => 'auto',
             ],
         ],
 
         'local' => [
             'supervisor-1' => [
                 'connection' => 'redis',
-                'maxProcesses' => 3,
+                'maxProcesses' => 10,
+                'tries' => 5,
+                'timeout' => 180,
+                'queue' => ['default'],
+                'balance' => 'auto',
             ],
         ],
     ],
