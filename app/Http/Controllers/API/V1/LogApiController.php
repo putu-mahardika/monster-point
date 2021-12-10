@@ -16,7 +16,7 @@ class LogApiController extends Controller
      /**
      * @OA\POST(
      *      path="/api/v1/{token}/{event}/{id}/{value}",
-     *      operationId="getTransactionData",
+     *      operationId="postTransactionData",
      *      tags={"Transaction"},
      *      summary="Get All Transaction",
      *      description="Returns Transaction Data",
@@ -84,18 +84,27 @@ class LogApiController extends Controller
 
     /**
      * @OA\Get(
-     *      path="api/v1/{token}/history/{id}",
+     *      path="/api/v1/{token}/history/{id}",
      *      operationId="getMemberHistoryPoint",
      *      tags={"Transaction"},
      *      summary="Get Member History Transaction Information",
      *      description="Returns Member Transaction Data",
      *      @OA\Parameter(
-     *          name="id",
-     *          description="History id",
+     *          name="token",
+     *          description="Your Token",
      *          required=true,
      *          in="path",
      *          @OA\Schema(
-     *              type="integer"
+     *              type="string"
+     *          )
+     *      ),
+     *      @OA\Parameter(
+     *          name="id",
+     *          description="Member Key",
+     *          required=true,
+     *          in="path",
+     *          @OA\Schema(
+     *              type="string"
      *          )
      *      ),
      *

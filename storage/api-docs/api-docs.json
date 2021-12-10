@@ -16,7 +16,7 @@
                 ],
                 "summary": "Get All Transaction",
                 "description": "Returns Transaction Data",
-                "operationId": "getTransactionData",
+                "operationId": "postTransactionData",
                 "parameters": [
                     {
                         "name": "token",
@@ -79,7 +79,7 @@
                 }
             }
         },
-        "api/v1/{token}/history/{id}": {
+        "/api/v1/{token}/history/{id}": {
             "get": {
                 "tags": [
                     "Transaction"
@@ -89,12 +89,21 @@
                 "operationId": "getMemberHistoryPoint",
                 "parameters": [
                     {
-                        "name": "id",
+                        "name": "token",
                         "in": "path",
-                        "description": "History id",
+                        "description": "Your Token",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member Key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 ],

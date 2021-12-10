@@ -47,18 +47,18 @@ class LogHelper {
         $idMember = Member::where('MerchentMemberKey', $id)->where('IdMerhant', $idMerchant)->pluck('Id')->first();
         $exec = Log::select('CreateDate', 'Point')->where('IdMerchant', $idMerchant)->where('IdMember', $idMember)->get();
 
-        try {
-            $exec = DB::table('Log')
-                        ->join('Member', 'Log.IdMember', '=', 'Member.Id')
-                        ->select('Log.CreateDate as CreateDate',
-                                 'Log.Point as Point')
-                        ->where('Log.IdMember', $id)
-                        ->where('Member.MerchentMemberKey', $token)
-                        ->orderByDesc('CreateDate')
-                        ->get();
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Something went wrong!'], 400);
-        }
+        // try {
+        //     $exec = DB::table('Log')
+        //                 ->join('Member', 'Log.IdMember', '=', 'Member.Id')
+        //                 ->select('Log.CreateDate as CreateDate',
+        //                          'Log.Point as Point')
+        //                 ->where('Log.IdMember', $idMember)
+        //                 ->where('Member.MerchentMemberKey', $token)
+        //                 ->orderByDesc('CreateDate')
+        //                 ->get();
+        // } catch (\Exception $e) {
+        //     return response()->json(['message' => $e->getMessage()], 400);
+        // }
 
         return response()->json($exec);
     }
