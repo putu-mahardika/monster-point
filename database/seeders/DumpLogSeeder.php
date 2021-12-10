@@ -22,34 +22,34 @@ class DumpLogSeeder extends Seeder
         $loopStart = 1;
         $stepDate = 1;
         $date = now()->day(1);
-        for ($i = 0; $i < 10000; $i++) {
+        for ($i = 0; $i < 1; $i++) {
             try {
-                // Http::post(route('api.v1.transaction', [
-                //     'token' => 'HJEX',
-                //     'event' => 'TRX',
-                //     'id' => 1,
-                //     'value' => 3000,
-                // ]));
+                $log = Http::post(route('api.v1.transaction', [
+                    'token' => 'HJEX',
+                    'event' => 'TRX',
+                    'id' => 'AAN1',
+                    'value' => 3000,
+                ]));
 
-                if ($loopStart == $loop) {
-                    $loop = rand(10, 20);
-                    $loopStart = 1;
-                    $date->addDays($stepDate);
-                }
+                // if ($loopStart == $loop) {
+                //     $loop = rand(10, 20);
+                //     $loopStart = 1;
+                //     $date->addDays($stepDate);
+                // }
 
-                $log = Log::where('Id', $start)->update([
-                    'CreateDate' => $date->toDateTimeString(),
-                ]);
+                // $log = Log::where('Id', $start)->update([
+                //     'CreateDate' => $date->toDateTimeString(),
+                // ]);
 
-                $log ? $berhasil++ : $gagal++;
+                // $loopStart++;
+                // $start++;
 
-                $loopStart++;
-                $start++;
-
-                if($log) {
+                if($log->status() >= 200 && $log->status() < 300) {
+                    $berhasil++;
                     echo "Berhasil! ".now()->toTimeString()." #$i\n";
                 }
                 else {
+                    $gagal++;
                     echo "Gagal! ".now()->toTimeString()." #$i\n";
                 }
 
