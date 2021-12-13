@@ -16,6 +16,7 @@ class Update
             ->artisan('migrate', ['--force' => true])
             ->external('npm', 'install')
             ->external('npm', 'run', 'production')
+            ->artisan('version:absorb')
             ->artisan('queue:work')
             ->artisan('horizon')
             ->artisan('optimize:clear')
@@ -26,9 +27,10 @@ class Update
     {
         $run->external('git', 'pull', '--no-edit')
             ->external('composer', 'install')
+            ->artisan('migrate')
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')
-            ->artisan('migrate')
+            ->artisan('version:absorb')
             ->artisan('queue:work')
             ->artisan('horizon')
             ->artisan('optimize:clear');

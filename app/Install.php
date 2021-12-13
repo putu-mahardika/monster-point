@@ -14,6 +14,7 @@ class Install
             ->artisan('storage:link')
             ->external('npm', 'install')
             ->external('npm', 'run', 'production')
+            ->artisan('version:absorb')
             ->artisan('queue:work')
             ->artisan('horizon')
             ->artisan('optimize:clear');
@@ -27,6 +28,7 @@ class Install
             ->artisan('storage:link')
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')
+            ->artisan('version:absorb')
             ->artisan('queue:work')
             ->artisan('horizon')
             ->artisan('optimize:clear');
