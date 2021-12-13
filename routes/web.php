@@ -113,9 +113,5 @@ Route::get('/test', function () {
     return view('/test');
 });
 
-//riset swagger
-Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
-
-
 // email view invoice & receipt
 Route::get('/send-receipt', [Coba::class, 'index' ]);
