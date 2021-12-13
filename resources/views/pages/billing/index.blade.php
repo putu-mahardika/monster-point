@@ -32,6 +32,10 @@
     </div>
 @endsection
 @section('js')
+    <script src="{{
+        !config('services.midtrans.isProduction') ? 'https://app.sandbox.midtrans.com/snap/snap.js' : 'https://app.midtrans.com/snap/snap.js' }}"
+        data-client-key="{{ config('services.midtrans.clientKey')
+    }}"></script>
     <script>
         let billingTable = null;
         let merchantTable = null;
@@ -81,6 +85,7 @@
                     onSelectionChanged(selectedItems) {
                         selectedMerchant = selectedItems.currentSelectedRowKeys[0].Id;
                         selectedMerchantName = selectedItems.currentSelectedRowKeys[0].Nama;
+                        // console.log(row.getAttribute('aria-rowindex'));
                         loadBillingByMerchant();
                     },
                     showBorders: false,
@@ -125,9 +130,11 @@
                         caption: '',
                         cellTemplate: function (container, options) {
                             container.html(`
-                                <a href="${options.value}" type="submit" class="btn btn-sm btn-primary rounded-xl px-2">
-                                   Pay
-                                </a>
+                                <div id="data-${options.value}">
+                                    <button id="btn-${options.value}" onclick="payment(${options.value})" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">
+                                    Pay
+                                    </button>
+                                </div>
                             `);
                         }
                     }
@@ -136,10 +143,53 @@
                 showColumnLines: false,
                 showRowLines: true,
             }).dxDataGrid('instance');
+            // var myVal = $('#billingTable option:last').val();
+
+
+            $('button').click(function(){
+                alert( "Handler for .click() called." );
+            });
         });
 
         function memberCellTemplate(container, options) {
             container.html(`${options.value}<i class="fas fa-chevron-right ms-5"></i>`);
         }
+
+
+        function payment(id){
+            console.log(id);
+
+            var action_btn = document.getElementById('data-'+id);
+            console.log(action_btn.innerHTML);
+
+            $.post("/billing-details/payment", {
+                idBilling: id
+            },
+            function (data, status) {
+                console.log(data.snap_token);
+                if(data.snap_token) {
+                    action_btn.innerHTML = `<button onclick="snap.pay('`+data.snap_token+`')" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">ANU</button>`
+                }
+                snap.pay(data.snap_token, {
+                    // Optional
+                    onSuccess: function (result) {
+                        console.log(JSON.stringify(result, null, 2));
+                        location.replace('/');
+                    },
+                    // Optional
+                    onPending: function (result) {
+                        console.log(JSON.stringify(result, null, 2));
+                        location.replace('/');
+                    },
+                    // Optional
+                    onError: function (result) {
+                        console.log(JSON.stringify(result, null, 2));
+                        location.replace('/');
+                    }
+                });
+                return false;
+            });
+        }
+
     </script>
 @endsection

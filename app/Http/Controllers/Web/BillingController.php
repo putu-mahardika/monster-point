@@ -7,6 +7,7 @@ use App\Helpers\GlobalSettingHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use App\Models\Billing;
+use App\Models\BillingDetail;
 use App\Models\GlobalSetting;
 use App\Models\Merchant;
 use Carbon\Carbon;
@@ -22,6 +23,12 @@ class BillingController extends Controller
      */
     public function index()
     {
+        // $billings = Billing::with(['billing_detail' => function($q){
+        //     $q->orderBy('created_at', 'desc')->first();
+        // }])->where('IdMerchant',2)->count();
+        // dd($billings);
+        // $billing = Billing::with('merchant')->where('Id', 1)->first();
+        // dd($billing->merchant->Nama);
         return view('pages.billing.index');
     }
 
@@ -93,7 +100,11 @@ class BillingController extends Controller
 
     public function dx(Request $request, $merchant_id)
     {
-        $billings = Billing::where('IdMerchant', $merchant_id)->get();
+        // $billings = Billing::with('billing_detail')->where('IdMerchant', $merchant_id)->get();
+        $billings = Billing::with(['billing_detail' => function($q){
+            $q->orderBy('created_at', 'desc')->first();
+        }])->where('IdMerchant',$merchant_id)->get();
+
         return response()->json($billings);
     }
 
@@ -157,4 +168,5 @@ class BillingController extends Controller
             \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
         }
     }
+
 }
