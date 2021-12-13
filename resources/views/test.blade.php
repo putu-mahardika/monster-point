@@ -1,4 +1,4 @@
-@php
+{{-- @php
 use App\Models\Member;
 use App\Models\Merchant;
 
@@ -10,7 +10,7 @@ dd($member);
 
 // $member = Merchant::where("Token", "=", "HJEX")->first()->members;
 // {{ $member->Id }}
-@endphp
+@endphp --}}
 
 
 
@@ -102,7 +102,7 @@ dd($member);
                             <div class="col">
                                 <div class="card mb-4 bg-white rounded-xl">
                                     <div class="card-body">
-                                        ini konten
+                                        <img src="{{ asset('/img/dashboard_capture.png') }}" alt="logo_ps_long">
                                     </div>
                                 </div>
                             </div>
@@ -113,6 +113,7 @@ dd($member);
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor nisi aspernatur cum omnis?
                                         Ipsam quidem veritatis eaque tempore sequi pariatur doloremque quibusdam,
                                         mollitia dolorum ducimus doloribus! Veritatis cupiditate laboriosam dignissimos.
+                                        <img src="" alt="">
                                     </div>
                                 </div>
                             </div>
