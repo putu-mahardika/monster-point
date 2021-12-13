@@ -16,9 +16,10 @@ class Update
             ->artisan('migrate', ['--force' => true])
             ->external('npm', 'install')
             ->external('npm', 'run', 'production')
+            ->artisan('queue:work')
+            ->artisan('horizon')
             ->artisan('optimize:clear')
             ->artisan('up');
-            // ->artisan('queue:restart'); // ->artisan('horizon:terminate');
     }
 
     public function local(Runner $run)
@@ -28,6 +29,8 @@ class Update
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')
             ->artisan('migrate')
+            ->artisan('queue:work')
+            ->artisan('horizon')
             ->artisan('optimize:clear');
     }
 }

@@ -10,10 +10,12 @@ class Install
     {
         $run->external('composer', 'install', '--no-interaction', '--optimize-autoloader')
             ->artisan('key:generate', ['--force' => true])
-            ->artisan('migrate', ['--force' => true])
+            ->artisan('migrate', ['--seed' => true, '--force' => true])
             ->artisan('storage:link')
             ->external('npm', 'install')
             ->external('npm', 'run', 'production')
+            ->artisan('queue:work')
+            ->artisan('horizon')
             ->artisan('optimize:clear');
     }
 
@@ -21,10 +23,12 @@ class Install
     {
         $run->external('composer', 'install')
             ->artisan('key:generate')
-            ->artisan('migrate')
+            ->artisan('migrate', ['--seed' => true])
             ->artisan('storage:link')
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')
+            ->artisan('queue:work')
+            ->artisan('horizon')
             ->artisan('optimize:clear');
     }
 }
