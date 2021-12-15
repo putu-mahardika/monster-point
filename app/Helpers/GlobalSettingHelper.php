@@ -37,4 +37,10 @@ class GlobalSettingHelper {
         return $value;
     }
 
+    public static function getpaymentExpTime()
+    {
+        $value = GlobalSetting::where('Kode', 'Payment Exp Time')->pluck('Value')->first();
+        return $value;
+    }
+
 }

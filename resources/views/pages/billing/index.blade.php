@@ -122,21 +122,19 @@
                         caption: 'Bill'
                     },
                     {
-                        dataField: 'TanggalTerbayar',
+                        dataField: 'TerbayarTanggal',
                         caption: 'Paid At'
                     },
                     {
-                        dataField: 'Id',
+                        dataField: 'payStatus',
                         caption: '',
                         cellTemplate: function (container, options) {
-                            container.html(`
-                                <div id="data-${options.value}">
-                                    <button id="btn-${options.value}" onclick="payment(${options.value})" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">
-                                    Pay
-                                    </button>
-                                </div>
-                            `);
+                            container.html(`${options.value}`);
                         }
+                    },
+                    {
+                        caption: '',
+
                     }
                 ],
                 showBorders: false,
@@ -158,7 +156,7 @@
 
         function payment(id){
             console.log(id);
-
+            snap.show();
             var action_btn = document.getElementById('data-'+id);
             console.log(action_btn.innerHTML);
 
@@ -167,26 +165,29 @@
             },
             function (data, status) {
                 console.log(data.snap_token);
-                if(data.snap_token) {
+                if(!data.snap_token){
+                    snap.hide();
+                } else {
                     action_btn.innerHTML = `<button onclick="snap.pay('`+data.snap_token+`')" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">ANU</button>`
+
+                    snap.pay(data.snap_token, {
+                        // Optional
+                        onSuccess: function (result) {
+                            console.log(JSON.stringify(result, null, 2));
+                            location.replace('/');
+                        },
+                        // Optional
+                        onPending: function (result) {
+                            console.log(JSON.stringify(result, null, 2));
+                            location.replace('/');
+                        },
+                        // Optional
+                        onError: function (result) {
+                            console.log(JSON.stringify(result, null, 2));
+                            location.replace('/');
+                        }
+                    });
                 }
-                snap.pay(data.snap_token, {
-                    // Optional
-                    onSuccess: function (result) {
-                        console.log(JSON.stringify(result, null, 2));
-                        location.replace('/');
-                    },
-                    // Optional
-                    onPending: function (result) {
-                        console.log(JSON.stringify(result, null, 2));
-                        location.replace('/');
-                    },
-                    // Optional
-                    onError: function (result) {
-                        console.log(JSON.stringify(result, null, 2));
-                        location.replace('/');
-                    }
-                });
                 return false;
             });
         }

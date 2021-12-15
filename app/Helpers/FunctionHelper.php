@@ -96,4 +96,40 @@ class FunctionHelper {
         return $data;
     }
 
+    public static function changeTransactionStatus($transaction, $type, $fraud)
+    {
+        $status = 0;
+        if ($transaction == 'capture') {
+            if ($type == 'credit_card') {
+
+              if($fraud == 'challenge') {
+                $status = 2; //pending
+              } else {
+                $status = 1; //success
+              }
+
+            }
+        } elseif ($transaction == 'settlement') {
+
+        $status = 1; //success
+
+        } elseif($transaction == 'pending'){
+
+            $status = 2; //pending
+
+        } elseif ($transaction == 'deny') {
+
+            $status = 3; //failed
+
+        } elseif ($transaction == 'expire') {
+
+            $status = 4; //expired
+
+        } elseif ($transaction == 'cancel') {
+
+            $status = 3; //failed
+
+        }
+        return $status;
+    }
 }

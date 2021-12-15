@@ -30,6 +30,7 @@ class Kernel extends ConsoleKernel
         $date_exec = GlobalSettingHelper::getValueCut();
         $schedule->call([Web\BillingController::class, 'createBilling'])->monthlyOn($date_exec, '00:00');
         $schedule->call([Web\BillingController::class, 'resendInvoice'])->daily();
+        $schedule->call([Web\BillingDetailController::class, 'resetPaymentStatus'])->everyMinute();
     }
 
     /**
