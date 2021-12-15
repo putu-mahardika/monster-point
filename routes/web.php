@@ -57,6 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Route::get('payment', [Web\BillingController::class, 'payment']);
 
     Route::post('billing-details/payment', [Web\BillingDetailController::class, 'store']);
+    Route::post('midtrans/notification', [Web\BillingDetailController::class, 'notification']);
     Route::resource('billings', Web\BillingController::class);
 
 
