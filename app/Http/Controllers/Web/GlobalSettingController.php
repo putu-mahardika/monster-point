@@ -137,7 +137,7 @@ class GlobalSettingController extends Controller
 
     public function getSettings()
     {
-        $settings = GlobalSetting::orderBy('id', 'DESC')->get();
+        $settings = GlobalSetting::orderBy('id', 'asc')->get();
         return $settings;
     }
 }
