@@ -13,9 +13,9 @@ class FixForeignKeyToMember extends Migration
      */
     public function up()
     {
-        DB::statement('ALTER TABLE [dbo].[Member] DROP CONSTRAINT [FK_Member_Member]');
-        DB::statement('ALTER TABLE [dbo].[Member]  WITH CHECK ADD CONSTRAINT [FK_Member_Member] FOREIGN KEY([IdMerhant]) REFERENCES [dbo].[Merchant] ([Id])');
-        DB::statement('ALTER TABLE [dbo].[Member] CHECK CONSTRAINT [FK_Member_Member]');
+        // DB::statement('ALTER TABLE [dbo].[Member] DROP CONSTRAINT [FK_Member_Member]');
+        // DB::statement('ALTER TABLE [dbo].[Member]  WITH CHECK ADD CONSTRAINT [FK_Member_Member] FOREIGN KEY([IdMerhant]) REFERENCES [dbo].[Merchant] ([Id])');
+        // DB::statement('ALTER TABLE [dbo].[Member] CHECK CONSTRAINT [FK_Member_Member]');
     }
 
     /**
@@ -25,8 +25,8 @@ class FixForeignKeyToMember extends Migration
      */
     public function down()
     {
-        DB::statement('ALTER TABLE [dbo].[Member] DROP CONSTRAINT [FK_Member_Member]');
-        DB::statement('ALTER TABLE [dbo].[Member]  WITH CHECK ADD CONSTRAINT [FK_Member_Member] FOREIGN KEY([IdMerhant]) REFERENCES [dbo].[Merchant] ([Id])');
-        DB::statement('ALTER TABLE [dbo].[Member] CHECK CONSTRAINT [FK_Member_Member]');
+        // DB::statement('ALTER TABLE [dbo].[Member] DROP CONSTRAINT [FK_Member_Member]');
+        // DB::statement('ALTER TABLE [dbo].[Member]  WITH CHECK ADD CONSTRAINT [FK_Member_Member] FOREIGN KEY([IdMerhant]) REFERENCES [dbo].[Merchant] ([Id])');
+        // DB::statement('ALTER TABLE [dbo].[Member] CHECK CONSTRAINT [FK_Member_Member]');
     }
 }
