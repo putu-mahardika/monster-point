@@ -1,59 +1,74 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Your super  ApplicationAPI",
+        "title": "Monster Point Service API Documentation",
+        "description": "This is a direction for using all the APIs that we have created for our Monster Point Service users.",
+        "contact": {
+            "email": "superadmin@monsterpoint.com"
+        },
         "version": "1.0.0"
     },
     "paths": {
-        "/login": {
+        "/api/v1/{token}/{event}/{id}/{value}": {
             "post": {
                 "tags": [
-                    "auth"
+                    "Transaction"
                 ],
-                "summary": "Sign in",
-                "description": "Login by email, password",
-                "operationId": "authLogin",
-                "requestBody": {
-                    "description": "Pass user credentials",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user1@mail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
-                                    },
-                                    "persistent": {
-                                        "type": "boolean",
-                                        "example": "true"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "summary": "Make poin by user activity",
+                "description": "Make points based on the value obtained by the user from the results of activities in the application. For example: the value of playing games, the minimum number of transactions a user achieves when shopping online, and so on.",
+                "operationId": "cf112f735f2e27b345f3bb78b785895d",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "event",
+                        "in": "path",
+                        "description": "The event name you created",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member Key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "value",
+                        "in": "path",
+                        "description": "Value obtained by user, e.g : game score",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
-                },
+                ],
                 "responses": {
-                    "422": {
-                        "description": "Wrong credentials response",
+                    "200": {
+                        "description": "Success",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "message": {
+                                        "status": {
                                             "type": "string",
-                                            "example": "Sorry, wrong email address or password. Please try again"
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
                                         }
                                     },
                                     "type": "object"
@@ -64,28 +79,28 @@
                 }
             }
         },
-        "/greet": {
+        "/api/v1/{token}/history/{id}": {
             "get": {
                 "tags": [
-                    "greeting"
+                    "Transaction"
                 ],
-                "summary": "Returns a Sample API response",
-                "description": "A sample greeting to test out the API",
-                "operationId": "greet",
+                "summary": "Show member point history",
+                "description": "Displays the entire history of member points based on the member_key entered.",
+                "operationId": "d6ef65c0bac5aab2ff7d14c185a788ff",
                 "parameters": [
                     {
-                        "name": "firstname",
-                        "in": "query",
-                        "description": "nama depan",
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
                         "required": true,
                         "schema": {
                             "type": "string"
                         }
                     },
                     {
-                        "name": "lastname",
-                        "in": "query",
-                        "description": "nama belakang",
+                        "name": "id",
+                        "in": "path",
+                        "description": "Member Key",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -93,8 +108,240 @@
                     }
                 ],
                 "responses": {
-                    "default": {
-                        "description": "successful operation"
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{token}/members": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get all your member data.",
+                "description": "Get all your member data. With the token parameter you have.",
+                "operationId": "d5b5074568944f11c8385b27bc5af4c3",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Create a new members",
+                "description": "Create a new member by entering your token, member key, member name, and member note.",
+                "operationId": "createMember",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_key",
+                        "in": "query",
+                        "description": "Member Key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_name",
+                        "in": "query",
+                        "description": "Member Name",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member_note",
+                        "in": "query",
+                        "description": "Note for your member",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{token}/members/{member}": {
+            "get": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Get Member data by member_key",
+                "description": "Get specific data member by the member_key.",
+                "operationId": "86d3c216fa7f5792998b287528c2efc2",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member",
+                        "in": "path",
+                        "description": "Member Key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/{token}/members/{member} ": {
+            "put": {
+                "tags": [
+                    "Members"
+                ],
+                "summary": "Update existing member",
+                "description": "Updating data members from Active to Inactive",
+                "operationId": "4bc520b223d718bcab2c07d9506c74d5",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Your Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "member",
+                        "in": "path",
+                        "description": "Member key",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "type": "string",
+                                            "readOnly": "true"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "readOnly": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
                 }
             }

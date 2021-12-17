@@ -115,9 +115,10 @@ Route::get('/receipt', function () {
     return view('pages/billing/receipt');
 });
 
-//riset swagger
-Route::get('/help', [GreetingController::class, 'GreetingController@greet']);
-
+//test
+Route::get('/test', function () {
+    return view('/test');
+});
 
 // email view invoice & receipt
 Route::get('/send-receipt', [Coba::class, 'index' ]);

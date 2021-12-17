@@ -132,4 +132,11 @@ class FunctionHelper {
         }
         return $status;
     }
+
+    public static function getMqttBaseTopic($merchantToken)
+    {
+        return Str::slug(
+            config('app.name') . ' ' . $merchantToken
+        );
+    }
 }

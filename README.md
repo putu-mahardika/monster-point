@@ -1,65 +1,59 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+![App Screenshot](http://127.0.0.1:8000/img/logo_ps_long.png)
 
-## About Laravel
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# Monster Point Service
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+A service for the needs of various application points
+This service is designed to serve companies that need points to support transactions.
 
-## Learning Laravel
+## About The Project
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+![App Screenshot](http://127.0.0.1:8000/img/dashboard_capture.png)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Built with
+- PHP
+    - [Laravel Debugbar](https://github.com/barryvdh/laravel-debugbar)
+    - [Laravel Version](https://github.com/antonioribeiro/version)
+    - [Laravel Socialite](https://laravel.com/docs/8.x/socialite#installation)
+    - [Php Mqtt](https://github.com/php-mqtt/laravel-client)
+    - [Laravel Permission](https://spatie.be/docs/laravel-permission/v5/installation-laravel)
+    - [Predis](https://github.com/predis/predis)
+    - [Laravel Swagger](https://github.com/DarkaOnLine/L5-Swagger)
+    - [Laravel IDE Helper](https://github.com/barryvdh/laravel-ide-helper)
+    - [Laravel Horizon](https://laravel.com/docs/8.x/horizon)
+    - [Laravel Fortify](https://laravel.com/docs/8.x/fortify)
+- JS
+    - [DevExtreme](https://www.npmjs.com/package/devextreme)
+    - [Popper JS](https://popper.js.org/)
+    - [jQuery](https://jquery.com/download/)
+    - [Sweet Alert](https://sweetalert2.github.io/#download)
+    - [Select2](https://www.npmjs.com/package/select2)
+    - [Mqtt](https://www.npmjs.com/package/mqtt)
+    - [CodeMirror](https://www.npmjs.com/package/codemirror)
+    - [Html2Pdf](https://ekoopmans.github.io/html2pdf.js/)
+    - [Cleave JS](https://nosir.github.io/cleave.js/)
+    - [Confetti JS](https://github.com/loonywizard/js-confetti)
+    - [Json Viewer JS](https://github.com/renhongl/json-viewer-js)
+    - [Moment JS](https://momentjs.com/)
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+- CSS
+    - [Bootstrap](https://getbootstrap.com/docs/5.0/getting-started/download/)
+    - [Fontawesome](https://fontawesome.com/v5.15)
+## Used By
+Service Points Monster is a bridging app for other apps that need a point manager feature. The user is a programmer/admin of another application.
 
-### Premium Partners
+Monster Poin Servis merupakan sebuah aplikasi penjembatan untuk aplikasi lain yang membutuhkan fitur pengelola poin . Penggunanya adalah programmer/admin dari aplikasi lain.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Installation
 
-## Contributing
+Install my-project with php artisan
+```bash
+ php artisan app:install
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+ php artisan app:update
+```

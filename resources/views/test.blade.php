@@ -1,4 +1,27 @@
- <!DOCTYPE html>
+{{-- @php
+use App\Models\Member;
+use App\Models\Merchant;
+
+$member = Merchant::where("Token","=", "HJEX")->first()->members()->find(10020);
+dd($member);
+
+// $memberMerchant = Merchant::where("Token", "=", "HJEX")->first()->members;
+// dd($memberMerchant);
+
+// $member = Merchant::where("Token", "=", "HJEX")->first()->members;
+// {{ $member->Id }}
+@endphp --}}
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -79,7 +102,7 @@
                             <div class="col">
                                 <div class="card mb-4 bg-white rounded-xl">
                                     <div class="card-body">
-                                        ini konten
+                                        <img src="{{ asset('/img/dashboard_capture.png') }}" alt="logo_ps_long">
                                     </div>
                                 </div>
                             </div>
@@ -90,6 +113,7 @@
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor nisi aspernatur cum omnis?
                                         Ipsam quidem veritatis eaque tempore sequi pariatur doloremque quibusdam,
                                         mollitia dolorum ducimus doloribus! Veritatis cupiditate laboriosam dignissimos.
+                                        <img src="" alt="">
                                     </div>
                                 </div>
                             </div>

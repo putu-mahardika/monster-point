@@ -10,9 +10,9 @@
 @section('title', 'Help')
 
 @section('content')
-<div class="col-md-12">
-    <div class="card mb-4 rounded-xxl">
-        <div class="card-body ">
+{{-- <div class="col-md-12"> --}}
+    {{-- <div class="card mb-4 rounded-xxl"> --}}
+        {{-- <div class="card-body ">
             <div class="row mt-3  ">
                 <div class="col">
                   <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
@@ -122,8 +122,9 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+        </div> --}}
 
+    {{-- </div> --}}
 
+<iframe src="http://127.0.0.1:8000/api/documentation" frameborder="0"  width = "101%" height = "600"></iframe>
 @endsection
