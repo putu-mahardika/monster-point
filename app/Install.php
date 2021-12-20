@@ -15,8 +15,7 @@ class Install
             ->external('npm', 'install')
             ->external('npm', 'run', 'production')
             ->artisan('version:absorb')
-            ->artisan('queue:work')
-            ->artisan('horizon')
+            ->artisan('queue:restart')
             ->artisan('optimize:clear');
     }
 
@@ -29,8 +28,7 @@ class Install
             ->external('npm', 'install')
             ->external('npm', 'run', 'development')
             ->artisan('version:absorb')
-            ->artisan('queue:work')
-            ->artisan('horizon')
+            ->artisan('queue:restart')
             ->artisan('optimize:clear');
     }
 }
