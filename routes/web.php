@@ -54,7 +54,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('resendInvoice', [Web\BillingController::class, 'resendInvoice'])->name('billing.resendInvoice');
     Route::get('createBilling', [Web\BillingController::class, 'createBilling'])->name('billing.createBilling');
+    // Route::get('payment', [Web\BillingController::class, 'payment']);
+
+    Route::post('billing-details/payment', [Web\BillingDetailController::class, 'store']);
+    Route::post('midtrans/notification', [Web\BillingDetailController::class, 'notification']);
     Route::resource('billings', Web\BillingController::class);
+
+
+    Route::resource('billing-details', Web\BillingDetailController::class);
 
     Route::post('popup-verify/{user}', function (User $user) {
         $user->isShowPopupVerify = true;

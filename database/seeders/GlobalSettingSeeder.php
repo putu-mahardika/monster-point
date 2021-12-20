@@ -39,5 +39,10 @@ class GlobalSettingSeeder extends Seeder
             'Value' => '100',
             'Keterangan' => 'Limit hit user per detik'
         ]);
+        GlobalSetting::create([
+            'Kode' => 'Payment Exp Time',
+            'Value' => '1',
+            'Keterangan' => 'Waktu kadaluarsa transaksi pembayaran (jam)'
+        ]);
     }
 }

@@ -7,6 +7,7 @@ use App\Helpers\GlobalSettingHelper;
 use App\Http\Controllers\Controller;
 use App\Mail\SendMail;
 use App\Models\Billing;
+use App\Models\BillingDetail;
 use App\Models\GlobalSetting;
 use App\Models\Merchant;
 use Carbon\Carbon;
@@ -93,8 +94,33 @@ class BillingController extends Controller
 
     public function dx(Request $request, $merchant_id)
     {
-        $billings = Billing::where('IdMerchant', $merchant_id)->get();
-        return response()->json($billings);
+        // $billings = Billing::with('billing_detail')->where('IdMerchant', $merchant_id)->get();
+        $billings = Billing::with(['billing_detail' => function($q){
+            $q->orderBy('created_at', 'desc')->first();
+        }])->where('IdMerchant',$merchant_id)->get();
+
+        $results = collect($billings)->map(function($item){
+            if(!is_null($item->billing_detail->status)){
+                if ($item->billing_detail->status == 1) {
+                    $item->payStatus = 'Paid';
+                } elseif ($item->billing_detail->status == 2 || $item->billing_detail->status == 0) {
+                    $item->payStatus = '<div id="data-'.$item->Id.'">
+                                        <button onclick="snap.pay(`'.$item->snap_token.'`)" class="btn btn-sm btn-success rounded-xl px-2 button-pay">
+                                            Continue Payment
+                                        </button>
+                                    </div>';
+                } else {
+                    $item->payStatus = '<div id="data-'.$item->Id.'">
+                                        <button id="btn-'.$item->Id.'" onclick="payment('.$item->Id.')" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">
+                                            Pay
+                                        </button>
+                                    </div>';
+                }
+            }
+            return $item;
+        });
+
+        return collect($results);
     }
 
     public function createBilling()
@@ -157,4 +183,5 @@ class BillingController extends Controller
             \Mail::to($merchant->Email)->send(new SendMail($data['subject'], $data['details'], $data['view']));
         }
     }
+
 }

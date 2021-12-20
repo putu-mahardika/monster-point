@@ -98,9 +98,9 @@
                                 <a class="btn btn-google rounded-pill mx-1" href="{{ url('/auth/google') }}">
                                     <i class="fab fa-google"></i>
                                 </a>
-                                <button class="btn btn-github rounded-pill mx-1" href="{{ url('/auth/github') }}">
+                                <a class="btn btn-github rounded-pill mx-1" href="{{ url('/auth/github') }}">
                                     <i class="fab fa-github"></i>
-                                </button>
+                                </a>
                             </div>
 
                             <p class="text-center mt-5">
