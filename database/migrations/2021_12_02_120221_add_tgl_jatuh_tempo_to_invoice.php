@@ -13,9 +13,11 @@ class AddTglJatuhTempoToInvoice extends Migration
      */
     public function up()
     {
-        Schema::table('invoice', function (Blueprint $table) {
-            $table->dateTime('TglJatuhTempo')->nullable();
-        });
+        if (!Schema::hasColumn('invoice', 'TglJatuhTempo')) {
+            Schema::table('invoice', function (Blueprint $table) {
+                $table->dateTime('TglJatuhTempo')->nullable();
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddTglJatuhTempoToInvoice extends Migration
      */
     public function down()
     {
-        Schema::table('invoice', function (Blueprint $table) {
-            $table->dropColumn('TglJatuhTempo');
-        });
+        if (Schema::hasColumn('invoice', 'TglJatuhTempo')) {
+            Schema::table('invoice', function (Blueprint $table) {
+                $table->dropColumn('TglJatuhTempo');
+            });
+        }
     }
 }

@@ -13,10 +13,12 @@ class RemoveDateStartNDateEndInInvoice extends Migration
      */
     public function up()
     {
-        Schema::table('invoice', function (Blueprint $table) {
-            $table->dropColumn('date_start');
-            $table->dropColumn('date_end');
-        });
+        if (Schema::hasColumns('invoice', ['date_start', 'date_end'])) {
+            Schema::table('invoice', function (Blueprint $table) {
+                $table->dropColumn('date_start');
+                $table->dropColumn('date_end');
+            });
+        }
     }
 
     /**
@@ -26,9 +28,11 @@ class RemoveDateStartNDateEndInInvoice extends Migration
      */
     public function down()
     {
-        Schema::table('invoice', function (Blueprint $table) {
-            $table->dateTime('date_start')->nullable();
-            $table->dateTime('date_end')->nullable();
-        });
+        if (!Schema::hasColumn('invoice', ['date_start', 'date_end'])) {
+            Schema::table('invoice', function (Blueprint $table) {
+                $table->dateTime('date_start')->nullable();
+                $table->dateTime('date_end')->nullable();
+            });
+        }
     }
 }

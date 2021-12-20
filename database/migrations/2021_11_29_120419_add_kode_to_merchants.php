@@ -13,9 +13,11 @@ class AddKodeToMerchants extends Migration
      */
     public function up()
     {
-        Schema::table('Merchant', function (Blueprint $table) {
-            $table->string('Kode')->nullable();
-        });
+        if (!Schema::hasColumn('Merchant', 'Kode')) {
+            Schema::table('Merchant', function (Blueprint $table) {
+                $table->string('Kode')->nullable();
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddKodeToMerchants extends Migration
      */
     public function down()
     {
-        Schema::table('Merchant', function (Blueprint $table) {
-            $table->dropColumn('Kode');
-        });
+        if (Schema::hasColumn('Merchant', 'Kode')) {
+            Schema::table('Merchant', function (Blueprint $table) {
+                $table->dropColumn('Kode');
+            });
+        }
     }
 }

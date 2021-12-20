@@ -13,9 +13,11 @@ class AddLastMonthModulus extends Migration
      */
     public function up()
     {
-        Schema::table('billing', function (Blueprint $table) {
-            $table->float('sisa')->nullable();
-        });
+        if (!Schema::hasColumn('billing', 'sisa')) {
+            Schema::table('billing', function (Blueprint $table) {
+                $table->float('sisa')->nullable();
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddLastMonthModulus extends Migration
      */
     public function down()
     {
-        Schema::table('billing', function (Blueprint $table) {
-            $table->dropColumn('sisa');
-        });
+        if (Schema::hasColumn('billing', 'sisa')) {
+            Schema::table('billing', function (Blueprint $table) {
+                $table->dropColumn('sisa');
+            });
+        }
     }
 }

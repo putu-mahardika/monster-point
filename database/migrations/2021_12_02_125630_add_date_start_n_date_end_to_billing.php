@@ -13,10 +13,12 @@ class AddDateStartNDateEndToBilling extends Migration
      */
     public function up()
     {
-        Schema::table('billing', function (Blueprint $table) {
-            $table->dateTime('date_start')->nullable();
-            $table->dateTime('date_end')->nullable();
-        });
+        if (!Schema::hasColumns('billing', ['date_start', 'date_end'])) {
+            Schema::table('billing', function (Blueprint $table) {
+                $table->dateTime('date_start')->nullable();
+                $table->dateTime('date_end')->nullable();
+            });
+        }
     }
 
     /**
@@ -26,9 +28,11 @@ class AddDateStartNDateEndToBilling extends Migration
      */
     public function down()
     {
-        Schema::table('billing', function (Blueprint $table) {
-            $table->dropColumn('date_start');
-            $table->dropColumn('date_end');
-        });
+        if (Schema::hasColumns('billing', ['date_start', 'date_end'])) {
+            Schema::table('billing', function (Blueprint $table) {
+                $table->dropColumn('date_start');
+                $table->dropColumn('date_end');
+            });
+        }
     }
 }

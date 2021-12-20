@@ -13,13 +13,15 @@ class CreateBillingDetailTable extends Migration
      */
     public function up()
     {
-        Schema::create('billing_detail', function (Blueprint $table) {
-            $table->id();
-            $table->bigInteger('billing_id')->index();
-            $table->Integer('status');
-            $table->json('payload');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('billing_detail')) {
+            Schema::create('billing_detail', function (Blueprint $table) {
+                $table->id();
+                $table->bigInteger('billing_id')->index();
+                $table->Integer('status');
+                $table->json('payload');
+                $table->timestamps();
+            });
+        }
     }
 
     /**

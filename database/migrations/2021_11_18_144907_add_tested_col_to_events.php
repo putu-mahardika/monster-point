@@ -13,9 +13,11 @@ class AddTestedColToEvents extends Migration
      */
     public function up()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->boolean('tested')->default(false);
-        });
+        if (!Schema::hasColumn('events', 'tested')) {
+            Schema::table('events', function (Blueprint $table) {
+                $table->boolean('tested')->default(false);
+            });
+        }
     }
 
     /**
@@ -25,8 +27,10 @@ class AddTestedColToEvents extends Migration
      */
     public function down()
     {
-        Schema::table('events', function (Blueprint $table) {
-            $table->dropColumn('tested');
-        });
+        if (Schema::hasColumn('events', 'tested')) {
+            Schema::table('events', function (Blueprint $table) {
+                $table->dropColumn('tested');
+            });
+        }
     }
 }
