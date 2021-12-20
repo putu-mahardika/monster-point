@@ -2,11 +2,14 @@
 
 namespace App\Helpers;
 
+use App\Mail\SendEmailChangeVerification;
 use App\Models\EmailChangeVerification;
 use App\Models\User;
 use App\Notifications\EmailChangeVerification as NotificationsEmailChangeVerification;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Str;
+
 
 class EmailChangeHelper {
 
@@ -40,11 +43,7 @@ class EmailChangeHelper {
      **/
     public static function sendEmail(User $user, EmailChangeVerification $emailChange)
     {
-        $user->notify(
-            new NotificationsEmailChangeVerification(
-                $emailChange
-            )
-        );
+        Mail::to($emailChange->new_email)->send(new SendEmailChangeVerification($emailChange, $user));
     }
 
     /**
