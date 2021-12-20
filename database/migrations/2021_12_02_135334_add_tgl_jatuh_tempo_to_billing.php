@@ -26,7 +26,7 @@ class AddTglJatuhTempoToBilling extends Migration
     public function down()
     {
         Schema::table('billing', function (Blueprint $table) {
-            $table->dropColumn('JatugTempo');
+            $table->dropColumn('JatuhTempo');
         });
     }
 }
