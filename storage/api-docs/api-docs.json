@@ -9,76 +9,6 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/v1/{token}/{event}/{id}/{value}": {
-            "post": {
-                "tags": [
-                    "Transaction"
-                ],
-                "summary": "Make poin by user activity",
-                "description": "Make points based on the value obtained by the user from the results of activities in the application. For example: the value of playing games, the minimum number of transactions a user achieves when shopping online, and so on.",
-                "operationId": "cf112f735f2e27b345f3bb78b785895d",
-                "parameters": [
-                    {
-                        "name": "token",
-                        "in": "path",
-                        "description": "Your Token",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "event",
-                        "in": "path",
-                        "description": "The event name you created",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "description": "Member Key",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "name": "value",
-                        "in": "path",
-                        "description": "Value obtained by user, e.g : game score",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Success",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "type": "string",
-                                            "readOnly": "true"
-                                        },
-                                        "data": {
-                                            "type": "object",
-                                            "readOnly": "true"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/{token}/history/{id}": {
             "get": {
                 "tags": [
@@ -343,6 +273,68 @@
                             }
                         }
                     }
+                }
+            }
+        }
+    },
+    "components": {
+        "responses": {
+            "200": {
+                "description": "Success",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "string",
+                                    "readOnly": "true"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "readOnly": "true"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        "parameters": {
+            "token": {
+                "name": "token",
+                "in": "path",
+                "description": "Your Token",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "event": {
+                "name": "event",
+                "in": "path",
+                "description": "The event name you created",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "id": {
+                "name": "id",
+                "in": "path",
+                "description": "Member Key",
+                "required": true,
+                "schema": {
+                    "type": "string"
+                }
+            },
+            "value": {
+                "name": "value",
+                "in": "path",
+                "description": "Value obtained by user, e.g : game score",
+                "required": true,
+                "schema": {
+                    "type": "integer"
                 }
             }
         }
