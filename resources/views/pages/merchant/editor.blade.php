@@ -25,6 +25,16 @@
                 <input type="text" id="merchant_name" name="merchant_name" value="{{ old('merchant_name', $merchant->Nama ?? '') }}" class="form-control rounded-xl" autofocus autocomplete="off" required>
             </div>
         </div>
+        @if (isset($merchant))
+            <div class="row justify-content-center mb-3">
+                <div class="col-md-5">
+                    <label for="merchant_token">Merchant Token</label>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" id="merchant_token" name="merchant_token" value="{{ old('merchant_token', $merchant->Token ?? '') }}" class="form-control rounded-xl" autofocus autocomplete="off" disabled>
+                </div>
+            </div>
+        @endif
         <div class="row justify-content-center mb-3">
             <div class="col-md-5">
                 <label for="merchant_address">Address</label>

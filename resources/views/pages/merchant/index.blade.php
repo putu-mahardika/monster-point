@@ -169,6 +169,9 @@
                         dataField: 'Nama',
                     },
                     {
+                        dataField: 'Token',
+                    },
+                    {
                         dataField: 'Alamat',
                     },
                     {
