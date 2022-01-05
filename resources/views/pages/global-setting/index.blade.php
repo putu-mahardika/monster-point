@@ -15,27 +15,25 @@
             <div class="col">
                 <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
                     <div class="card-body">
-                        {{-- <div class="d-flex mb-3">
-                            <div class="col">
-                                <button type="button" id="createSetting" class="btn btn-primary rounded-xxl" data-bs-toggle="modal" data-bs-target="#addSettingModal">
-                                    Add Setting <i class="fas fa-plus ms-3"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div id="settingsTable"></div>
-                    </div> --}}
                     @foreach ($settings as $key=>$setting)
                         <div class="row mb-2">
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-xl-4 col-lg-4 py-2">
                                         <label id="title-{{$key}}">{{$setting->Kode}}</label>
-                                        <button class="btn btn-primary btn-sm rounded-xxl" data-id="{{$setting->Id}}" id="editSetting">
-                                            <i class="fas fa-edit fa-sm"></i>
-                                        </button>
                                     </div>
                                     <div class="col-xl-8 col-lg-8 mb-3">
-                                        <input type="text" id="value-{{$key}}" class="form-control rounded-xl" value="{{$setting->Value}}" readonly>
+                                        <div class="input-group mb-3">
+                                            <input type="text" id="value-{{$key}}" class="form-control rounded-xl-start border-end-0" value="{{$setting->Value}}" readonly>
+                                            <button class="btn rounded-xl-end border border-start-0" data-id="{{$setting->Id}}" id="editSetting" style="background-color: var(--bs-gray-200);">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            @error('password')
+                                                <em class="small text-danger">
+                                                    {{ $message }}
+                                                </em>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
