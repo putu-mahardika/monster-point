@@ -24,8 +24,8 @@
                                     </div>
                                     <div class="col-xl-8 col-lg-8 mb-3">
                                         <div class="input-group mb-3">
-                                            <input type="text" id="value-{{$key}}" class="form-control rounded-xl-start border-end-0" value="{{$setting->Value}}" readonly>
-                                            <button class="btn rounded-xl-end border border-start-0" data-id="{{$setting->Id}}" id="editSetting" style="background-color: var(--bs-gray-200);">
+                                            <input type="text" id="value-{{$key}}" class="form-control rounded-xl" value="{{$setting->Value}}" readonly>
+                                            <button class="btn rounded-xl" data-id="{{$setting->Id}}" id="editSetting" >
                                                 <i class="fas fa-edit"></i>
                                             </button>
                                             @error('password')
