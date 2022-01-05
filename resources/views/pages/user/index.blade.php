@@ -28,7 +28,13 @@
     <form action="{{ route('profile.update', auth()->id()) }}" method="post">
         @csrf
         @method('put')
+
+        @php
+            $roleId = auth()->user()->roles()->first()->id;
+        @endphp
+
         <div class="row">
+            @if ( $roleId != 1)
             <div class="col-md-6 mb-3">
                 <div class="card rounded-xxl card-auto-resize">
                     <div class="card-body">
@@ -39,7 +45,7 @@
                                 <label for="merchant_name">Name</label>
                             </div>
                             <div class="col-md-8">
-                                <input name="merchant_name" id="merchant_name" type="text" class="form-control rounded-xl @error('merchant_name') is-invalid @enderror" autofocus autocomplete="off" value="{{ old('merchant_name', $merchant->Nama) }}">
+                                <input name="merchant_name" id="merchant_name" type="text" class="form-control rounded-xl @error('merchant_name') is-invalid @enderror" autofocus autocomplete="off" value="{{ old('merchant_name', $merchant->Nama ?? '') }}">
                                 @error('merchant_name')
                                     <em class="small text-danger">
                                         {{ $message }}
@@ -52,7 +58,7 @@
                                 <label for="merchant_address">Address</label>
                             </div>
                             <div class="col-md-8">
-                                <input name="merchant_address" id="merchant_address" type="text" class="form-control rounded-xl @error('merchant_address') is-invalid @enderror" autocomplete="off" value="{{ old('merchant_address', $merchant->Alamat) }}">
+                                <input name="merchant_address" id="merchant_address" type="text" class="form-control rounded-xl @error('merchant_address') is-invalid @enderror" autocomplete="off" value="{{ old('merchant_address', $merchant->Alamat ?? '') }}">
                                 @error('merchant_address')
                                     <em class="small text-danger">
                                         {{ $message }}
@@ -65,7 +71,7 @@
                                 <label for="pic">PIC</label>
                             </div>
                             <div class="col-md-8">
-                                <input name="pic" id="pic" type="text" class="form-control rounded-xl @error('pic') is-invalid @enderror" autocomplete="off" value="{{ old('pic', $merchant->Pic) }}">
+                                <input name="pic" id="pic" type="text" class="form-control rounded-xl @error('pic') is-invalid @enderror" autocomplete="off" value="{{ old('pic', $merchant->Pic ?? '') }}">
                                 @error('pic')
                                     <em class="small text-danger">
                                         {{ $message }}
@@ -78,7 +84,7 @@
                                 <label for="pic_phone">PIC Phone</label>
                             </div>
                             <div class="col-md-8">
-                                <input name="pic_phone" id="pic_phone" type="text" class="form-control rounded-xl @error('pic_phone') is-invalid @enderror" autocomplete="off" value="{{ old('pic_phone', $merchant->PicTelp) }}">
+                                <input name="pic_phone" id="pic_phone" type="text" class="form-control rounded-xl @error('pic_phone') is-invalid @enderror" autocomplete="off" value="{{ old('pic_phone', $merchant->PicTelp ?? '') }}">
                                 @error('pic_phone')
                                     <em class="small text-danger">
                                         {{ $message }}
@@ -91,7 +97,7 @@
                                 <label for="use_for">Use For</label>
                             </div>
                             <div class="col-md-8">
-                                <input name="use_for" id="use_for" type="text" class="form-control rounded-xl @error('use_for') is-invalid @enderror" autocomplete="off" value="{{ old('use_for', $merchant->Kebutuhan) }}">
+                                <input name="use_for" id="use_for" type="text" class="form-control rounded-xl @error('use_for') is-invalid @enderror" autocomplete="off" value="{{ old('use_for', $merchant->Kebutuhan ?? '') }}">
                                 @error('use_for')
                                     <em class="small text-danger">
                                         {{ $message }}
@@ -102,6 +108,7 @@
                     </div>
                 </div>
             </div>
+            @endif
             <div class="col-md-6 mb-3">
                 <div class="card rounded-xxl card-auto-resize">
                     <div class="card-body">
@@ -112,7 +119,7 @@
                                 <label for="email">Email</label>
                             </div>
                             <div class="col-md-8">
-                                <input name="email" id="email" type="email" class="form-control rounded-xl @error('email') is-invalid @enderror" autocomplete="on" value="{{ old('email', $user->email) }}">
+                                <input name="email" id="email" type="email" class="form-control rounded-xl @error('email') is-invalid @enderror" autocomplete="on" value="{{ old('email', $user->email ?? '') }}">
                                 @error('email')
                                     <em class="small text-danger">
                                         {{ $message }}
@@ -121,14 +128,15 @@
                             </div>
                         </div>
 
+                        @if ($roleId != 1)
                         <div class="row justify-content-center mt-4 mb-3">
                             <div class="col-md-4">
                                 <label for="token">Token</label>
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input name="token" id="token" type="text" class="form-control rounded-xl-start border-end-0 @error('token') is-invalid @enderror" aria-describedby="copyToken" readonly value="{{ $merchant->Token }}">
-                                    <button id="btnCopyToken" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="">
+                                    <input name="token" id="token" type="text" class="form-control rounded-xl @error('token') is-invalid @enderror" aria-describedby="copyToken" readonly value="{{ $merchant->Token ?? '' }}">
+                                    <button id="btnCopyToken" class="btn rounded-xl" type="button" onclick="">
                                         <i class="fas fa-copy"></i>
                                     </button>
                                     @error('token')
@@ -139,6 +147,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                         <div class="text-divider">
                             <label>Change Password</label>
@@ -150,8 +159,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input name="old_password" id="old_password" type="password" class="form-control rounded-xl-start border-end-0 @error('old_password') is-invalid @enderror" aria-describedby="showOldPassword">
-                                    <button id="btnShowOldPassword" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="toogleShowPassword('old');">
+                                    <input name="old_password" id="old_password" type="password" class="form-control rounded-xl @error('old_password') is-invalid @enderror" aria-describedby="showOldPassword">
+                                    <button id="btnShowOldPassword" class="btn rounded-xl"  type="button" onclick="toogleShowPassword('old');">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -169,8 +178,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input name="new_password" id="new_password" type="password" class="form-control rounded-xl-start border-end-0 @error('new_password') is-invalid @enderror" aria-describedby="showNewPassword">
-                                    <button id="btnShowNewPassword" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="toogleShowPassword();">
+                                    <input name="new_password" id="new_password" type="password" class="form-control rounded-xl @error('new_password') is-invalid @enderror" aria-describedby="showNewPassword">
+                                    <button id="btnShowNewPassword" class="btn rounded-xl" type="button" onclick="toogleShowPassword();">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
@@ -188,8 +197,8 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input name="new_password_confirmation" id="new_password_confirmation" type="password" class="form-control rounded-xl-start border-end-0 @error('new_password_confirmation') is-invalid @enderror" aria-describedby="showNewPasswordConfirmation">
-                                    <button id="btnShowNewPasswordConfirmation" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="toogleShowPassword('confirm');">
+                                    <input name="new_password_confirmation" id="new_password_confirmation" type="password" class="form-control rounded-xl @error('new_password_confirmation') is-invalid @enderror" aria-describedby="showNewPasswordConfirmation">
+                                    <button id="btnShowNewPasswordConfirmation" class="btn rounded-xl" type="button" onclick="toogleShowPassword('confirm');">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>

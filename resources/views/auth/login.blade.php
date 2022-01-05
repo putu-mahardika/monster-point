@@ -60,8 +60,8 @@
                                     </div>
                                     <div class="col-md-7">
                                         <div class="input-group mb-3">
-                                            <input name="password" id="password" type="password" class="form-control rounded-xl-start border-end-0 @error('password') is-invalid @enderror" aria-describedby="showPassword">
-                                            <button id="btnShowPassword" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" type="button" onclick="toogleShowPassword();">
+                                            <input name="password" id="password" type="password" class="form-control rounded-xl @error('password') is-invalid @enderror" aria-describedby="showPassword">
+                                            <button id="btnShowPassword" class="btn rounded-xl" type="button" onclick="toogleShowPassword();">
                                                 <i class="fas fa-eye"></i>
                                             </button>
                                             @error('password')

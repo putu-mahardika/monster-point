@@ -27111,14 +27111,28 @@ textarea.form-control-lg {
     z-index: 3;
 }
 
+.input-group .form-control {
+    width: 100%;
+    padding-right: 40px;
+}
+
 .input-group .btn {
-    position: relative;
-    z-index: 2;
+    position: absolute;
+    right: 0;
+    z-index: 3;
 }
 
 .input-group .btn:focus {
     z-index: 3;
+    box-shadow: none;
 }
+
+.input-group .form-control.is-invalid {
+    /* background-image: none; */
+    background-position: right calc(1em + 1.5rem) center;
+    padding-right: 65px;
+}
+
 
 .input-group-text {
     display: flex;
@@ -37346,6 +37360,7 @@ body {
     color: var(--bs-dark);
     z-index: 11;
     /* left: calc(50% - 0); */
+    left: calc(50% - 12.539px);
 }
 
 .dx-datagrid-headers .dx-header-row {
