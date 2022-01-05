@@ -19,11 +19,18 @@ class RoleSeeder extends Seeder
             ->givePermissionTo(Permission::all());
 
         Role::create(['name' => 'merchant'])
-            ->givePermissionTo(function () {
-                return Permission::where('name', 'not like', 'merchants%')
-                                 ->pluck('name')
-                                 ->toArray();
-            });
+            ->givePermissionTo(Permission::where('name', 'not like', 'merchants%')
+                                ->pluck('id')
+                                ->toArray());
 
+
+        // ====================>>> Seeding Permission Only <<<====================
+        // $roleAdmin = Role::findByName('super admin');
+        // $roleAdmin->givePermissionTo(Permission::all());
+
+        // $roleMerchant = Role::findByName('merchant');
+        // $roleMerchant->givePermissionTo(Permission::where('name', 'not like', 'merchants%')
+        //                                     ->pluck('id')
+        //                                     ->toArray());
     }
 }

@@ -53,6 +53,6 @@ class CreateNewUser implements CreatesNewUsers
             'email' => $input['merchant_email'],
             // 'password' => Hash::make($input['password']),
             'password' => $password,
-        ]);
+        ])->assignRole('merchant');
     }
 }
