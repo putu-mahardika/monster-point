@@ -101,6 +101,11 @@ class MemberController extends Controller
         return MemberHelper::getMembers($request);
     }
 
+    public function getCountMembers(Request $request)
+    {
+        return MemberHelper::getCountMembers($request);
+    }
+
     public function dx(Request $request, $merchant_id = null)
     {
         $members = Member::when(!empty($merchant_id), function ($query) use ($merchant_id) {

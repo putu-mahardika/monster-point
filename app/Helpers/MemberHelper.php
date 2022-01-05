@@ -81,4 +81,10 @@ class MemberHelper {
         return response()->json($members);
     }
 
+    public static function getCountMembers(Request $request)
+    {
+        $countMembers = Member::where('IdMerhant', $request->id)->get()->count();
+        return $countMembers;
+    }
+
 }
