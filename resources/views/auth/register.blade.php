@@ -30,7 +30,7 @@
                                     <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:100px; width:auto;">
                                 </div>
                             </div>
-                            <form action="/register" method="POST">
+                            <form action="{{ url('/register') }}" method="POST">
                                 @csrf
                                 <div class="row justify-content-center mb-3">
                                     <div class="col-md-3">
