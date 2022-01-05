@@ -29,14 +29,10 @@
         @csrf
         @method('put')
 
-        @php
-            $roleId = auth()->user()->roles()->first()->id;
-        @endphp
-
         <div class="row">
-            @if ( $roleId != 1)
+            @if ( !auth()->user()->hasRole('super admin'))
             <div class="col-md-6 mb-3">
-                <div class="card rounded-xxl card-auto-resize">
+                <div class="card rounded-xxl auto-align">
                     <div class="card-body">
                         <h4 class="mb-5">Merchant Info</h4>
 
@@ -110,7 +106,7 @@
             </div>
             @endif
             <div class="col-md-6 mb-3">
-                <div class="card rounded-xxl card-auto-resize">
+                <div class="card rounded-xxl auto-align">
                     <div class="card-body">
                         <h4 class="mb-5">Credentials</h4>
 
@@ -128,7 +124,7 @@
                             </div>
                         </div>
 
-                        @if ($roleId != 1)
+                        @if (!auth()->user()->hasRole('super admin'))
                         <div class="row justify-content-center mt-4 mb-3">
                             <div class="col-md-4">
                                 <label for="token">Token</label>

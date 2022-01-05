@@ -5309,6 +5309,10 @@ fieldset:disabled .btn {
     border-radius: 0.25rem;
 }
 
+.card.auto-align {
+    height: 100%;
+}
+
 .card>hr {
     margin-right: 0;
     margin-left: 0;
