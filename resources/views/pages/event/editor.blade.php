@@ -292,9 +292,10 @@
         function loadFormula(search = '') {
             let list = '';
             let index = 0;
-            formulas.forEach(formula => {
+            // console.log(formulas);
+            formulas.forEach(formula => {       // array formulas get dari resource->js->monster-point->formulas.js
                 if (search.length > 0) {
-                    if (formula.name.indexOf(search.toUpperCase()) >= 0) {
+                    if (formula.name.indexOf(search.replace(/(^|\s)\S/g, l => l.toUpperCase())) >= 0) {
                         list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
                     }
                 } else {
@@ -348,11 +349,11 @@
             eventExample.setSize('100%', '10rem');
             loadFormula();
 
-            $('#searchFormula').on('keyup', function () {
+            $('#searchFormula').keyup(function () {
                 loadFormula(
                     $(this).val()
                 );
-            });
+            })
 
             @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
                 $('#eventForm').on('submit', function (e) {
@@ -376,6 +377,7 @@
                         data: $(this).serialize(),
                         success: (res) => {
                             Swal.fire({
+                                allowOutsideClick: false,
                                 icon: 'success',
                                 title: 'Success!',
                                 text: res.message,
