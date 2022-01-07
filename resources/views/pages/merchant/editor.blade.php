@@ -45,7 +45,7 @@
         </div>
         <div class="row justify-content-center mb-3">
             <div class="col-md-5">
-                <label for="merchant_pic">Peron in Charge</label>
+                <label for="merchant_pic">Person in Charge</label>
             </div>
             <div class="col-md-7">
                 <input type="text" id="merchant_pic" name="merchant_pic" value="{{ old('merchant_pic', $merchant->Pic ?? '') }}" class="form-control rounded-xl" autocomplete="off" required>
