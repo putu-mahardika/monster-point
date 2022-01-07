@@ -96,6 +96,7 @@
             console.log('masuk');
             $('button').click(function() {
                 let cekID = $(this).attr('id');
+                console.log(cekID);
                 // console.log(cek == 'deleteMerchant');
                 if (cekID == 'deleteMember' || cekID == 'deleteMerchant') {
                     Swal.fire({
@@ -207,6 +208,7 @@
                 onSelectionChanged(selectedItems) {
                     const data = selectedItems.selectedRowsData[0];
                     if (data) {
+                        // console.log(data);
                         let merchantId = data.Id;
                         selectedMerchant = data.Id;
                         console.log('merchantId : ' + merchantId);
@@ -270,6 +272,8 @@
                     document.getElementById('total-member').innerText = data;
                 });
             }
+            // ====================================>>>> Get Count Data Member <<<<====================================
+
 
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -299,7 +303,7 @@
             });
 
             $('.modalMember').on('hidden.bs.modal', function (event) {
-                console.log('cek');
+                // console.log('cek');
                 if (submitted) {
                     memberTable.refresh();
                     submitted = false;
