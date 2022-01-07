@@ -27,8 +27,10 @@ class RoleSeeder extends Seeder
         // ====================>>> Seeding Permission Only <<<====================
         // $roleAdmin = Role::findByName('super admin');
         // $roleAdmin->givePermissionTo(Permission::all());
+        // $roleAdmin->givePermissionTo('billings access');
 
         // $roleMerchant = Role::findByName('merchant');
+        // $roleMerchant->givePermissionTo('billings access');
         // $roleMerchant->givePermissionTo(Permission::where('name', 'not like', 'merchants%')
         //                                     ->pluck('id')
         //                                     ->toArray());
