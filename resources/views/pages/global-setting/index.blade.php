@@ -25,9 +25,11 @@
                                     <div class="col-xl-8 col-lg-8 mb-3">
                                         <div class="input-group mb-3">
                                             <input type="text" id="value-{{$key}}" class="form-control rounded-xl" value="{{$setting->Value}}" readonly>
-                                            <button class="btn rounded-xl" data-id="{{$setting->Id}}" id="editSetting" >
-                                                <i class="fas fa-edit"></i>
-                                            </button>
+                                            @can('settings edit')
+                                                <button class="btn rounded-xl" data-id="{{$setting->Id}}" id="editSetting" >
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                            @endcan
                                             @error('password')
                                                 <em class="small text-danger">
                                                     {{ $message }}
