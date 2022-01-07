@@ -99,11 +99,14 @@ class BillingController extends Controller
             $q->orderBy('created_at', 'desc')->first();
         }])->where('IdMerchant',$merchant_id)->get();
 
+        // dd(collect($billings));
+
         $results = collect($billings)->map(function($item){
-            if(!is_null($item->billing_detail->status)){
-                if ($item->billing_detail->status == 1) {
+            // dd($item);
+            if(array_key_exists('status', $item->billing_detail)){
+                if ($item->billing_detail->status == '1') {
                     $item->payStatus = 'Paid';
-                } elseif ($item->billing_detail->status == 2 || $item->billing_detail->status == 0) {
+                } elseif ($item->billing_detail->status == '2' || $item->billing_detail->status == '0') {
                     $item->payStatus = '<div id="data-'.$item->Id.'">
                                         <button onclick="snap.pay(`'.$item->snap_token.'`)" class="btn btn-sm btn-success rounded-xl px-2 button-pay">
                                             Continue Payment
@@ -116,6 +119,14 @@ class BillingController extends Controller
                                         </button>
                                     </div>';
                 }
+            } elseif($item->TotalBiaya > 0) {
+                $item->payStatus = '<div id="data-'.$item->Id.'">
+                                        <button id="btn-'.$item->Id.'" onclick="payment('.$item->Id.')" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">
+                                            Pay
+                                        </button>
+                                    </div>';
+            } else {
+                $item->payStatus = '';
             }
             return $item;
         });
