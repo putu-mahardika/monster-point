@@ -416,6 +416,15 @@ select:disabled {
     opacity: 1;
 }
 
+.select2-container--bootstrap-5 {
+    width: 100% !important;
+}
+
+.select2-container--bootstrap-5 .select2-selection--single {
+    border-radius: 0.6rem !important;
+    background-color: var(--ekky-light-gray);
+}
+
 [list]::-webkit-calendar-picker-indicator {
     display: none;
 }
