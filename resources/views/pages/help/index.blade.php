@@ -126,5 +126,5 @@
 
     {{-- </div> --}}
 
-<iframe src="http://127.0.0.1:8000/api/documentation" frameborder="0"  width = "101%" height = "600"></iframe>
+<iframe src="http://127.0.0.1:8000/api/documentation" frameborder="0" style="height: 100vh" width = "101%" height = "100vh"></iframe>
 @endsection
