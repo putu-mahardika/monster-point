@@ -8,6 +8,12 @@
         },
         "version": "1.0.0"
     },
+    "servers": [
+        {
+            "url": "http://monstercode.ip-dynamic.com:8087/monsterpoint",
+            "description": "Demo API Server"
+        }
+    ],
     "paths": {
         "/api/v1/{token}/{event}/{id}/{value}": {
             "post": {
