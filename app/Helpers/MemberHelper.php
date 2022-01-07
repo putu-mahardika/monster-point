@@ -28,8 +28,8 @@ class MemberHelper {
     public static function storeMember(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'member_id' => ['required'],
-            'member_key' => ['required'],
+            'merchant_id' => ['required'],
+            'member_key' => ['required', 'string', 'max:150', 'unique:members'],
             'member_name' => ['required', 'string', 'max:150'],
             'member_note' => ['nullable', 'string', 'max:150'],
         ]);
