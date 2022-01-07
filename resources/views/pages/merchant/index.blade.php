@@ -160,7 +160,7 @@
                 },
                 columns: [
                     {
-                        caption: 'No',
+                        caption: '#',
                         width: 40,
                         cellTemplate: function(container, options) {
                             container.html(`${options.row.rowIndex + 1}`);
@@ -168,27 +168,35 @@
                     },
                     {
                         dataField: 'Nama',
+                        caption: 'Name',
                     },
                     {
                         dataField: 'Token',
+                        caption: 'Token',
                     },
                     {
                         dataField: 'Alamat',
+                        caption: 'Address',
                     },
                     {
                         dataField: 'Pic',
+                        caption: 'PIC',
                     },
                     {
                         dataField: 'PicTelp',
+                        caption: 'PIC Phone'
                     },
                     {
                         dataField: 'Email',
+                        caption: 'Email',
                     },
                     {
                         dataField: 'Kebutuhan',
+                        caption: 'Use For',
                     },
                     {
                         dataField: 'Id',
+                        caption: '',
                         cellTemplate: function (container, options) {
                             container.html(`
                                 <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="editMerchant">
@@ -239,9 +247,11 @@
                         },
                         {
                             dataField: 'Nama',
+                            caption: 'Name',
                         },
                         {
                             dataField: 'Point',
+                            caption: 'Point',
                         },
                         {
                             dataField: 'Id',

@@ -139,12 +139,15 @@
                     },
                     {
                         dataField: 'Nama',
+                        caption: 'Name',
                     },
                     {
                         dataField: 'Point',
+                        caption: 'Point',
                     },
                     {
-                        dataField: 'Keterangan'
+                        dataField: 'Keterangan',
+                        caption: 'Description'
                     },
                     {
                         dataField: 'Id',
@@ -152,7 +155,7 @@
                         cellTemplate: function (container, options) {
                             let html = '';
                             @can('members edit')
-                                html += `<button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" data-bs-toggle="tooltip" data-bs-placement="top" id="edit" title="Edit">
+                                html += `<button class="btn btn-primary btn-sm rounded-xxl me-1" data-id="${options.value}" data-bs-toggle="tooltip" data-bs-placement="top" id="edit" title="Edit">
                                     <i class="fas fa-edit fa-sm"></i>
                                 </button>`;
                             @endcan
@@ -204,11 +207,13 @@
                         {
                             dataField: 'CreateDate',
                             dataType: 'datetime',
-                            format: "dd-MM-yyyy HH:mm:ss"
+                            format: "dd-MM-yyyy HH:mm:ss",
+                            caption: 'Date'
                         },
                         {
                             dataField: 'Point',
-                            dataType: 'number'
+                            dataType: 'number',
+                            caption: 'Point',
                         },
                     ],
                     showBorders: false,

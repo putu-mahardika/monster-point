@@ -72,7 +72,7 @@
                     },
                     columns: [
                         {
-                            caption: 'No',
+                            caption: '#',
                             width: 40,
                             cellTemplate: function(container, options) {
                                 container.html(`${options.row.rowIndex + 1}`);
@@ -80,6 +80,7 @@
                         },
                         {
                             dataField: 'Nama',
+                            caption: 'Merchant',
                         }
                     ],
                     onSelectionChanged(selectedItems) {
@@ -131,10 +132,6 @@
                         cellTemplate: function (container, options) {
                             container.html(`${options.value}`);
                         }
-                    },
-                    {
-                        caption: '',
-
                     }
                 ],
                 showBorders: false,
