@@ -1,8 +1,11 @@
 <?php
 namespace App\Helpers;
 
+use App\Models\Log;
 use Illuminate\Http\Request;
 use App\Models\Member;
+use App\Models\Merchant;
+use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 
@@ -16,14 +19,16 @@ class MemberHelper {
         return view('pages.member.index');
     }
 
-    public static function createMember()
+    public static function createMember(Request $request)
     {
-        return view('pages.member.editor');
+        $merchants = Merchant::select('Id', 'Nama')->get();
+        return view('pages.member.editor', compact('request', 'merchants'));
     }
 
     public static function storeMember(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'member_id' => ['required'],
             'member_key' => ['required'],
             'member_name' => ['required', 'string', 'max:150'],
             'member_note' => ['nullable', 'string', 'max:150'],
@@ -39,6 +44,7 @@ class MemberHelper {
                 'Point' => 0,
                 'Nama' => $request->member_name,
                 'Keterangan' => $request->member_note,
+                'Aktif' => 1
             ]);
         }
         return response(['msg' => 'The member has been created']);
@@ -85,6 +91,19 @@ class MemberHelper {
     {
         $countMembers = Member::where('IdMerhant', $request->id)->get()->count();
         return $countMembers;
+    }
+
+    public static function getCountMemberHistoryPoints(Request $request)
+    {
+        $idMerchant = Merchant::where('Token', $request->token)->pluck('Id')->first();
+        $idMember = Member::where('MerchentMemberKey', $request->id)->where('IdMerhant', $idMerchant)->pluck('Id')->first();
+        $exec = Log::select('CreateDate', 'Point')
+                    ->where('IdMerchant', $idMerchant)
+                    ->where('IdMember', $idMember)
+
+                    ->get()->count();
+
+        return $exec;
     }
 
 }
