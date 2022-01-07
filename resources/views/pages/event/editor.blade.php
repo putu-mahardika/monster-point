@@ -77,12 +77,12 @@
                             </div>
                             <div class="col-xl-10 col-lg-9 mb-3">
                                 <div class="input-group">
-                                    <select name="action" id="action" class="form-select rounded-xl-start" required>
+                                    <select name="action" id="action" class="form-select rounded-xl" required>
                                         <option value="none">None</option>
                                         <option value="daily" @if(in_array(old('action', $event->Daily ?? false), ['daily', true])) selected @endif>Daily</option>
                                         <option value="oncetime" @if(in_array(old('action', $event->OnceTime ?? false), ['oncetime', true])) selected @endif>Once Time</option>
                                     </select>
-                                    <button type="button" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" data-bs-toggle="modal" data-bs-target="#modalActionFieldInfo">
+                                    <button type="button" class="btn rounded-xl" data-bs-toggle="modal" data-bs-target="#modalActionFieldInfo">
                                         <i class="fas fa-info-circle"></i>
                                     </button>
                                 </div>
@@ -120,8 +120,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="input-group mb-2">
-                            <input type="text" name="searchFormula" id="searchFormula" class="form-control rounded-xl-start border-end-0" autocomplete="off" placeholder="Find the formula...">
-                            <span class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);">
+                            <input type="text" name="searchFormula" id="searchFormula" class="form-control rounded-xl" autocomplete="off" placeholder="Find the formula...">
+                            <span class="btn rounded-xl">
                                 <i class="fas fa-search"></i>
                             </span>
                         </div>
