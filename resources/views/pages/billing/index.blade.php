@@ -144,9 +144,9 @@
             // var myVal = $('#billingTable option:last').val();
 
 
-            $('button').click(function(){
-                alert( "Handler for .click() called." );
-            });
+            // $('button').click(function(){
+            //     alert( "Handler for .click() called." );
+            // });
         });
 
         function memberCellTemplate(container, options) {
@@ -168,7 +168,7 @@
                 if(!data.snap_token){
                     snap.hide();
                 } else {
-                    action_btn.innerHTML = `<button onclick="snap.pay('`+data.snap_token+`')" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">ANU</button>`
+                    action_btn.innerHTML = `<button onclick="snap.pay('`+data.snap_token+`')" class="btn btn-sm btn-primary rounded-xl px-2 button-pay">Continue Payment</button>`
 
                     snap.pay(data.snap_token, {
                         // Optional
