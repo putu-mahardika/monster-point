@@ -16,6 +16,11 @@ use Illuminate\Routing\Controller as BaseController;
  *         email="superadmin@monsterpoint.com"
  *      )
  *  )
+ *
+ * @OA\Server(
+ *      url=L5_SWAGGER_CONST_HOST,
+ *      description="Demo API Server"
+ *  )
  */
 class Controller extends BaseController
 {

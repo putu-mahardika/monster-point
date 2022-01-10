@@ -96,6 +96,7 @@
             console.log('masuk');
             $('button').click(function() {
                 let cekID = $(this).attr('id');
+                console.log(cekID);
                 // console.log(cek == 'deleteMerchant');
                 if (cekID == 'deleteMember' || cekID == 'deleteMerchant') {
                     Swal.fire({
@@ -159,7 +160,7 @@
                 },
                 columns: [
                     {
-                        caption: 'No',
+                        caption: '#',
                         width: 40,
                         cellTemplate: function(container, options) {
                             container.html(`${options.row.rowIndex + 1}`);
@@ -167,24 +168,35 @@
                     },
                     {
                         dataField: 'Nama',
+                        caption: 'Name',
+                    },
+                    {
+                        dataField: 'Token',
+                        caption: 'Token',
                     },
                     {
                         dataField: 'Alamat',
+                        caption: 'Address',
                     },
                     {
                         dataField: 'Pic',
+                        caption: 'PIC',
                     },
                     {
                         dataField: 'PicTelp',
+                        caption: 'PIC Phone'
                     },
                     {
                         dataField: 'Email',
+                        caption: 'Email',
                     },
                     {
                         dataField: 'Kebutuhan',
+                        caption: 'Use For',
                     },
                     {
                         dataField: 'Id',
+                        caption: '',
                         cellTemplate: function (container, options) {
                             container.html(`
                                 <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="editMerchant">
@@ -204,13 +216,13 @@
                 onSelectionChanged(selectedItems) {
                     const data = selectedItems.selectedRowsData[0];
                     if (data) {
+                        // console.log(data);
                         let merchantId = data.Id;
                         selectedMerchant = data.Id;
                         console.log('merchantId : ' + merchantId);
                         document.getElementById('merchant-name').innerText = data.Nama;
                         getMembers(merchantId);
-                        // document.getElementById('total-member').innerText = data.Nama;
-                        // console.log(recordCount);
+                        getCountMembers(merchantId);
                     }
                 },
             }).dxDataGrid('instance');
@@ -235,9 +247,11 @@
                         },
                         {
                             dataField: 'Nama',
+                            caption: 'Name',
                         },
                         {
                             dataField: 'Point',
+                            caption: 'Point',
                         },
                         {
                             dataField: 'Id',
@@ -258,16 +272,18 @@
                     showColumnLines: false,
                     showRowLines: true,
                 }).dxDataGrid('instance');
-
-                // =========== Get Total Member ===========
-                const dataSource1 = memberTable.getDataSource();
-                // console.log(dataSource1);
-                setTimeout(() => {
-                    memberCount = dataSource1.items().length;
-                    // console.log(memberCount);
-                    document.getElementById('total-member').innerText = memberCount;
-                }, 400);
             }
+
+            // ====================================>>>> Get Count Data Member <<<<====================================
+
+            function getCountMembers(id = '') {
+                $.get(`{{ url('members/getCountMembers') }}?id=${id}`, function(data, status){
+                    // alert("Data: " + data + "\nStatus: " + status);
+                    document.getElementById('total-member').innerText = data;
+                });
+            }
+            // ====================================>>>> Get Count Data Member <<<<====================================
+
 
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -297,7 +313,7 @@
             });
 
             $('.modalMember').on('hidden.bs.modal', function (event) {
-                console.log('cek');
+                // console.log('cek');
                 if (submitted) {
                     memberTable.refresh();
                     submitted = false;

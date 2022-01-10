@@ -26,17 +26,21 @@
                         Events
                     </a>
                 @endcan
-                <a class="nav-link menu-halfround" href="{{ url('/billings')}}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
-                    Billings
-                </a>
-                <a class="nav-link menu-halfround" href="{{ url('/help')}}">
-                    <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
-                    Helps
-                </a>
+                @can('billings access')
+                    <a class="nav-link menu-halfround" href="{{ url('/billings')}}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
+                        Billings
+                    </a>
+                @endcan
+                @can('settings access')
                 <a class="nav-link menu-halfround" href="{{ url('/settings')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
                     Settings
+                </a>
+                @endcan
+                <a class="nav-link menu-halfround" href="{{ url('/help')}}">
+                    <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
+                    Helps
                 </a>
             </div>
         </div>

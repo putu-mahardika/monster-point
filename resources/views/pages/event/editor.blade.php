@@ -77,12 +77,12 @@
                             </div>
                             <div class="col-xl-10 col-lg-9 mb-3">
                                 <div class="input-group">
-                                    <select name="action" id="action" class="form-select rounded-xl-start" required>
+                                    <select name="action" id="action" class="form-select rounded-xl" required>
                                         <option value="none">None</option>
                                         <option value="daily" @if(in_array(old('action', $event->Daily ?? false), ['daily', true])) selected @endif>Daily</option>
                                         <option value="oncetime" @if(in_array(old('action', $event->OnceTime ?? false), ['oncetime', true])) selected @endif>Once Time</option>
                                     </select>
-                                    <button type="button" class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);" data-bs-toggle="modal" data-bs-target="#modalActionFieldInfo">
+                                    <button type="button" class="btn rounded-xl" data-bs-toggle="modal" data-bs-target="#modalActionFieldInfo">
                                         <i class="fas fa-info-circle"></i>
                                     </button>
                                 </div>
@@ -120,8 +120,8 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <div class="input-group mb-2">
-                            <input type="text" name="searchFormula" id="searchFormula" class="form-control rounded-xl-start border-end-0" autocomplete="off" placeholder="Find the formula...">
-                            <span class="btn rounded-xl-end border border-start-0" style="background-color: var(--ekky-light-gray);">
+                            <input type="text" name="searchFormula" id="searchFormula" class="form-control rounded-xl" autocomplete="off" placeholder="Find the formula...">
+                            <span class="btn rounded-xl">
                                 <i class="fas fa-search"></i>
                             </span>
                         </div>
@@ -256,7 +256,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-2">
-                            <input type="text" class="form-control rounded-xl" placeholder="Event Name">
+                        <label for="formulaTesterName">Event Name :</label>
+                            <input type="text" class="form-control rounded-xl" placeholder="Event Name" id="formulaTesterName" value='' disabled>
                         </div>
                         <div class="mb-2 border rounded-xl" id="formulaTesterContainer">
                             <span class="d-block text-center py-3">Please Wait...</span>
@@ -292,9 +293,10 @@
         function loadFormula(search = '') {
             let list = '';
             let index = 0;
-            formulas.forEach(formula => {
+            // console.log(formulas);
+            formulas.forEach(formula => {       // array formulas get dari resource->js->monster-point->formulas.js
                 if (search.length > 0) {
-                    if (formula.name.indexOf(search.toUpperCase()) >= 0) {
+                    if (formula.name.indexOf(search.replace(/(^|\s)\S/g, l => l.toUpperCase())) >= 0) {
                         list += `<li data-index="${index}" class="list-group-item">${formula.name}</li>`;
                     }
                 } else {
@@ -348,11 +350,11 @@
             eventExample.setSize('100%', '10rem');
             loadFormula();
 
-            $('#searchFormula').on('keyup', function () {
+            $('#searchFormula').keyup(function () {
                 loadFormula(
                     $(this).val()
                 );
-            });
+            })
 
             @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
                 $('#eventForm').on('submit', function (e) {
@@ -376,6 +378,7 @@
                         data: $(this).serialize(),
                         success: (res) => {
                             Swal.fire({
+                                allowOutsideClick: false,
                                 icon: 'success',
                                 title: 'Success!',
                                 text: res.message,
@@ -416,6 +419,7 @@
 
             @if(request()->route()->getName() == 'events.edit')
                 $('#modalFormulaTester').on('show.bs.modal', function (e) {
+                    $('#formulaTesterName').val(`{{ $event->Event }}`);
                     $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
                     eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
                         lineNumbers: true,

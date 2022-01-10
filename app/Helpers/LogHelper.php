@@ -5,6 +5,7 @@ use App\Models\Event;
 use App\Models\Log;
 use App\Models\Member;
 use App\Models\Merchant;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -45,22 +46,18 @@ class LogHelper {
 
         $idMerchant = Merchant::where('Token', $token)->pluck('Id')->first();
         $idMember = Member::where('MerchentMemberKey', $id)->where('IdMerhant', $idMerchant)->pluck('Id')->first();
-        $exec = Log::select('CreateDate', 'Point')->where('IdMerchant', $idMerchant)->where('IdMember', $idMember)->get();
+        $exec = Log::select('CreateDate', 'Point')
+                    ->where('IdMerchant', $idMerchant)
+                    ->where('IdMember', $idMember)
+                    ->orderBy('id', 'DESC')
+                    ->get();
 
-        // try {
-        //     $exec = DB::table('Log')
-        //                 ->join('Member', 'Log.IdMember', '=', 'Member.Id')
-        //                 ->select('Log.CreateDate as CreateDate',
-        //                          'Log.Point as Point')
-        //                 ->where('Log.IdMember', $idMember)
-        //                 ->where('Member.MerchentMemberKey', $token)
-        //                 ->orderByDesc('CreateDate')
-        //                 ->get();
-        // } catch (\Exception $e) {
-        //     return response()->json(['message' => $e->getMessage()], 400);
-        // }
+        $result = collect($exec)->map(function ($item) {
+            $item->CreateDate = Carbon::parse($item->CreateDate)->tz(config('app.timezone'))->format('Y-m-d H:i:s');
+            return $item;
+        });
 
-        return response()->json($exec);
+        return response()->json($result);
     }
 
 }

@@ -49,6 +49,9 @@
                                                 Send Password Reset Link
                                             </button>
                                         </form>
+                                        <div class="col-md-12 text-center mt-5">
+                                            <a href="{{ url('/login') }}">Back to Login Page</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

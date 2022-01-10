@@ -416,6 +416,15 @@ select:disabled {
     opacity: 1;
 }
 
+.select2-container--bootstrap-5 {
+    width: 100% !important;
+}
+
+.select2-container--bootstrap-5 .select2-selection--single {
+    border-radius: 0.6rem !important;
+    background-color: var(--ekky-light-gray);
+}
+
 [list]::-webkit-calendar-picker-indicator {
     display: none;
 }
@@ -3007,14 +3016,28 @@ textarea.form-control-lg {
     z-index: 3;
 }
 
+.input-group .form-control {
+    width: 100%;
+    padding-right: 40px;
+}
+
 .input-group .btn {
-    position: relative;
-    z-index: 2;
+    position: absolute;
+    right: 0;
+    z-index: 3;
 }
 
 .input-group .btn:focus {
     z-index: 3;
+    box-shadow: none;
 }
+
+.input-group .form-control.is-invalid {
+    /* background-image: none; */
+    background-position: right calc(1em + 1.5rem) center;
+    padding-right: 65px;
+}
+
 
 .input-group-text {
     display: flex;
@@ -5293,6 +5316,10 @@ fieldset:disabled .btn {
     background-clip: border-box;
     border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 0.25rem;
+}
+
+.card.auto-align {
+    height: 100%;
 }
 
 .card>hr {
@@ -13243,6 +13270,7 @@ body {
     color: var(--bs-dark);
     z-index: 11;
     /* left: calc(50% - 0); */
+    left: calc(50% - 12.539px);
 }
 
 .dx-datagrid-headers .dx-header-row {
