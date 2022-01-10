@@ -1,7 +1,7 @@
 <nav class="sb-topnav navbar navbar-expand py-4" style="background-color: white;">
 
     {{-- Navbar Brand --}}
-    <a class="navbar-brand ps-3" href="index.html">
+    <a class="navbar-brand ps-3" href="{{ url('/dashboard') }}">
         <img src="{{ asset('/img/logo_ps_long.png') }}" alt="logo_ps_long" style="height:53px; width:auto;">
     </a>
 
