@@ -643,7 +643,10 @@
                         verticalAlignment: 'bottom',
                         horizontalAlignment: 'center',
                         hoverMode: 'excludePoints',
-                    }
+                    },
+                    loadingIndicator: {
+                        enabled: true,
+                    },
                 })
                 .dxChart('instance')
                 .on('legendClick', (e) => {
@@ -718,7 +721,10 @@
                             text: 'Member Name'
                         }
                     },
-                    rotated: true
+                    rotated: true,
+                    loadingIndicator: {
+                        enabled: true,
+                    },
                 }).dxChart('instance')
                 .on('legendClick', (e) => {
                     var series = e.target;
@@ -792,6 +798,9 @@
                         title: {
                             text: 'Days'
                         }
+                    },
+                    loadingIndicator: {
+                        enabled: true,
                     },
                     customizeLabel(barInfo) {
                         if (barInfo.value > 0) {
