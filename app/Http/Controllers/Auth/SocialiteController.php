@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Merchant;
 use App\Models\SocialAccount;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 use Laravel\Socialite\Facades\Socialite;
 
 class SocialiteController extends Controller
@@ -46,10 +49,28 @@ class SocialiteController extends Controller
 
             if(! $user)
             {
+                Merchant::create([
+                    'CreateDate' => now(),
+                    'Token' => Str::random(25),
+                    'Nama' => '',
+                    'Alamat' => '',
+                    'Pic' => $socialUser->getName(),
+                    'PicTelp' => '',
+                    'Email' => $socialUser->getEmail(),
+                    'Pass' => 'password',
+                    'Kebutuhan' => '',
+                    'LastUpdate' => now(),
+                    'Akif' => 1,
+                    'Validasi' => 1
+                ]);
+
+                $password = Hash::make(config('app.default_password', '12345678'));
+
                 $user = User::create([
                     'name' => $socialUser->getName(),
                     'email' => $socialUser->getEmail(),
-                ]);
+                    'password' => $password
+                ])->assignRole('merchant');
             }
 
             $user->socialAccounts()->create([
