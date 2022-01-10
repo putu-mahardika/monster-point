@@ -256,7 +256,8 @@
                     </div>
                     <div class="modal-body">
                         <div class="mb-2">
-                            <input type="text" class="form-control rounded-xl" placeholder="Event Name">
+                        <label for="formulaTesterName">Event Name :</label>
+                            <input type="text" class="form-control rounded-xl" placeholder="Event Name" id="formulaTesterName" value='' disabled>
                         </div>
                         <div class="mb-2 border rounded-xl" id="formulaTesterContainer">
                             <span class="d-block text-center py-3">Please Wait...</span>
@@ -418,6 +419,7 @@
 
             @if(request()->route()->getName() == 'events.edit')
                 $('#modalFormulaTester').on('show.bs.modal', function (e) {
+                    $('#formulaTesterName').val(`{{ $event->Event }}`);
                     $('#formulaTesterContainer').html(`<textarea name="tester" id="tester" cols="30" rows="3">{{ $event->Formula }}</textarea>`);
                     eventTester = CodeMirror.fromTextArea(document.getElementById('tester'), {
                         lineNumbers: true,
