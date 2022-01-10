@@ -20,6 +20,7 @@
         "mad-web/laravel-initializer": "^3.3",
         "midtrans/midtrans-php": "^2.5",
         "nahidulhasan/html2pdf": "^1.4",
+        "pe/component-process": "^1.0",
         "php-mqtt/laravel-client": "^1.0",
         "pragmarx/version": "^1.3",
         "predis/predis": "^1.1",

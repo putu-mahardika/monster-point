@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "50582f4c906619bc9549b6897f8a24f1",
+    "content-hash": "320787f2702c163db1e4d55fa61f0146",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -3505,6 +3505,64 @@
                 "source": "https://github.com/paragonie/constant_time_encoding"
             },
             "time": "2020-12-06T15:14:20+00:00"
+        },
+        {
+            "name": "pe/component-process",
+            "version": "v1.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/pavlenko/php-component-process.git",
+                "reference": "c9096ef683e0f3c5da2bc2650d71b32da36cec99"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/pavlenko/php-component-process/zipball/c9096ef683e0f3c5da2bc2650d71b32da36cec99",
+                "reference": "c9096ef683e0f3c5da2bc2650d71b32da36cec99",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0",
+                "psr/log": "^1.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~6.0"
+            },
+            "suggest": {
+                "ext-pcntl": "*",
+                "ext-posix": "*",
+                "ext-proctitle": "*"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "PE\\Component\\Process\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eugene Pavlenko",
+                    "email": "pavlenko.obs@gmail.com"
+                }
+            ],
+            "description": "Process management based on ext-pcntl and ext-posix",
+            "keywords": [
+                "pcntl",
+                "posix"
+            ],
+            "support": {
+                "issues": "https://github.com/pavlenko/php-component-process/issues",
+                "source": "https://github.com/pavlenko/php-component-process/tree/master"
+            },
+            "time": "2019-01-11T05:54:42+00:00"
         },
         {
             "name": "php-mqtt/client",
