@@ -166,16 +166,6 @@
                         }
                     },
                     {
-                        dataField: 'LockDelay',
-                        dataType: 'number',
-                        caption: 'Delay',
-                        cellTemplate: function (container, options) {
-                            container.html(`
-                                ${options.value} min
-                            `);
-                        }
-                    },
-                    {
                         dataField: 'Keterangan',
                         caption: 'Description',
                     },

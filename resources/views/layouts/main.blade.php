@@ -17,6 +17,7 @@
         @yield('css')
     </head>
     <body class="sb-nav-fixed" style="overflow-x: hidden;">
+        <div id="overlay"></div>
         @include('partials.topbar')
         <div id="layoutSidenav">
             @include('partials.menu')

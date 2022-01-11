@@ -35,7 +35,7 @@
                                         <option value="{{ $merchant->Id }}">{{ $merchant->Nama }}</option>
                                     @endforeach
                                 </select>
-                                <x-error-message-field for="merchant_id" class="d-none"></x-error-message-field> --}}
+                                <x-error-message-field for="merchant_id" class="d-none"></x-error-message-field>
                             </div>
                         </div>
                     @endif
@@ -70,7 +70,7 @@
                 </div>
             </div>
             <div class="d-flex justify-content-end mt-5">
-                <button type="submit" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Save</button>
+                <button type="submit" id="btnSave" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Save</button>
             </div>
         </form>
 </div>
@@ -85,6 +85,8 @@
     $(function () {
         $('#memberForm').on('submit', function(e) {
             e.preventDefault();
+            // $('#overlay').css('display', 'block');
+            autoDisableSubmitButton();
             clearErrorField();
             $.ajax({
                 url: $(this).attr('action'),
@@ -110,6 +112,7 @@
                         });
                         submitted = true;
                     }
+                    removeOverlayPanel();
                 },
                 error: function (errors) {
                     if (errors.status == 403) {
@@ -121,6 +124,7 @@
                     else {
                         showErrorField(errors.responseJSON);
                     }
+                    removeOverlayPanel();
                 }
             })
         });

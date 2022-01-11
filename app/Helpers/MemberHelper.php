@@ -29,8 +29,8 @@ class MemberHelper {
     {
         $validator = Validator::make($request->all(), [
             'merchant_id' => ['required'],
-            'member_key' => ['required', 'string', 'max:150', 'unique:members'],
-            'member_name' => ['required', 'string', 'max:150'],
+            'member_key' => ['required', 'string', 'max:50', 'unique:Member,MerchentMemberKey'],
+            'member_name' => ['required', 'string', 'max:50'],
             'member_note' => ['nullable', 'string', 'max:150'],
         ]);
 

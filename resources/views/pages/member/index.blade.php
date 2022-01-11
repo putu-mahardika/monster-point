@@ -152,6 +152,7 @@
                     {
                         dataField: 'Id',
                         caption: '',
+                        cssClass: 'actionField',
                         cellTemplate: function (container, options) {
                             let html = '';
                             @can('members edit')

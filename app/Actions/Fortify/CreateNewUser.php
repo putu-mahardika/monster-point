@@ -26,11 +26,11 @@ class CreateNewUser implements CreatesNewUsers
     {
         // dd($input);
         Validator::make($input, [
-            'merchant_name' => ['required', 'string', 'max:150'],
-            'merchant_email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:users,email'],
+            'merchant_name' => ['required', 'string', 'max:100'],
+            'merchant_email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:Merchant,Email'],
             'merchant_address' => ['required', 'string', 'max:150'],
-            'merchant_pic' => ['required', 'string', 'max:150'],
-            'merchant_pic_phone' => ['required', 'string', 'max:150'],
+            'merchant_pic' => ['required', 'regex:/^[\pL\s\-]+$/u', 'string', 'max:50'],
+            'merchant_pic_phone' => ['required', 'string', 'max:15'],
             'use_for' => ['required', 'string', 'max:250'],
             // 'password' => $this->passwordRules(),
         ])->validate();
