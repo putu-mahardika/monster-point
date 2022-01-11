@@ -35,7 +35,7 @@
                                         <option value="{{ $merchant->Id }}">{{ $merchant->Nama }}</option>
                                     @endforeach
                                 </select>
-                                <x-error-message-field for="merchant_id" class="d-none"></x-error-message-field> --}}
+                                <x-error-message-field for="merchant_id" class="d-none"></x-error-message-field>
                             </div>
                         </div>
                     @endif
