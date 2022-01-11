@@ -22,7 +22,8 @@
                 <label for="merchant_name">Merchant Name</label>
             </div>
             <div class="col-md-7">
-                <input type="text" id="merchant_name" name="merchant_name" value="{{ old('merchant_name', $merchant->Nama ?? '') }}" class="form-control rounded-xl" autofocus autocomplete="off" required>
+                <input type="text" id="merchant_name" name="merchant_name" value="{{ old('merchant_name', $merchant->Nama ?? '') }}" class="form-control rounded-xl @error('merchant_name') is-invalid @enderror" autofocus autocomplete="off" required>
+                <x-error-message-field for="merchant_name" class="d-none"></x-error-message-field>
             </div>
         </div>
         @if (isset($merchant))
@@ -32,6 +33,7 @@
                 </div>
                 <div class="col-md-7">
                     <input type="text" id="merchant_token" name="merchant_token" value="{{ old('merchant_token', $merchant->Token ?? '') }}" class="form-control rounded-xl" autofocus autocomplete="off" disabled>
+                    <x-error-message-field for="merchant_token" class="d-none"></x-error-message-field>
                 </div>
             </div>
         @endif
@@ -41,6 +43,7 @@
             </div>
             <div class="col-md-7">
                 <input type="text" id="merchant_address" name="merchant_address" value="{{ old('merchant_address', $merchant->Alamat ?? '') }}" class="form-control rounded-xl" autocomplete="off" required>
+                <x-error-message-field for="merchant_address" class="d-none"></x-error-message-field>
             </div>
         </div>
         <div class="row justify-content-center mb-3">
@@ -49,6 +52,7 @@
             </div>
             <div class="col-md-7">
                 <input type="text" id="merchant_pic" name="merchant_pic" value="{{ old('merchant_pic', $merchant->Pic ?? '') }}" class="form-control rounded-xl" autocomplete="off" required>
+                <x-error-message-field for="merchant_pic" class="d-none"></x-error-message-field>
             </div>
         </div>
         <div class="row justify-content-center mb-3">
@@ -57,6 +61,7 @@
             </div>
             <div class="col-md-7">
                 <input type="text" id="merchant_pic_phone" name="merchant_pic_phone" value="{{ old('merchant_pic_phone', $merchant->PicTelp ?? '') }}"  class="form-control rounded-xl" autocomplete="off" required>
+                <x-error-message-field for="merchant_pic_phone" class="d-none"></x-error-message-field>
             </div>
         </div>
         <div class="row justify-content-center mb-3">
@@ -65,6 +70,7 @@
             </div>
             <div class="col-md-7">
                 <input type="email" id="merchant_pic_email" name="merchant_pic_email" value="{{ old('merchant_pic_email', $merchant->Email ?? '') }}" class="form-control rounded-xl" autocomplete="off" required>
+                <x-error-message-field for="merchant_pic_email" class="d-none"></x-error-message-field>
             </div>
         </div>
         <div class="row justify-content-center mb-3">
@@ -73,6 +79,7 @@
             </div>
             <div class="col-md-7">
                 <input type="text" id="use_for" name="use_for" value="{{ old('use_for', $merchant->Kebutuhan ?? '') }}" class="form-control rounded-xl" autocomplete="off" required>
+                <x-error-message-field for="use_for" class="d-none"></x-error-message-field>
             </div>
         </div>
 
@@ -116,6 +123,17 @@
                             title: data.msg
                         });
                         submitted = true;
+                    }
+                },
+                error: function (errors) {
+                    if (errors.status == 403) {
+                        Toast.fire({
+                            icon: 'error',
+                            title: errors.responseJSON.msg
+                        });
+                    }
+                    else {
+                        showErrorField(errors.responseJSON);
                     }
                 }
             })
