@@ -53,9 +53,9 @@ window.showErrorField = (errors) => {
 }
 
 window.clearErrorField = () => {
-    $('.error-field').each(el => {
-        $(el).html('');
-        $(el).addClass('d-none');
+    $('.error-field').each(function() {
+        $(this).html('');
+        $(this).addClass('d-none');
     });
 }
 
@@ -122,4 +122,24 @@ window.autoResizeMoreCard = () => {
     cards.forEach(card => {
         $(card).css({height: `${maxHeight}px`});
     });
+}
+
+window.autoDisableSubmitButton = () => {
+    $('#btnSave').html(`
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving
+    `);
+    $('#btnSave').addClass('disabled');
+    $('#overlay').css('display', 'block');
+}
+
+window.autoEnableSubmitButton = () => {
+    $('#btnSave').html(`
+        Save
+    `);
+    $('#btnSave').removeClass('disabled');
+    removeOverlayPanel();
+}
+
+window.removeOverlayPanel = () => {
+    $('#overlay').css('display', 'none');
 }
