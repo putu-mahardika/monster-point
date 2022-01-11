@@ -48,7 +48,7 @@ class MerchantController extends Controller
         $validator = Validator::make($request->all(), [
             'merchant_name' => ['required', 'string', 'max:100'],
             'merchant_address' => ['required', 'string', 'max:150'],
-            'merchant_pic' => ['required', 'regex:/^[a-zA-Z]+$/', 'string', 'max:50'],
+            'merchant_pic' => ['required', 'regex:/^[\pL\s\-]+$/u', 'string', 'max:50'],
             'merchant_pic_phone' => ['required', 'string', 'max:15'],
             'merchant_pic_email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:Merchant,Email'],
             'use_for' => ['required', 'string', 'max:250'],
@@ -117,12 +117,12 @@ class MerchantController extends Controller
     public function update(Request $request, Merchant $merchant)
     {
         $validator = Validator::make($request->all(), [
-            'merchant_name' => ['required'],
-            'merchant_address' => ['required'],
-            'merchant_pic' => ['required'],
-            'merchant_pic_phone' => ['required'],
-            'merchant_pic_email' => ['required'],
-            'use_for' => ['required'],
+            'merchant_name' => ['required', 'string', 'max:100'],
+            'merchant_address' => ['required', 'string', 'max:150'],
+            'merchant_pic' => ['required', 'regex:/^[\pL\s\-]+$/u', 'string', 'max:50'],
+            'merchant_pic_phone' => ['required', 'string', 'max:15'],
+            'merchant_pic_email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:Merchant,Email'],
+            'use_for' => ['required', 'string', 'max:250'],
         ]);
 
         if ($validator->fails()) {
@@ -153,11 +153,12 @@ class MerchantController extends Controller
      */
     public function destroy(Merchant $merchant)
     {
+        // dd($merchant);
         $query = $merchant->delete();
         if ($query) {
-            return response()->json(['code' => 1, 'msg' => 'Merchant Has Been Deleted From Databases']);
+            return response()->json(['code' => 1, 'message' => 'Merchant Has Been Deleted From Databases']);
         } else {
-            return response()->json(['code' => 0, 'msg' => 'Something went wrong']);
+            return response()->json(['code' => 0, 'message' => 'Something went wrong']);
         }
     }
 
