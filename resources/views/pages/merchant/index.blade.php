@@ -92,15 +92,17 @@
         });
 
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data Merchant / Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        function deleteData(id) {
+        function deleteData(id, state) {
             console.log('masuk');
-            $('button').click(function() {
-                let cekID = $(this).attr('id');
-                console.log(cekID);
+            // $('button').click(function() {
+                // let cekID = $(this).attr('id');
+                // console.log(cekID);
                 // console.log(cek == 'deleteMerchant');
-                if (cekID == 'deleteMember' || cekID == 'deleteMerchant') {
+                if (state == 'deleteMember' || state == 'deleteMerchant') {
+                    let cekID = state;
                     Swal.fire({
                         title: cekID == 'deleteMember' ? 'Do you want to delete this Member?' : 'Do you want to delete this Merchant?',
+                        text: cekID == 'deleteMerchant' ? 'Members from this Merchant will be deleted too!' : '',
                         showCancelButton: true,
                         showConfirmButton: false,
                         showDenyButton: true,
@@ -121,6 +123,9 @@
                                         memberTable.refresh();
                                     } else {
                                         merchantTable.refresh();
+                                        memberTable.refresh();
+                                        document.getElementById('merchant-name').innerText = 'No Name';
+                                        document.getElementById('total-member').innerText = 0;
                                     }
                                 },
                                 error: (error) => {
@@ -130,14 +135,14 @@
                         }
                     });
                 }
-            });
+            // });
         }
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data Merchant / Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         $(document).ready(() => {
             $('#myCollapsible').on('shown.bs.collapse', function () {
                 $('.collapse').collapse();
-                console.log('test');
+                // console.log('test');
             })
 
             $('#addMerchantModal').on('shown.bs.modal', function () {
@@ -148,7 +153,6 @@
                 $(this).find('#member_key').focus();
             });
 
-            getMembers();
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Merchant >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             merchantTable = $('#merchantTable').dxDataGrid({
                 dataSource: `{{ route('merchants.index') }}`,
@@ -197,12 +201,13 @@
                     {
                         dataField: 'Id',
                         caption: '',
+                        cssClass: 'actionField',
                         cellTemplate: function (container, options) {
                             container.html(`
                                 <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="editMerchant">
                                     <i class="fas fa-edit fa-sm"></i>
                                 </button>
-                                <button onclick="deleteData(${options.value});" class="btn btn-danger btn-sm rounded-xxl" id="deleteMerchant">
+                                <button onclick="deleteData(${options.value}, 'deleteMerchant');" class="btn btn-danger btn-sm rounded-xxl" id="deleteMerchant">
                                     <i class="fas fa-trash-alt fa-sm"></i>
                                 </button>
                             `);
@@ -256,12 +261,13 @@
                         {
                             dataField: 'Id',
                             caption: '',
+                            cssClass: 'actionField',
                             cellTemplate: function (container, options) {
                                 container.html(`
                                     <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="editMember">
                                         <i class="fas fa-edit fa-sm"></i>
                                     </button>
-                                    <button onclick="deleteData(${options.value});" class="btn btn-danger btn-sm rounded-xxl" id="deleteMember">
+                                    <button onclick="deleteData(${options.value}, 'deleteMember');" class="btn btn-danger btn-sm rounded-xxl" id="deleteMember">
                                         <i class="fas fa-trash-alt fa-sm"></i>
                                     </button>
                                 `);
@@ -278,7 +284,6 @@
 
             function getCountMembers(id = '') {
                 $.get(`{{ url('members/getCountMembers') }}?id=${id}`, function(data, status){
-                    // alert("Data: " + data + "\nStatus: " + status);
                     document.getElementById('total-member').innerText = data;
                 });
             }
@@ -302,6 +307,7 @@
                     merchantTable.refresh();
                     submitted = false;
                 }
+                $('.modalMerchant').find('.modal-content').html("");
             });
 
             $(document).on('click', '#createMember', function () {
@@ -313,8 +319,9 @@
             });
 
             $('.modalMember').on('hidden.bs.modal', function (event) {
-                // console.log('cek');
+                // console.log(event);
                 if (submitted) {
+                    getCountMembers(selectedMerchant);
                     memberTable.refresh();
                     submitted = false;
                 }
