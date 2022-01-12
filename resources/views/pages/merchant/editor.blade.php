@@ -84,7 +84,7 @@
         </div>
 
         <div class="d-flex justify-content-end mt-5">
-            <button type="submit" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Save</button>
+            <button type="submit" id="btnSave" class="btn btn-lg btn-primary px-5 py-1 rounded-xxl">Save</button>
         </div>
     </form>
 </div>
@@ -101,6 +101,8 @@
     $(function() {
         $('#editor-merchant-form').on('submit', function(e) {
             e.preventDefault();
+            // $('#overlay').css('display', 'block');
+            autoDisableSubmitButton();
             $.ajax({
                 url: $(this).attr('action'),
                 method: $(this).attr('method'),
@@ -124,6 +126,7 @@
                         });
                         submitted = true;
                     }
+                    removeOverlayPanel();
                 },
                 error: function (errors) {
                     if (errors.status == 403) {
@@ -133,8 +136,10 @@
                         });
                     }
                     else {
+                        clearErrorField();
                         showErrorField(errors.responseJSON);
                     }
+                    removeOverlayPanel();
                 }
             })
         });

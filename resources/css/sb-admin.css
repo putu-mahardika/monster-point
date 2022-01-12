@@ -13301,6 +13301,10 @@ body {
     color: #232323 !important;
 }
 
+.actionField {
+    text-align: center !important;
+}
+
 .disabled-container {
     pointer-events: none;
     opacity: 0.4;
@@ -13344,4 +13348,18 @@ body {
 .btn-outline-primary.disabled {
     color: var(--ekky-cyan);
     background-color: transparent;
+}
+
+#overlay {
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:100%;
+    background-color:var(--bs-dark);
+    opacity: 0.5;
+    z-index:1059;
 }

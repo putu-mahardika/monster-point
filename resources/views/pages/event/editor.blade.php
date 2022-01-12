@@ -359,13 +359,10 @@
             @if (auth()->user()->can('events create') || auth()->user()->can('events edit'))
                 $('#eventForm').on('submit', function (e) {
                     e.preventDefault();
+                    autoDisableSubmitButton();
                     $(this).addClass('disabled-container');
-                    $('#btnSave').html(`
-                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Saving
-                    `);
                     $('#btnTest').addClass('disabled');
                     $('#btnClose').addClass('disabled');
-                    $('#btnSave').addClass('disabled');
                     clearErrorField();
 
                     $.ajax({
@@ -388,6 +385,7 @@
                                     window.location.href = res.url;
                                 }
                             });
+                            removeOverlayPanel();
                         },
                         error: (error) => {
                             if (error.status == 403) {
@@ -404,12 +402,10 @@
                                 scrollTop: 0
                             });
                             $(this).removeClass('disabled-container');
-                            $('#btnSave').html(`
-                                Save
-                            `);
+                            autoEnableSubmitButton();
                             $('#btnTest').removeClass('disabled');
                             $('#btnClose').removeClass('disabled');
-                            $('#btnSave').removeClass('disabled');
+
                         }
                     });
                 });
@@ -454,7 +450,7 @@
                         }
                     });
                 });
-                eventTester.setSize('100%', '10rem');
+                // eventTester.setSize('100%', '10rem');
 
                 $('#modalFormulaTester').on('shown.bs.modal', function (e) {
                     eventTester.refresh();
