@@ -93,7 +93,7 @@
                     },
                     columns: [
                         {
-                            caption: 'No',
+                            caption: '#',
                             width: 40,
                             cellTemplate: function(container, options) {
                                 container.html(`${options.row.rowIndex + 1}`);
@@ -101,6 +101,7 @@
                         },
                         {
                             dataField: 'Nama',
+                            caption: 'Name',
                         }
                     ],
                     onSelectionChanged(selectedItems) {
@@ -128,30 +129,45 @@
                     },
                     {
                         dataField: 'Kode',
+                        caption: 'Code',
                     },
                     {
                         dataField: 'Event',
+                        caption: 'Event',
                     },
                     {
-                        dataField: 'Formula'
+                        dataField: 'Formula',
+                        caption: 'Formula',
                     },
                     {
                         dataField: 'Daily',
-                    },
-                    {
-                        dataField: 'Once',
-                    },
-                    {
-                        dataField: 'LockDelay',
-                        dataType: 'number',
+                        caption: 'Daily',
                         cellTemplate: function (container, options) {
-                            container.html(`
-                                ${options.value} min
-                            `);
+                            let html = '';
+                            if(options.value == 1) {
+                                html += '<span style="color:limegreen"><i class="fas fa-check"></i></span>';
+                            } else {
+                                html += '<span style="color:red"><i class="fas fa-times"></i></span>';
+                            }
+                            container.html(html);
                         }
                     },
                     {
-                        dataField: 'Keterangan'
+                        dataField: 'OnceTime',
+                        caption: 'Once',
+                        cellTemplate: function (container, options) {
+                            let html = '';
+                            if(options.value == 1) {
+                                html += '<span style="color:limegreen"><i class="fas fa-check"></i></span>';
+                            } else {
+                                html += '<span style="color:red"><i class="fas fa-times"></i></span>';
+                            }
+                            container.html(html);
+                        }
+                    },
+                    {
+                        dataField: 'Keterangan',
+                        caption: 'Description',
                     },
                     {
                         dataField: 'Id',

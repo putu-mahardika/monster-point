@@ -92,14 +92,17 @@
         });
 
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data Merchant / Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-        function deleteData(id) {
+        function deleteData(id, state) {
             console.log('masuk');
-            $('button').click(function() {
-                let cekID = $(this).attr('id');
+            // $('button').click(function() {
+                // let cekID = $(this).attr('id');
+                // console.log(cekID);
                 // console.log(cek == 'deleteMerchant');
-                if (cekID == 'deleteMember' || cekID == 'deleteMerchant') {
+                if (state == 'deleteMember' || state == 'deleteMerchant') {
+                    let cekID = state;
                     Swal.fire({
                         title: cekID == 'deleteMember' ? 'Do you want to delete this Member?' : 'Do you want to delete this Merchant?',
+                        text: cekID == 'deleteMerchant' ? 'Members from this Merchant will be deleted too!' : '',
                         showCancelButton: true,
                         showConfirmButton: false,
                         showDenyButton: true,
@@ -120,6 +123,9 @@
                                         memberTable.refresh();
                                     } else {
                                         merchantTable.refresh();
+                                        memberTable.refresh();
+                                        document.getElementById('merchant-name').innerText = 'No Name';
+                                        document.getElementById('total-member').innerText = 0;
                                     }
                                 },
                                 error: (error) => {
@@ -129,14 +135,14 @@
                         }
                     });
                 }
-            });
+            // });
         }
         // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Delete Data Merchant / Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
         $(document).ready(() => {
             $('#myCollapsible').on('shown.bs.collapse', function () {
                 $('.collapse').collapse();
-                console.log('test');
+                // console.log('test');
             })
 
             $('#addMerchantModal').on('shown.bs.modal', function () {
@@ -147,7 +153,6 @@
                 $(this).find('#member_key').focus();
             });
 
-            getMembers();
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Merchant >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
             merchantTable = $('#merchantTable').dxDataGrid({
                 dataSource: `{{ route('merchants.index') }}`,
@@ -159,7 +164,7 @@
                 },
                 columns: [
                     {
-                        caption: 'No',
+                        caption: '#',
                         width: 40,
                         cellTemplate: function(container, options) {
                             container.html(`${options.row.rowIndex + 1}`);
@@ -167,30 +172,42 @@
                     },
                     {
                         dataField: 'Nama',
+                        caption: 'Name',
+                    },
+                    {
+                        dataField: 'Token',
+                        caption: 'Token',
                     },
                     {
                         dataField: 'Alamat',
+                        caption: 'Address',
                     },
                     {
                         dataField: 'Pic',
+                        caption: 'PIC',
                     },
                     {
                         dataField: 'PicTelp',
+                        caption: 'PIC Phone'
                     },
                     {
                         dataField: 'Email',
+                        caption: 'Email',
                     },
                     {
                         dataField: 'Kebutuhan',
+                        caption: 'Use For',
                     },
                     {
                         dataField: 'Id',
+                        caption: '',
+                        cssClass: 'actionField',
                         cellTemplate: function (container, options) {
                             container.html(`
                                 <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="editMerchant">
                                     <i class="fas fa-edit fa-sm"></i>
                                 </button>
-                                <button onclick="deleteData(${options.value});" class="btn btn-danger btn-sm rounded-xxl" id="deleteMerchant">
+                                <button onclick="deleteData(${options.value}, 'deleteMerchant');" class="btn btn-danger btn-sm rounded-xxl" id="deleteMerchant">
                                     <i class="fas fa-trash-alt fa-sm"></i>
                                 </button>
                             `);
@@ -204,13 +221,13 @@
                 onSelectionChanged(selectedItems) {
                     const data = selectedItems.selectedRowsData[0];
                     if (data) {
+                        // console.log(data);
                         let merchantId = data.Id;
                         selectedMerchant = data.Id;
                         console.log('merchantId : ' + merchantId);
                         document.getElementById('merchant-name').innerText = data.Nama;
                         getMembers(merchantId);
-                        // document.getElementById('total-member').innerText = data.Nama;
-                        // console.log(recordCount);
+                        getCountMembers(merchantId);
                     }
                 },
             }).dxDataGrid('instance');
@@ -235,19 +252,22 @@
                         },
                         {
                             dataField: 'Nama',
+                            caption: 'Name',
                         },
                         {
                             dataField: 'Point',
+                            caption: 'Point',
                         },
                         {
                             dataField: 'Id',
                             caption: '',
+                            cssClass: 'actionField',
                             cellTemplate: function (container, options) {
                                 container.html(`
                                     <button class="btn btn-primary btn-sm rounded-xxl" data-id="${options.value}" id="editMember">
                                         <i class="fas fa-edit fa-sm"></i>
                                     </button>
-                                    <button onclick="deleteData(${options.value});" class="btn btn-danger btn-sm rounded-xxl" id="deleteMember">
+                                    <button onclick="deleteData(${options.value}, 'deleteMember');" class="btn btn-danger btn-sm rounded-xxl" id="deleteMember">
                                         <i class="fas fa-trash-alt fa-sm"></i>
                                     </button>
                                 `);
@@ -258,16 +278,17 @@
                     showColumnLines: false,
                     showRowLines: true,
                 }).dxDataGrid('instance');
-
-                // =========== Get Total Member ===========
-                const dataSource1 = memberTable.getDataSource();
-                // console.log(dataSource1);
-                setTimeout(() => {
-                    memberCount = dataSource1.items().length;
-                    // console.log(memberCount);
-                    document.getElementById('total-member').innerText = memberCount;
-                }, 400);
             }
+
+            // ====================================>>>> Get Count Data Member <<<<====================================
+
+            function getCountMembers(id = '') {
+                $.get(`{{ url('members/getCountMembers') }}?id=${id}`, function(data, status){
+                    document.getElementById('total-member').innerText = data;
+                });
+            }
+            // ====================================>>>> Get Count Data Member <<<<====================================
+
 
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Get Data Member >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
@@ -286,6 +307,7 @@
                     merchantTable.refresh();
                     submitted = false;
                 }
+                $('.modalMerchant').find('.modal-content').html("");
             });
 
             $(document).on('click', '#createMember', function () {
@@ -297,8 +319,9 @@
             });
 
             $('.modalMember').on('hidden.bs.modal', function (event) {
-                console.log('cek');
+                // console.log(event);
                 if (submitted) {
+                    getCountMembers(selectedMerchant);
                     memberTable.refresh();
                     submitted = false;
                 }

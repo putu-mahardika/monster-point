@@ -40,5 +40,10 @@ class PermissionSeeder extends Seeder
 
         Permission::create(['name' => 'profile access']);
         Permission::create(['name' => 'profile edit']);
+
+        Permission::create(['name' => 'settings access']);
+        Permission::create(['name' => 'settings edit']);
+
+        Permission::create(['name' => 'billings access']);
     }
 }

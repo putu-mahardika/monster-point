@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Helpers\LogHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Member;
 use Illuminate\Http\Request;
 use App\Helpers\MemberHelper;
+use App\Http\Controllers\API\V1\LogApiController;
 use App\Models\Merchant;
 use Illuminate\Http\Response;
 
@@ -26,9 +28,9 @@ class MemberController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return MemberHelper::createMember();
+        return MemberHelper::createMember($request);
     }
 
     /**
@@ -101,12 +103,27 @@ class MemberController extends Controller
         return MemberHelper::getMembers($request);
     }
 
+    public function getCountMembers(Request $request)
+    {
+        return MemberHelper::getCountMembers($request);
+    }
+
     public function dx(Request $request, $merchant_id = null)
     {
         $members = Member::when(!empty($merchant_id), function ($query) use ($merchant_id) {
             return $query->where('IdMerhant', $merchant_id);
         })->get();
         return response()->json($members);
+    }
+
+    public function getMemberHistoryPoint(Request $request)
+    {
+        return LogHelper::memberHistoryPoint($request, $request->token, $request->id);
+    }
+
+    public function getCountMemberHistoryPoints(Request $request)
+    {
+        return MemberHelper::getCountMemberHistoryPoints($request);
     }
 
 }

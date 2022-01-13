@@ -126,5 +126,5 @@
 
     {{-- </div> --}}
 
-<iframe src="/api/documentation" frameborder="0"  width = "101%" height = "600"></iframe>
+<iframe src="{{ url('/api/documentation') }}" frameborder="0"  width = "101%" height = "600"></iframe>
 @endsection

@@ -44,6 +44,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('merchants', Web\MerchantController::class);
 
     Route::get('members/getMembers', [Web\MemberController::class, 'getMembers'])->name('members.getMembers');
+    Route::get('members/getCountMembers', [Web\MemberController::class, 'getCountMembers'])->name('members.getCountMembers');
+    Route::get('members/getHistoryPoints', [Web\MemberController::class, 'getMemberHistoryPoint'])->name('members.getHistoryPoints');
+    Route::get('members/getCountHistoryPoints', [Web\MemberController::class, 'getCountMemberHistoryPoints'])->name('members.getCountHistoryPoints');
     Route::resource('members', Web\MemberController::class);
 
     Route::resource('events', Web\EventController::class);

@@ -77,40 +77,49 @@ class UserControler extends Controller
     public function update(Request $request, $id)
     {
         $user = User::find($id);
-        $merchant = $user->merchant;
+        $role = $user->roles->first()->id;
+        // dd($role);
+        $merchant = $user->merchant ?? null;
         $userData = [];
         $merchantData = [];
 
         $request->validate([
-            'merchant_name' => ['required', 'string', 'max:150'],
+            'merchant_name' => [Rule::requiredIf(!empty($request->merchant_name)), 'string', 'max:150'],
             'email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:users,email,'.$id],
-            'merchant_address' => ['required', 'string', 'max:150'],
-            'pic' => ['required', 'string', 'max:150'],
-            'pic_phone' => ['required', 'string', 'max:150'],
-            'use_for' => ['required', 'string', 'max:250'],
+            'merchant_address' => [Rule::requiredIf(!empty($request->merchant_address)), 'string', 'max:150'],
+            'pic' => [Rule::requiredIf(!empty($request->pic)), 'string', 'max:150'],
+            'pic_phone' => [Rule::requiredIf(!empty($request->pic_phone)), 'string', 'max:150'],
+            'use_for' => [Rule::requiredIf(!empty($request->use_for)), 'string', 'max:250'],
             'old_password' => [Rule::requiredIf(!empty($request->new_password)), new ValidPassword($user)],
             'new_password' => ['nullable', 'min:8', 'confirmed'],
         ]);
 
         $password = !empty($request->new_password) ? Hash::make($request->new_password) : null;
 
-        $merchantData = [
-            'Nama' => $request->merchant_name,
-            'Alamat' => $request->merchant_address,
-            'Pic' => $request->pic,
-            'PicTelp' => $request->pic_phone,
-            'Kebutuhan' => $request->use_for,
-        ];
+        if($role != 1){
+            $merchantData = [
+                'Nama' => $request->merchant_name,
+                'Alamat' => $request->merchant_address,
+                'Pic' => $request->pic,
+                'PicTelp' => $request->pic_phone,
+                'Kebutuhan' => $request->use_for,
+            ];
 
-        $userData['name'] = $request->merchant_name;
+            $userData['name'] = $request->merchant_name;
 
-        if (!empty($password)) {
-            $merchantData['Pass']  = $password;
-            $userData['password'] = $password;
+            if (!empty($password)) {
+                $merchantData['Pass']  = $password;
+                $userData['password'] = $password;
+            }
+
+            $user->update($userData);
+            $merchant->update($merchantData);
+        } else {
+            if(!empty($password)) {
+                $userData['password'] = $password;
+            }
+            $user->update($userData);
         }
-
-        $user->update($userData);
-        $merchant->update($merchantData);
 
         if ($user->email !== $request->email) {
             EmailChangeHelper::create($user, $request->email);

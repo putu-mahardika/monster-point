@@ -26,6 +26,9 @@
             @can('dashboard chart 1 access')
                 <div class="@cannot('dashboard chart 2 access') col @endcannot @can('dashboard chart 2 access') col-md-6 @endcan mb-3">
                     <div class="card rounded-xxl">
+                        <div class="card-header">
+                            Daily Point Transactions
+                        </div>
                         <div class="card-body">
                             <div class="row justify-content-between">
                                 <div class="col-lg-6 mb-3 text-lg-start text-center">
@@ -118,6 +121,9 @@
             @can('dashboard chart 2 access')
                 <div class="@cannot('dashboard chart 1 access') col @endcannot @can('dashboard chart 1 access') col-md-6 @endcan mb-3">
                     <div class="card rounded-xxl">
+                        <div class="card-header">
+                            Top 10 Total Points & Transactions
+                        </div>
                         <div class="card-body">
                             <div class="row justify-content-between">
                                 <div class="col-lg-6 mb-3 text-lg-start text-center">
@@ -211,6 +217,9 @@
 
     @can('dashboard chart 3 access')
         <div class="card rounded-xxl">
+            <div class="card-header">
+                Activity Hit API
+            </div>
             <div class="card-body">
                 <div class="row justify-content-between">
                     <div class="col-lg-6 mb-3 text-lg-start text-center">
@@ -599,7 +608,15 @@
                     margin: {
                         bottom: 10,
                     },
+                    valueAxis: {
+                        title: {
+                            text: 'Points'
+                        }
+                    },
                     argumentAxis: {
+                        title: {
+                            text: 'Days'
+                        },
                         valueMarginsEnabled: false,
                         discreteAxisDivisionMode: 'crossLabels',
                         grid: {
@@ -626,7 +643,10 @@
                         verticalAlignment: 'bottom',
                         horizontalAlignment: 'center',
                         hoverMode: 'excludePoints',
-                    }
+                    },
+                    loadingIndicator: {
+                        enabled: true,
+                    },
                 })
                 .dxChart('instance')
                 .on('legendClick', (e) => {
@@ -691,7 +711,20 @@
                     legend: {
                         visible: true,
                     },
-                    rotated: true
+                    valueAxis: {
+                        title: {
+                            text: 'Value'
+                        }
+                    },
+                    argumentAxis: {
+                        title: {
+                            text: 'Member Name'
+                        }
+                    },
+                    rotated: true,
+                    loadingIndicator: {
+                        enabled: true,
+                    },
                 }).dxChart('instance')
                 .on('legendClick', (e) => {
                     var series = e.target;
@@ -755,6 +788,19 @@
                     ],
                     legend: {
                         visible: true,
+                    },
+                    valueAxis: {
+                        title: {
+                            text: 'Value'
+                        }
+                    },
+                    argumentAxis: {
+                        title: {
+                            text: 'Days'
+                        }
+                    },
+                    loadingIndicator: {
+                        enabled: true,
                     },
                     customizeLabel(barInfo) {
                         if (barInfo.value > 0) {

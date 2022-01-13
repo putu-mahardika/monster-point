@@ -40,4 +40,22 @@ class Merchant extends Model
         return $this->hasMany(Member::class, 'IdMerhant', 'Id');
     }
 
+    public function users()
+    {
+        // return $this->hasOne(User::class, 'email', 'email');
+        return $this->hasOne(User::class, 'email', 'Email');
+    }
+
+    // hapus semua yang berkaitan dengan merchant
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($merchant) { // before delete() method call this
+            // dd($merchant->Email);
+            $merchant->events()->delete();
+            $merchant->billings()->delete();
+            $merchant->members()->delete();
+            $merchant->users()->delete();
+        });
+    }
+
 }

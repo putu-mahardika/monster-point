@@ -33,6 +33,7 @@
         "moment": "^2.29.1",
         "mqtt": "^4.2.8",
         "select2": "^4.1.0-rc.0",
+        "select2-bootstrap-5-theme": "^1.2.0",
         "sweetalert2": "^11.1.9"
     }
 }

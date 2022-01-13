@@ -26,17 +26,21 @@
                         Events
                     </a>
                 @endcan
-                <a class="nav-link menu-halfround" href="{{ url('/billings')}}">
-                    <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
-                    Billings
-                </a>
-                <a class="nav-link menu-halfround" href="{{ url('/help')}}">
-                    <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
-                    Helps
-                </a>
+                @can('billings access')
+                    <a class="nav-link menu-halfround" href="{{ url('/billings')}}">
+                        <div class="sb-nav-link-icon"><i class="fas fa-receipt"></i></div>
+                        Billings
+                    </a>
+                @endcan
+                @can('settings access')
                 <a class="nav-link menu-halfround" href="{{ url('/settings')}}">
                     <div class="sb-nav-link-icon"><i class="fas fa-cog"></i></div>
                     Settings
+                </a>
+                @endcan
+                <a class="nav-link menu-halfround" href="{{ url('/help')}}">
+                    <div class="sb-nav-link-icon"><i class="far fa-question-circle"></i></div>
+                    Helps
                 </a>
             </div>
         </div>
@@ -44,17 +48,13 @@
 </div>
 
 <script>
-    const getRootPathDocumentLocation = () => {
-        return window.location.pathname.split('/').filter((item) => {
-            if (item !== '') {
-                return item;
-            }
-        })[0];
+    const isActiveLink = (link) => {
+        return window.location.href.indexOf(link) >= 0;
     }
 
-    let lists = document.querySelectorAll('a');
+    let lists = document.querySelectorAll('a.nav-link');
     lists.forEach(list => {
-        if (list.href.indexOf(getRootPathDocumentLocation()) >= 0) {
+        if (isActiveLink(list.getAttribute('href'))) {
             list.classList.add('active');
         } else {
             list.classList.remove('active');
