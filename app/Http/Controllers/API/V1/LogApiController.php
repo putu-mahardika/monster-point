@@ -14,7 +14,7 @@ use Log;
 class LogApiController extends Controller
 {
      /**
-     * @OA\POST(
+     * @OA\Post(
      *      path="/api/v1/{token}/{event}/{id}/{value}",
      *      tags={"Transaction"},
      *      summary="Make poin by user activity",
