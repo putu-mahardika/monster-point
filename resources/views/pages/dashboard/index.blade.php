@@ -53,21 +53,21 @@
                                     <div class="row">
                                         <div class="col">
                                             <span class="small text-muted d-block">
-                                                Success
+                                                In
                                             </span>
-                                            <span id="chart1Success" class="fs-4 d-block"></span>
-                                            <span style="font-size: .7rem;" class="text-success d-block">
-                                                <i class="fas fa-arrow-up"></i> <span id="chart1SuccessStat"></span>
-                                            </span>
+                                            <span id="chart1In" class="fs-4 d-block"></span>
+                                            {{-- <span style="font-size: .7rem;" class="text-success d-block">
+                                                <i class="fas fa-arrow-up"></i> <span id="chart1InStat"></span>
+                                            </span> --}}
                                         </div>
                                         <div class="col">
                                             <span class="small text-muted d-block">
-                                                Failed
+                                                Out
                                             </span>
-                                            <span id="chart1Failed" class="fs-4 d-block"></span>
-                                            <span style="font-size: .7rem;" class="text-danger d-block">
-                                                <i class="fas fa-arrow-down"></i> <span id="chart1FailedStat"></span>
-                                            </span>
+                                            <span id="chart1Out" class="fs-4 d-block"></span>
+                                            {{-- <span style="font-size: .7rem;" class="text-danger d-block">
+                                                <i class="fas fa-arrow-down"></i> <span id="chart1OutStat"></span>
+                                            </span> --}}
                                         </div>
                                     </div>
                                 </div>
@@ -601,10 +601,6 @@
                 chart1 = $('#chart1').dxChart({
                     palette: 'Cyan',
                     dataSource: `{{ route('dashboard.chart1') }}${requestParamBuilder(1)}`,
-                    commonSeriesSettings: {
-                        argumentField: 'date',
-                        type: 'line',
-                    },
                     margin: {
                         bottom: 10,
                     },
@@ -615,7 +611,7 @@
                     },
                     argumentAxis: {
                         title: {
-                            text: 'Days'
+                            text: 'Datetime'
                         },
                         valueMarginsEnabled: false,
                         discreteAxisDivisionMode: 'crossLabels',
@@ -624,16 +620,24 @@
                         },
                     },
                     series: [{
-                            valueField: 'inLogs',
-                            name: 'In'
-                        },
-                        {
-                            valueField: 'outLogs',
-                            name: 'Out'
-                        }
-                    ],
+                        argumentField: 'date',
+                        valueField: 'plus',
+                        name: 'In',
+                        type: 'bar',
+                        color: '#00CAEE',
+                    }, {
+                        argumentField: 'date',
+                        valueField: 'minus',
+                        name: 'out',
+                        type: 'bar',
+                        color: '#00204C',
+                    }],
                     tooltip: {
                         enabled: true,
+                        contentTemplate(info, $container) {
+                            const container = $container[0];
+                            container.innerHTML = info.value.toFixed(2);
+                        },
                     },
                     size: {
                         height: 266,
@@ -660,10 +664,8 @@
             }
 
             $.get(`{{ route('dashboard.chart1.stat') }}${requestParamBuilder(1)}`, function (response) {
-                $('#chart1Success').text(response.success);
-                $('#chart1SuccessStat').text(response.successPercent);
-                $('#chart1Failed').text(response.failed);
-                $('#chart1FailedStat').text(response.failedPercent);
+                $('#chart1In').text(response.plus);
+                $('#chart1Out').text(response.minus);
             });
 
             $.get(`{{ route('dashboard.chartTime') }}${requestParamBuilder(1)}&ch=chart1`, function (response) {
@@ -673,7 +675,8 @@
             });
 
             $("#chart1FilterMerchant").select2({
-                placeholder: "Select a merchant"
+                placeholder: "Select a merchant",
+                allowClear: true
             });
         }
 

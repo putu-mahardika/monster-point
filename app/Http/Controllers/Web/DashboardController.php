@@ -6,6 +6,7 @@ use App\Helpers\FunctionHelper;
 use App\Http\Controllers\Controller;
 use App\Models\Log;
 use Carbon\Carbon;
+use Carbon\CarbonPeriod;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Cache;
@@ -22,233 +23,224 @@ class DashboardController extends Controller
 
     public function chart1(Request $request)
     {
-        $key = "chart1.t=$request->t.d=$request->d";
+        /**
+         * Key cache
+         */
+        $mrc = ($request->has('mrc') || empty($request->mrc)) ? 0 : $request->mrc;
+        $key = "chart1.t=$request->t.d=$request->d.mrc=$mrc";
+
+        /**
+         * Time to life of cache
+         */
         $ttl = now()->addMinutes(30);
-        $result = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl) {
+
+        /**
+         * Caching data
+         */
+        $cached = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl, $mrc) {
+
+            /**
+             * intance carbon datetime by $request->d from specific format.
+             */
             $date = Carbon::createFromFormat('Y-m-d', $request->d);
-            $data = Log::when($request->t === 'd', function ($query) use ($request, $date) {
-                           return $query->whereDate('CreateDate', $date->toDateString());
-                       })
-                       ->when($request->t === 'M', function ($query) use ($request, $date) {
-                           return $query->whereMonth('CreateDate', $date->month)
-                                       ->whereYear('CreateDate', $date->year);
-                       })
-                       ->when($request->t === 'y', function ($query) use ($request, $date) {
-                           return $query->whereYear('CreateDate', $date->year);
-                       })
-                       ->when(!empty($request->mrc), function ($query) use ($request) {
-                           return auth()->user()->is_admin ?
-                                  $query->where('IdMerchant', $request->mrc) :
-                                  $query;
-                       })
-                       ->when(!auth()->user()->is_admin, function ($query) use ($request) {
-                           return $query->where('IdMerchant', auth()->user()->merchant->Id);
-                       })
-                       ->get();
 
-            $inLogs = $data->where('Status', 200)
-                           ->where('Point', '>=', 0)
-                           ->groupBy(function ($query) use ($request){
-                               if ($request->t === 'd') {
-                                   return $query->CreateDate->format('H:00');
-                               }
-                               elseif ($request->t === 'M') {
-                                   return $query->CreateDate->format('d-m-Y');
-                               }
-                               elseif ($request->t === 'y') {
-                                   return $query->CreateDate->monthName;
-                               }
-                           });
-            $this->formatChartData($request->t, $request->d, $inLogs);
+            /**
+             * Get log data with condition.
+             * $request->t is "type". d is day, M is month, y is year
+             */
+            $data = Log::when($request->t === 'd', function ($query) use ($request, $date, $mrc) {
+                        return $query->whereDate('CreateDate', $date->toDateString());
+                    })
+                    ->when($request->t === 'M', function ($query) use ($request, $date) {
+                        return $query->whereMonth('CreateDate', $date->month)
+                                    ->whereYear('CreateDate', $date->year);
+                    })
+                    ->when($request->t === 'y', function ($query) use ($request, $date) {
+                        return $query->whereYear('CreateDate', $date->year);
+                    })
 
-            $outLogs = $data->where('Status', 200)
-                            ->where('Point', '<', 0)
-                            ->groupBy(function ($query) use ($request){
-                                if ($request->t === 'd') {
-                                    return $query->CreateDate->format('H:00');
-                                }
-                                elseif ($request->t === 'M') {
-                                    return $query->CreateDate->format('d-m-Y');
-                                }
-                                elseif ($request->t === 'y') {
-                                    return $query->CreateDate->monthName;
-                                }
-                            });
-            $this->formatChartData($request->t, $request->d, $outLogs);
-            Cache::tags('chart')->remember($key . ".lastUpdate", $ttl, function () {
-                return now();
-            });
-            return $this->mergeDataChart(compact('inLogs', 'outLogs'));
+                    /**
+                        * $request->mrc is "merchant id"
+                        * This condition will be executed when the user is admin
+                        * Admin can select a specific merchant or leave it blank to get data from all merchants
+                        */
+                    ->when($mrc > 0, function ($query) use ($mrc) {
+                        return auth()->user()->is_admin ?
+                                $query->where('IdMerchant', $mrc) :
+                                $query;
+                    })
+
+                    ->when(empty($request->mrc), function ($query) use ($request) {
+                        return $query;
+                    })
+
+                    /**
+                        * This condition will be executed when the user is not an admin
+                        */
+                    ->when(!auth()->user()->is_admin, function ($query) use ($request) {
+                        return $query->where('IdMerchant', auth()->user()->merchant->Id);
+                    })
+
+                    /**
+                        * Get only success transactions
+                        */
+                    ->where('Status', 200)
+                    ->get();
+
+            if ($request->t == 'd') {
+
+                /**
+                 * Make period like "00:00", "01:00", "02:00", "..."
+                 */
+                $period = CarbonPeriod::since($date->startOfDay()->toTimeString())
+                                    ->hours(1)
+                                    ->until($date->endOfDay()->toTimeString());
+
+                /**
+                 * Fill in the list of periods with logs at suitable times
+                 */
+                $result = collect($period->toArray())->map(function ($value, $key) use ($data) {
+
+                    /**
+                     * Retrieve log data with matching hour
+                     */
+                    $logs = $data->filter(function ($v, $k) use ($value) {
+                        return $v->CreateDate->hour == $value->hour;
+                    });
+
+                    /**
+                     * Retrieve log data with positive point attribute values
+                     */
+                    $logPlus = $logs->filter(function ($v, $k) {
+                        return $v->Point >= 0;
+                    });
+
+                    /**
+                     * Retrieve log data with negative point attribute values
+                     */
+                    $logMinus = $logs->filter(function ($v, $k) {
+                        return $v->Point < 0;
+                    });
+
+                    /**
+                     * Return data in array format
+                     */
+                    return [
+                        'date' => $value->format('H:i'),
+                        'plus' => $logPlus->sum('Point'),
+                        'minus' => $logMinus->sum('Point'),
+                    ];
+                });
+            }
+            elseif ($request->t == 'M') {
+
+                /**
+                 * Make period like "2021-11-01", "2021-11-02", "2021-11-03", "..."
+                 */
+                $period = CarbonPeriod::create(
+                    $date->startOfMonth()->toDateString(),
+                    $date->endOfMonth()->toDateString()
+                );
+
+                /**
+                 * Fill in the list of periods with logs at suitable date
+                 */
+                $result = collect($period->toArray())->map(function ($value, $key) use ($data) {
+
+                    /**
+                     * Retrieve log data with matching date
+                     */
+                    $logs = $data->filter(function ($v, $k) use ($value) {
+                        return $v->CreateDate->toDateString() == $value->toDateString();
+                    });
+
+                    /**
+                     * Retrieve log data with positive point attribute values
+                     */
+                    $logPlus = $logs->filter(function ($v, $k) {
+                        return $v->Point >= 0;
+                    });
+
+                    /**
+                     * Retrieve log data with negative point attribute values
+                     */
+                    $logMinus = $logs->filter(function ($v, $k) {
+                        return $v->Point < 0;
+                    });
+
+                    /**
+                     * Return data in array format
+                     */
+                    return [
+                        'date' => $value->format('Y-m-d'),
+                        'plus' => $logPlus->sum('Point'),
+                        'minus' => $logMinus->sum('Point'),
+                    ];
+                });
+            }
+            elseif ($request->t == 'y') {
+
+                /**
+                 * Make period like "2021-01", "2021-02", "2021-03", "..."
+                 */
+                $period = CarbonPeriod::create(
+                    $date->startOfYear()->toDateString(),
+                    '1 month',
+                    $date->endOfYear()->toDateString()
+                );
+
+                /**
+                 * Fill in the list of periods with logs at suitable date
+                 */
+                $result = collect($period->toArray())->map(function ($value, $key) use ($data) {
+
+                    /**
+                     * Retrieve log data with matching month-year
+                     */
+                    $logs = $data->filter(function ($v, $k) use ($value) {
+                        return $v->CreateDate->format('Y-m') == $value->format('Y-m');
+                    });
+
+                    /**
+                     * Retrieve log data with positive point attribute values
+                     */
+                    $logPlus = $logs->filter(function ($v, $k) {
+                        return $v->Point >= 0;
+                    });
+
+                    /**
+                     * Retrieve log data with negative point attribute values
+                     */
+                    $logMinus = $logs->filter(function ($v, $k) {
+                        return $v->Point < 0;
+                    });
+
+                    /**
+                     * Return data in array format
+                     */
+                    return [
+                        'date' => $value->format('M'),
+                        'plus' => $logPlus->sum('Point'),
+                        'minus' => $logMinus->sum('Point'),
+                    ];
+                });
+            }
+
+            return $result;
         });
 
-        return response()->json($result);
+        // return response()->json($result);
+        return response()->json($cached);
     }
 
     public function chart1Stat(Request $request)
     {
-        $key = "chart1stat.t=$request->t.d=$request->d";
-        $ttl = now()->addMinutes(30);
-        $result = Cache::tags('chart')->remember($key, $ttl, function () use ($request, $key, $ttl) {
-            $date = Carbon::createFromFormat('Y-m-d', $request->d);
+        dd($this->chart1($request));
+        $chart1 = collect($this->chart1($request)->getData(true));
+        $plus = FunctionHelper::thousandsCurrencyFormat($chart1->sum('plus'));
+        $minus = FunctionHelper::thousandsCurrencyFormat($chart1->sum('minus'));
 
-            if ($request->t === 'd') {
-                $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)
-                                  ->subDay();
-            }
-            elseif ($request->t === 'M') {
-                $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)
-                                  ->subMonth();
-            }
-            elseif ($request->t === 'y') {
-                $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)
-                                  ->subYear();
-            }
-
-            $data = Log::when($request->t === 'd', function ($query) use ($request, $date, $dateOld) {
-                              return $query->whereDate('CreateDate', '>=', $dateOld->toDateString())
-                                           ->whereDate('CreateDate', '<', $date->addDay()->toDateString());
-                         })
-                         ->when($request->t === 'M', function ($query) use ($request, $date, $dateOld) {
-                              return $query->whereDate('CreateDate', '>=', $dateOld->day(1)->toDateString())
-                                           ->whereDate('CreateDate', '<', $date->addMonth()->day(1)->toDateString());
-                         })
-                         ->when($request->t === 'y', function ($query) use ($request, $date, $dateOld) {
-                             return $query->whereYear('CreateDate', '>=', $dateOld->year)
-                                          ->whereYear('CreateDate', '<', $date->addYear()->year);
-                         })
-                         ->when(!empty($request->mrc), function ($query) use ($request) {
-                             return auth()->user()->is_admin ?
-                                    $query->where('IdMerchant', $request->mrc) :
-                                    $query;
-                         })
-                         ->when(!auth()->user()->is_admin, function ($query) use ($request) {
-                             return $query->where('IdMerchant', auth()->user()->merchant->Id);
-                         })
-                         ->get();
-
-            if ($request->t === 'd') {
-                $success = $data->filter(function ($item, $key) use ($request) {
-                    $date = Carbon::createFromFormat('Y-m-d', $request->d);
-                    return $item->CreateDate->between(
-                        $date->setTime(0, 0)->toDateTimeString(),
-                        $date->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', 200)->count();
-
-                $failed = $data->filter(function ($item, $key) use ($request) {
-                    $date = Carbon::createFromFormat('Y-m-d', $request->d);
-                    return $item->CreateDate->between(
-                        $date->setTime(0, 0)->toDateTimeString(),
-                        $date->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', '!=', 200)->count();
-
-                $successOld = $data->filter(function ($item, $key) use ($request) {
-                    $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)->subDay();
-                    return $item->CreateDate->between(
-                        $dateOld->setTime(0, 0)->toDateTimeString(),
-                        $dateOld->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', 200)->count();
-
-                $failedOld = $data->filter(function ($item, $key) use ($request) {
-                    $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)->subDay();
-                    return $item->CreateDate->between(
-                        $dateOld->setTime(0, 0)->toDateTimeString(),
-                        $dateOld->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', '!=', 200)->count();
-
-                $successPercent = $successOld == 0 ? '-' : floor((abs($successOld - $success) / $successOld) * 100) . "%";
-                $failedPercent = $failedOld == 0 ? '-' : floor((abs($failedOld - $failed) / $failedOld) * 100) . "%";
-                $success = FunctionHelper::thousandsCurrencyFormat($success);
-                $failed = FunctionHelper::thousandsCurrencyFormat($failed);
-            }
-            elseif ($request->t === 'M') {
-                $success = $data->filter(function ($item, $key) use ($request) {
-                    $date = Carbon::createFromFormat('Y-m-d', $request->d);
-                    return $item->CreateDate->between(
-                        $date->day(1)->setTime(0, 0)->toDateTimeString(),
-                        $date->day($date->daysInMonth)->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', 200)->count();
-
-                $failed = $data->filter(function ($item, $key) use ($request) {
-                    $date = Carbon::createFromFormat('Y-m-d', $request->d);
-                    return $item->CreateDate->between(
-                        $date->day(1)->setTime(0, 0)->toDateTimeString(),
-                        $date->day($date->daysInMonth)->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', '!=', 200)->count();
-
-                $successOld = $data->filter(function ($item, $key) use ($request) {
-                    $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)->subMonth();
-                    return $item->CreateDate->between(
-                        $dateOld->day(1)->setTime(0, 0)->toDateTimeString(),
-                        $dateOld->day($dateOld->daysInMonth)->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', 200)->count();
-
-                $failedOld = $data->filter(function ($item, $key) use ($request) {
-                    $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)->subMonth();
-                    return $item->CreateDate->between(
-                        $dateOld->day(1)->setTime(0, 0)->toDateTimeString(),
-                        $dateOld->day($dateOld->daysInMonth)->setTime(23, 59, 59)->toDateTimeString()
-                    );
-                })->where('Status', '!=', 200)->count();
-
-                $successPercent = $successOld == 0 ? '-' : floor((abs($successOld - $success) / $successOld) * 100) . "%";
-                $failedPercent = $failedOld == 0 ? '-' : floor((abs($failedOld - $failed) / $failedOld) * 100) . "%";
-                $success = FunctionHelper::thousandsCurrencyFormat($success);
-                $failed = FunctionHelper::thousandsCurrencyFormat($failed);
-            }
-            elseif ($request->t === 'y') {
-                $success = $data->filter(function ($item, $key) use ($request) {
-                    $date = Carbon::createFromFormat('Y-m-d', $request->d);
-                    return $item->CreateDate->between(
-                        Carbon::create($date->year, 1, 1, 0, 0, 0),
-                        Carbon::create($date->year, 12, 31, 23, 59, 59)
-                    );
-                })->where('Status', 200)->count();
-
-                $failed = $data->filter(function ($item, $key) use ($request) {
-                    $date = Carbon::createFromFormat('Y-m-d', $request->d);
-                    return $item->CreateDate->between(
-                        Carbon::create($date->year, 1, 1, 0, 0, 0),
-                        Carbon::create($date->year, 12, 31, 23, 59, 59)
-                    );
-                })->where('Status', '!=', 200)->count();
-
-                $successOld = $data->filter(function ($item, $key) use ($request) {
-                    $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)->subYear();
-                    return $item->CreateDate->between(
-                        Carbon::create($dateOld->year, 1, 1, 0, 0, 0),
-                        Carbon::create($dateOld->year, 12, 31, 23, 59, 59)
-                    );
-                })->where('Status', 200)->count();
-
-                $failedOld = $data->filter(function ($item, $key) use ($request) {
-                    $dateOld = Carbon::createFromFormat('Y-m-d', $request->d)->subYear();
-                    return $item->CreateDate->between(
-                        Carbon::create($dateOld->year, 1, 1, 0, 0, 0),
-                        Carbon::create($dateOld->year, 12, 31, 23, 59, 59)
-                    );
-                })->where('Status', '!=', 200)->count();
-
-                $successPercent = $successOld == 0 ? '-' : floor((abs($successOld - $success) / $successOld) * 100) . "%";
-                $failedPercent = $failedOld == 0 ? '-' : floor((abs($failedOld - $failed) / $failedOld) * 100) . "%";
-                $success = FunctionHelper::thousandsCurrencyFormat($success);
-                $failed = FunctionHelper::thousandsCurrencyFormat($failed);
-            }
-
-            Cache::tags('chart')->remember($key . ".lastUpdate", $ttl, function () {
-                return now();
-            });
-
-            return compact('success', 'successOld', 'successPercent', 'failed', 'failedOld', 'failedPercent');
-        });
-
-        return response()->json($result);
+        return response()->json(compact('plus', 'minus'));
     }
 
     public function chart2(Request $request)

@@ -44,6 +44,8 @@ class FunctionHelper {
     }
 
     public static function thousandsCurrencyFormat($num) {
+        $sign = $num < 0 ? '-' : ''; // is negative value
+        $num = abs($num);
         if ($num >= 1000) {
             $x = round($num);
             $x_number_format = number_format($x);
@@ -54,10 +56,11 @@ class FunctionHelper {
             $x_display = $x_array[0] . ((int) $x_array[1][0] !== 0 ? '.' . $x_array[1][0] : '');
             $x_display .= $x_parts[$x_count_parts - 1];
 
-            return $x_display;
+            return $sign . $x_display;
         }
 
-        return $num;
+        $num = round($num, 2);
+        return $sign == '-' ? $num * -1 : $num;
     }
 
     public static function getInvoiceDetails($merchant)
