@@ -48,7 +48,7 @@ class MerchantController extends Controller
         $validator = Validator::make($request->all(), [
             'merchant_name' => ['required', 'string', 'max:100'],
             'merchant_address' => ['required', 'string', 'max:150'],
-            'merchant_pic' => ['required', 'regex:/^[\pL\s\-]+$/u', 'string', 'max:50'],
+            'merchant_pic' => ['required', 'string', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
             'merchant_pic_phone' => ['required', 'string', 'max:15'],
             'merchant_pic_email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:Merchant,Email'],
             'use_for' => ['required', 'string', 'max:250'],
