@@ -24,7 +24,7 @@
             <div class="card rounded-xxl" style="min-height: calc(100vh - 10.3rem);">
                 <div class="card-body">
                     <div class="d-flex mb-3">
-                        <a id="btnCreateEvent" href="{{ auth()->user()->is_admin ? 'javascript:void(0);' : route('events.create') . '?m=' . auth()->user()->merchant->Id }}" class="btn btn-primary rounded-xxl">
+                        <a id="btnCreateEvent" href="{{ auth()->user()->is_admin ? 'javascript:void(0);' : route('events.create') . '?m=' . auth()->user()->hasMerchant->Id }}" class="btn btn-primary rounded-xxl">
                             New Event <i class="fas fa-plus ms-2"></i>
                         </a>
                     </div>
@@ -43,7 +43,7 @@
     <script>
         let eventTable = null;
         let merchantTable = null;
-        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->merchant->Id }};
+        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->hasMerchant->Id }};
         function deleteEvent(id) {
             Swal.fire({
                 title: 'Do you want to delete this event?',

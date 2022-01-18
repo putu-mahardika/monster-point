@@ -113,7 +113,7 @@
             // ==============================>>>> Get Data Member <<<<=============================
 
             eventTable = $('#memberTable').dxDataGrid({
-                dataSource: `{{ route('dx.members', auth()->user()->merchant->Id ?? null) }}`,
+                dataSource: `{{ route('dx.members', auth()->user()->hasMerchant->Id ?? null) }}`,
                 keyExpr: 'Id',
                 columnAutoWidth: true,
                 hoverStateEnabled: true,
@@ -265,6 +265,7 @@
                 $.get(`{{ route("members.index") }}/${member_id}/edit`, function(data) {
                     $('.modalMember').find('.modal-content').html(data);
                     $('.modalMember').modal('show');
+                    showRedStarRequired();
                 });
             });
             // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< Edit Data >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

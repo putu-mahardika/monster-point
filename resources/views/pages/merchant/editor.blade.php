@@ -139,7 +139,7 @@
                         clearErrorField();
                         showErrorField(errors.responseJSON);
                     }
-                    removeOverlayPanel();
+                    autoEnableSubmitButton();
                 }
             })
         });

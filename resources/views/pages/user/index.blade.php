@@ -1,6 +1,6 @@
 @php
     $user = auth()->user();
-    $merchant = $user->merchant;
+    $merchant = $user->hasMerchant;
 @endphp
 @extends('layouts.main')
 
@@ -155,7 +155,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input name="old_password" id="old_password" type="password" class="form-control rounded-xl @error('old_password') is-invalid @enderror" aria-describedby="showOldPassword">
+                                    <input name="old_password" id="old_password" type="password" class="form-control rounded-xl @error('old_password') is-invalid @enderror" aria-describedby="showOldPassword" value="{{ old('old_password') }}">
                                     <button id="btnShowOldPassword" class="btn rounded-xl"  type="button" onclick="toogleShowPassword('old');">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -174,7 +174,7 @@
                             </div>
                             <div class="col-md-8">
                                 <div class="input-group">
-                                    <input name="new_password" id="new_password" type="password" class="form-control rounded-xl @error('new_password') is-invalid @enderror" aria-describedby="showNewPassword">
+                                    <input name="new_password" id="new_password" type="password" class="form-control rounded-xl @error('new_password') is-invalid @enderror" aria-describedby="showNewPassword" value="{{ old('new_password') }}">
                                     <button id="btnShowNewPassword" class="btn rounded-xl" type="button" onclick="toogleShowPassword();">
                                         <i class="fas fa-eye"></i>
                                     </button>
@@ -214,7 +214,7 @@
             <div class="card-body row justify-content-end g-2">
                 <div class="col-md-2 mb-1 order-2 order-md-1">
                     <div class="d-grid gap-2">
-                        <button type="button" class="btn btn-secondary rounded-xxl" onclick="location.href='/dashboard';">
+                        <button type="button" class="btn btn-secondary rounded-xxl" onclick="location.href='../dashboard';">
                             Close
                         </button>
                     </div>
@@ -239,6 +239,12 @@
 {{-- JS --}}
 @section('js')
     <script>
+        merchantPicPhone = new Cleave('#pic_phone', {
+            phone: true,
+            phoneRegionCode: 'id'
+        });
+
+
         function toogleShowPassword(mode = '') {
             let passwordField = $(`#${mode === 'old' ? mode + '_' : 'new_'}password${mode === 'confirm' ? '_confirmation' : ''}`);
             let showPasswordBtn = $(`#btnShow${mode === 'old' ? 'Old' : 'New'}Password${mode === 'confirm' ? 'Confirmation' : ''}`);

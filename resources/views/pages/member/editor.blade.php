@@ -19,7 +19,7 @@
             @csrf
             @if (request()->route()->getName() == 'members.create')         <!-- Jika tampil form create -->
                 @if (!auth()->user()->is_admin)         <!-- Jika dibuka oleh selain admin (merchant) -->
-                    <input type="hidden" name="merchant_id" value="{{ auth()->user()->merchant->Id }}">     <!-- get id dari logged merchant -->
+                    <input type="hidden" name="merchant_id" value="{{ auth()->user()->hasMerchant->Id }}">     <!-- get id dari logged merchant -->
                 @else       <!-- jika dibuka oleh admin -->
                     @if ($request->m)   <!-- jika ada merchant_id dari request -->
                         <input type="hidden" name="merchant_id" value="{{ $request->m }}">
@@ -122,9 +122,10 @@
                         });
                     }
                     else {
+                        clearErrorField();
                         showErrorField(errors.responseJSON);
                     }
-                    removeOverlayPanel();
+                    autoEnableSubmitButton();
                 }
             })
         });

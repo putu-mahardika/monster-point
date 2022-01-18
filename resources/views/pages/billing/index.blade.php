@@ -39,8 +39,8 @@
     <script>
         let billingTable = null;
         let merchantTable = null;
-        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->merchant->Id }};
-        let selectedMerchantName = '{{ auth()->user()->is_admin ? '' : auth()->user()->merchant->Nama }}';
+        let selectedMerchant = {{ auth()->user()->is_admin ? 0 : auth()->user()->hasMerchant->Id }};
+        let selectedMerchantName = '{{ auth()->user()->is_admin ? '' : auth()->user()->hasMerchant->Nama }}';
 
         @if (auth()->user()->is_admin)
             function loadBillingByMerchant() {
@@ -51,7 +51,7 @@
         @endif
 
         $(document).ready(() => {
-            $('#merchantLabel').text(selectedMerchantName);
+            // $('#merchantLabel').text(selectedMerchantName);
 
             $('#addMerchantModal').on('shown.bs.modal', function () {
                 $(this).find('#merchant_name').focus();
