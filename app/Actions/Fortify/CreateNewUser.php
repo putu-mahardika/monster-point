@@ -30,7 +30,7 @@ class CreateNewUser implements CreatesNewUsers
             'merchant_email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:Merchant,Email'],
             'merchant_address' => ['required', 'string', 'max:150'],
             'merchant_pic' => ['required', 'string', 'max:50', 'regex:/^[\pL\s\-]+$/u'],
-            'merchant_pic_phone' => ['required', 'string', 'max:15'],
+            'merchant_pic_phone' => ['required', 'string', 'max:13'],
             'use_for' => ['required', 'string', 'max:250'],
             // 'password' => $this->passwordRules(),
         ])->validate();
