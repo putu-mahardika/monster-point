@@ -76,7 +76,7 @@ class EmailChangeHelper {
         }
 
         $user = $emailChange->user;
-        $merchant = $user->merchant;
+        $merchant = $user->hasMerchant;
 
         $emailChange->update([
             'verified_at' => now()
