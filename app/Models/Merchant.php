@@ -42,7 +42,13 @@ class Merchant extends Model
 
     public function users()
     {
-        return $this->hasOne(User::class, 'email', 'email');
+        return $this->hasOne(User::class, 'email', 'Email');
+        // return $this->hasOne(User::class, 'email', 'Email');
+    }
+
+    public function hasUser()
+    {
+        return $this->belongsTo(User::class, 'email', 'email');
     }
 
     // hapus semua yang berkaitan dengan merchant

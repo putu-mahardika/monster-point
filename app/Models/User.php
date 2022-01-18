@@ -59,7 +59,13 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     public function merchant()
     {
-        return $this->belongsTo(Merchant::class, 'email', 'email');
+        return $this->belongsTo(Merchant::class, 'Email', 'email');
+        // return $this->belongsTo(Merchant::class, 'Email', 'email');
+    }
+
+    public function hasMerchant()
+    {
+        return $this->hasOne(Merchant::class, 'email', 'email');
     }
 
     /**
