@@ -11,6 +11,7 @@ use App\Rules\ValidPassword;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 
 class UserControler extends Controller
 {
@@ -78,20 +79,21 @@ class UserControler extends Controller
     {
         $user = User::find($id);
         $role = $user->roles->first()->id;
-        // dd($role);
-        $merchant = $user->merchant ?? null;
+        // dd($user->hasMerchant);
+        $merchant = $user->hasMerchant ?? null;
         $userData = [];
         $merchantData = [];
 
         $request->validate([
-            'merchant_name' => [Rule::requiredIf(!empty($request->merchant_name)), 'string', 'max:150'],
+            'merchant_name' => [Rule::requiredIf(!empty($request->merchant_name)), 'string', 'max:100'],
             'email' => ['required', 'string', 'email:rfc,dns', 'max:150', 'unique:users,email,'.$id],
             'merchant_address' => [Rule::requiredIf(!empty($request->merchant_address)), 'string', 'max:150'],
-            'pic' => [Rule::requiredIf(!empty($request->pic)), 'string', 'max:150'],
-            'pic_phone' => [Rule::requiredIf(!empty($request->pic_phone)), 'string', 'max:150'],
-            'use_for' => [Rule::requiredIf(!empty($request->use_for)), 'string', 'max:250'],
+            'pic' => [Rule::requiredIf(!empty($request->pic)), 'string', 'max:50'],
+            'pic_phone' => [Rule::requiredIf(!empty($request->pic_phone)), 'string', 'max:13'],
+            'use_for' => [Rule::requiredIf(!empty($request->use_for)), 'string', 'max:100'],
             'old_password' => [Rule::requiredIf(!empty($request->new_password)), new ValidPassword($user)],
-            'new_password' => ['nullable', 'min:8', 'confirmed'],
+            'new_password' => ['nullable', Password::min(8)->letters()->mixedCase()->numbers()->symbols()],
+            'new_password_confirmation' => ['nullable', 'min:8', 'same:new_password'],
         ]);
 
         $password = !empty($request->new_password) ? Hash::make($request->new_password) : null;
